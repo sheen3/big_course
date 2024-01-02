@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>Produce_traceability</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <!--   统一的管理所有的子模块共享这个配置,所有子模块按照统一的方式进行构建  比如都用同一个代码质量检查插件  -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.17</version>
+    </parent>
+    <modules>
+        <module>pro-database</module>
+        <module>pro-tools</module>
+        <module>pro-user-service</module>
+        <module>pro-product-service</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>8</java.version>
+
+        <spring.boot.version>2.7.17</spring.boot.version>
+        <!--自动给类生成get set方法 和构造函数等 -->
+        <lombok.version>1.18.28</lombok.version>
+        <!--结构化数据序列化 用于存储或通信    -->
+        <protobuf-java.version>3.21.1</protobuf-java.version>
+        <!--单元测试   -->
+        <junit.version>4.13.2</junit.version>
+        <!--用于加密-->
+        <commons.codec.version>1.15</commons.codec.version>
+        <!-- 字符串操作、集合操作、输入输出处理等 -->
+        <commons.lang3.version>3.9</commons.lang3.version>
+        <!--！！！！访问接口Controller！！！！   -->
+        <!-- Swagger dependencies -->
+        <springfox.boot.starter.version>3.0.0</springfox.boot.starter.version>
+
+        <!-- ！！！！！数据库！！！！！   开始   -->
+        <!--整合druid到springboot中 -->
+        <druid.springboot.starter>1.2.16</druid.springboot.starter>
+        <!--druid的实例所在，是一个为数据库连接提供连接池的工具 -->
+        <druid.version>1.1.23</druid.version>
+        <!--连接Mysql数据库驱动 -->
+        <mysql.connector.java.version>8.0.26</mysql.connector.java.version>
+        <!--操作数据库CRUD   -->
+        <mybatisplus.boot.starter.version>3.4.2</mybatisplus.boot.starter.version>
+        <mybatis.spring.boot.starter.version>2.2.2</mybatis.spring.boot.starter.version>
+        <!-- 数据库查询分页插件 -->
+        <pagehelper.boot.version>1.4.6</pagehelper.boot.version>
+        <!-- ！！！！！数据库！！！！！   结束   -->
+
+        <!--跳过单元测试-->
+        <skipTests>true</skipTests>
+    </properties>
+
+    <!--子模块找父模块的这个management标签 获取依赖-->
+    <dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring.boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+        <dependency>
+            <!--单元测试-->
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!--@Date @AllArgsConstructor自动生成getter setter -->
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <!--scope=provided，说明它只在编译阶段生效，不需要打入包中, Lombok在编译期将带Lombok注解的Java文件正确编译为完整的Class文件-->
+            <!--                如果设置了这个参数，打包就不能被传递，在common包中的lombok在product-service不能用-->
+            <!--                <scope>provided</scope>-->
+        </dependency>
+        <dependency>
+            <!-- 字符串操作、集合操作、输入输出处理等 -->
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <!--用于加密-->
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>${commons.codec.version}</version>
+        </dependency>
+
+        <dependency>
+            <!--接口文档依赖 Swagger-->
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>${springfox.boot.starter.version}</version>
+        </dependency>
+        <!--连接操作阿里云OSS 对象存储服务-->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>3.8.0</version>
+        </dependency>
+
+        <!-- java中实现的Redis客户端 操作redis-->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.10.1</version>
+        </dependency>
+        <!-- fastJson 快速将Java对象序列化为JSON格式或从JSON格式反序列化为Java对象-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.7</version>
+        </dependency>
+        <!-- 接口参数校验 @NotNull @Min -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <!--整合mybatis到springboot中 -->
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.spring.boot.starter.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <!--mybatis plus和springboot整合-->
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.boot.starter.version}</version>
+        </dependency>
+        <!--    数据库连接操作模块依赖 开始。。。。-->
+        <dependency>
+            <!--连接Mysql数据库驱动 -->
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.java.version}</version>
+        </dependency>
+        <dependency>
+            <!--druid的实例所在，是一个为数据库连接提供连接池的工具 -->
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+
+        <dependency>
+            <!--mybatis plus和springboot整合-->
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.boot.starter.version}</version>
+        </dependency>
+
+        <dependency>
+            <!-- 数据库查询分页插件 -->
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.boot.version}</version>
+        </dependency>
+        <!--    数据库连接操作模块依赖 结束。。。。-->
+
+
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+
+        <dependency>
+            <!--      代码热加载       -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>3.1.2</version>
+            <scope>runtime</scope>
+            <!--表示这个依赖项是可选的，即使没有它，项目也可以编译和运行-->
+            <optional>true</optional>
+        </dependency>
+
+        <!--二维码api-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.4.1</version>
+        </dependency>
+
+        <!-- Spring Boot Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.5.15</version>
+        </dependency>
+
+        <!-- Spring Boot Thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <version>2.5.15</version>
+        </dependency>
+    </dependencies>
+
+    </dependencyManagement>
+
+    <!-- 代码库 -->
+    <repositories>
+        <repository>
+            <id>ali-code-repo</id>
+            <name>ali-code-repo</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public//</url>
+            <!-- 允许取得发布版本-->
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <!-- 允许取得快照版本-->
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+
+
+    </repositories>
+
+    <!--插件库-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>ali-plugin-repo</id>
+            <name>ali-plugin-repo</name>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
