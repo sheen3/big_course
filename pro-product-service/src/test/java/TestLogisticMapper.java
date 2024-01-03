@@ -91,7 +91,7 @@ public class TestLogisticMapper {
         logisticsSupermarketRef.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
 
        if( logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)) {
-           System.out.println("物流与超市关联建立成！");
+           System.out.println("物流与超市订单建立成！");
        }
 
     }

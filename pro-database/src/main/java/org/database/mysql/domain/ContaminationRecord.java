@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 public class ContaminationRecord {
     @TableId
     private String recordId;
-    private Integer qrCodesId;
+    private String productId;
     private String contaminationDescription;
     private Byte recordsStatus;
 }

@@ -3,8 +3,7 @@ package org.product.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
-import org.database.mysql.domain.LogisticsSupermarketRef;
-import org.database.mysql.domain.Supermarket;
+import org.database.mysql.domain.*;
 import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.LogisticMapper;
 import org.database.mysql.mapper.SupermarketMapper;
@@ -71,6 +70,7 @@ public class SupermarketMapperImpl {
 
     /**
      * 查找某一门店
+     *
      * @param supermarket
      * @throws Exception
      */
@@ -112,6 +112,7 @@ public class SupermarketMapperImpl {
 
     /**
      * 删除线下门店
+     *
      * @param supermarket
      * @throws Exception
      */
@@ -141,6 +142,7 @@ public class SupermarketMapperImpl {
 
     /**
      * 更新超市信息
+     *
      * @param supermarket
      * @throws Exception
      */
@@ -168,13 +170,17 @@ public class SupermarketMapperImpl {
         }
     }
 
-   /* public void getProduct(LogisticsSupermarketRef logisticsSupermarketRef)throws Exception{
+    /**
+     * 超市根据超市和物流单子拿到产品
+     * 先判断单子对不对得上
+     *
+     * @param logisticsSupermarketRef
+     * @throws Exception
+     */
+    public void getProduct(LogisticsSupermarketRef logisticsSupermarketRef) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
             LogComp.LogMessage logMessage1 = LogComp.buildData(LogType.SUPERMARKET);
-
-            MysqlBuilder<LogisticsSupermarketRef> flag = new MysqlBuilder<>(LogisticsSupermarketRef.class);
-            flag.setIn(logisticsSupermarketRef);
 
             if (logisticMapper.selectById(logisticsSupermarketRef.getLogisticId()) == null) {
                 logMessage.build(LogEnum.LOGISTIC_NO_EXISTS);
@@ -182,36 +188,66 @@ public class SupermarketMapperImpl {
             } else if (supermarketMapper.selectById(logisticsSupermarketRef.getSupermarketId()) == null) {
                 logMessage1.build(LogEnum.SUPERMARKET_NO_EXISTS);
                 log.warn(logMessage.log());
-            }else {
+            } else {
+                //由物流和超市订单找到商品和物流的单子然后进行扫码
 
-
-
+                ProductLogisticRef log = new ProductLogisticRef();
+                log.setLogisticId(logisticsSupermarketRef.getLogisticId());
+                MysqlBuilder<ProductLogisticRef> getLog = new MysqlBuilder<>(ProductLogisticRef.class);
+                getLog.setIn(log);
+                log = baseMysqlComp.selectOne(getLog);
 
                 String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
-                String logisticQrCodeFileName = productLogisticRef.getLogisticId() + ".png";
-                String logisticQrCodeFilePath=logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
+                String logisticQrCodeFileName = log.getLogisticId() + ".png";
+                String logisticQrCodeFilePath = logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
                 String logisticText = scanQRCode(logisticQrCodeFilePath);
                 if (logisticText != null) {
-                    System.out.println("扫描结果： " + logisticText);
+                    System.out.println("物流码扫描结果： " + logisticText);
                 } else {
                     System.out.println("未能扫描到二维码");
                 }
                 String productQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake";
-                String productQrCodeFileName = productLogisticRef.getProductId() + ".png";
+                String productQrCodeFileName = log.getProductId() + ".png";
                 String productQrCodeFilePath = productQrCodeFolderPath + "/" + productQrCodeFileName;
                 String productText = scanQRCode(productQrCodeFilePath);
                 if (productText != null) {
-                    System.out.println("扫描结果： " + productText);
+                    System.out.println("生产码扫描结果： " + productText);
                 } else {
                     System.out.println("未能扫描到二维码");
                 }
+                if (logisticText != null && productText != null) {
+                    ProductStorage proSto = new ProductStorage();
+                    proSto.setSupermarketId(logisticsSupermarketRef.getSupermarketId());
+                    proSto.setProductId(log.getProductId());
+                    MysqlBuilder<ProductStorage> get = new MysqlBuilder<>(ProductStorage.class);
+                    get.setIn(proSto);
+                    //入库
+                    baseMysqlComp.insert(get);
+
+                }
 
             }
-*/
+        } catch (Exception e) {
+            log.error("Failed to getProduct!", e);
+        }
+    }
 
+    /**
+     * 接到污染通知
+     * 下架商品
+     *
+     * @param productStorage
+     * @throws Exception
+     */
+    public void outProduct(ProductStorage productStorage) throws Exception {
+        try {
+            MysqlBuilder<ProductStorage> outProduct = new MysqlBuilder<>(ProductStorage.class);
+            outProduct.setIn(productStorage);
+            baseMysqlComp.delete(outProduct);
 
+        } catch (Exception e) {
+            log.error("Failed to outProduct!", e);
 
-
-
-
+        }
+    }
 }

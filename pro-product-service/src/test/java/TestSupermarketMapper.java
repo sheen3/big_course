@@ -1,3 +1,4 @@
+import org.database.mysql.domain.LogisticsSupermarketRef;
 import org.database.mysql.domain.Supermarket;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +69,16 @@ public class TestSupermarketMapper {
         supermarket.setSupermarketContact("10000001");
         supermarketMapperImpl.updateSupermarket(supermarket);
         System.out.println("超市信息更新成功！");
+
+
+    }
+    @Test
+    public void getProduct() throws Exception{
+        LogisticsSupermarketRef log=new LogisticsSupermarketRef();
+        log.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
+        log.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
+        supermarketMapperImpl.getProduct(log);
+        System.out.println("商品入库成功！");
 
 
     }
