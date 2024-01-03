@@ -3,6 +3,8 @@ package org.product.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
+import org.database.mysql.domain.Logistic;
+import org.database.mysql.domain.Product;
 import org.database.mysql.domain.ProductLogisticRef;
 import org.database.mysql.domain.QrCode;
 import org.database.mysql.entity.MysqlBuilder;
@@ -113,6 +115,70 @@ public class QrCodeMapperImpl {
             log.error("Failed to select qrcode!", e);
         }
         return null;
+    }
+    public void sanProductQrCode(Product product) throws Exception {
+        try {
+            LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
+            if (product == null || product.getProductId() == null) {
+                logMessage.build(LogEnum.PRODUCT_EMPTY);
+                log.warn(logMessage.log());
+            } else {
+                MysqlBuilder<Product> sanQrCode = new MysqlBuilder<>(Product.class);
+                sanQrCode.setIn(product);
+                if (baseMysqlComp.selectOne(sanQrCode) == null) {
+                    logMessage.build(LogEnum.PRODUCT_EXISTS);
+                    log.error(logMessage.log());
+
+                } else {
+                    String productQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake";
+                    String productQrCodeFileName = product.getProductId() + ".png";
+                    String productQrCodeFilePath = productQrCodeFolderPath + "/" + productQrCodeFileName;
+                    String productText = scanQRCode(productQrCodeFilePath);
+                    if (productText != null) {
+                        System.out.println("扫描结果： " + productText);
+                    } else {
+                        System.out.println("未能扫描到二维码");
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("Failed to san Product!", e);
+        }
+    }
+
+    public void sanLogisticQrCode(Logistic logistic) throws Exception {
+        try {
+            LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
+            if (logistic == null || logistic.getLogisticId() == null) {
+                logMessage.build(LogEnum.LOGISTIC_EMPTY);
+                log.warn(logMessage.log());
+            } else {
+                MysqlBuilder<Logistic> sanQrCode = new MysqlBuilder<>(Logistic.class);
+                sanQrCode.setIn(logistic);
+                if (baseMysqlComp.selectOne(sanQrCode) == null) {
+                    logMessage.build(LogEnum.LOGISTIC_EXISTS);
+                    log.error(logMessage.log());
+
+                } else {
+                    String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
+                    String logisticQrCodeFileName = logistic.getLogisticId() + ".png";
+                    String logisticQrCodeFilePath=logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
+                    String logisticText = scanQRCode(logisticQrCodeFilePath);
+                    if (logisticText != null) {
+                        System.out.println("扫描结果： " + logisticText);
+                    } else {
+                        System.out.println("未能扫描到二维码");
+                    }
+
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("Failed to san Logistic!", e);
+        }
+
     }
 
     public List<QrCode> selectAllQrCode() throws Exception {

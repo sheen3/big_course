@@ -1,3 +1,4 @@
+import org.database.mysql.domain.Logistic;
 import org.database.mysql.domain.Product;
 import org.database.mysql.domain.ProductLogisticRef;
 import org.database.mysql.domain.QrCode;
@@ -42,7 +43,7 @@ public class TestQrCodeMapper {
     public void selectOneQrCode() throws Exception {
         QrCode qrCode=new QrCode();
        // qrCode.setQrCodeId(4);
-        qrCode.setProductId("0000018c-c555-f88a-a6e6-74bb8b199dfc");
+        qrCode.setProductId("0000018c-ce96-07ee-98d2-2e9d32bb7d7f");
 
         System.out.println(qrCodeMapperImpl.selectOneQrCode(qrCode));
         System.out.println("二维码信息查找成功！");
@@ -53,6 +54,25 @@ public class TestQrCodeMapper {
         for (QrCode p : qrcodeList) {
             System.out.println(p);
         }
+
+    }
+
+    @Test
+    public void scanProductQrCode() throws Exception {
+        Product product=new Product();
+        product.setProductId("0000018c-ce96-07ee-98d2-2e9d32bb7d7f");
+       qrCodeMapperImpl.sanProductQrCode(product);
+        System.out.println("二维码信息查找成功！");
+
+
+    }
+    @Test
+    public void scanLogisticQrCode() throws Exception {
+        Logistic logistic =new Logistic();
+        logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
+        qrCodeMapperImpl.sanLogisticQrCode(logistic);
+        System.out.println("二维码信息查找成功！");
+
 
     }
     //打包张贴两张二维码

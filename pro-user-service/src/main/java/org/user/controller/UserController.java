@@ -1,17 +1,37 @@
 package org.user.controller;
 
+import io.swagger.annotations.ApiOperation;
+import org.database.mysql.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.user.serviceimpl.UserMapperImpl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 
 /**
  * @Author: eensh
  * @CreateDate: 2024/1/1
  */
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/User")
 public class UserController {
+
+    private final UserMapperImpl userMapper;
+
+    @Autowired
+    public UserController(UserMapperImpl userMapper) {
+        this.userMapper = userMapper;
+    }
+
+    //测试sheen
+    @GetMapping("/sheen")
+    @ApiOperation("测试联通")
+    public String get() {
+        return "hello sheen!";
+    }
+
 
     @GetMapping("/register")
     public String showRegisterPage() {

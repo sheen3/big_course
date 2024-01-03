@@ -69,7 +69,8 @@ public class ProductMapperImpl {
                     // 执行插入操作
                     baseMysqlComp.insert(insertProduct);
                     //生成二维码
-                    String qrCodeData = "产品名:" + product.getProductName() + '\n' +
+                    String qrCodeData = "产品编号:" + product.getProductId() + '\n' +
+                            "产品名:" + product.getProductName() + '\n' +
                             "生产日期:" + product.getProductDate() + '\n' +
                             "到期时间:" + product.getProductExpirationDate() + '\n' +
                             "企业编号:" + product.getProductEnterpriseId() + '\n' +
@@ -94,7 +95,8 @@ public class ProductMapperImpl {
                     QrCode qrcode = new QrCode();
                     qrcode.setQrCodeId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
                     qrcode.setProductId(product.getProductId());
-                    qrcode.setQrCodeContent("产品名:" + product.getProductName() + '\n' +
+                    qrcode.setQrCodeContent("产品编号:" + product.getProductId() + '\n' +
+                            "产品名:" + product.getProductName() + '\n' +
                             "生产日期:" + product.getProductDate() + '\n' +
                             "到期时间:" + product.getProductExpirationDate() + '\n' +
                             "企业编号:" + product.getProductEnterpriseId() + '\n' +
@@ -261,7 +263,8 @@ public class ProductMapperImpl {
 
                     QrCode qrCodeUpdate = new QrCode();
                     qrCodeUpdate.setProductId(product2.getProductId());
-                    qrCodeUpdate.setQrCodeContent("产品名:" + product1.getProductName() + '\n' +
+                    qrCodeUpdate.setQrCodeContent("产品编号:" + product.getProductId() + '\n' +
+                            "产品名:" + product1.getProductName() + '\n' +
                             "生产日期:" + product1.getProductDate() + '\n' +
                             "到期时间:" + product1.getProductExpirationDate() + '\n' +
                             "企业编号:" + product1.getProductEnterpriseId() + '\n' +
@@ -275,7 +278,8 @@ public class ProductMapperImpl {
 
 
                     //生成二维码
-                    String qrCodeData = "产品名:" + product1.getProductName() + '\n' +
+                    String qrCodeData = "产品编号:" + product.getProductId() + '\n' +
+                            "产品名:" + product1.getProductName() + '\n' +
                             "生产日期:" + product1.getProductDate() + '\n' +
                             "到期时间:" + product1.getProductExpirationDate() + '\n' +
                             "企业编号:" + product1.getProductEnterpriseId() + '\n' +
@@ -307,6 +311,7 @@ public class ProductMapperImpl {
 
     /**
      * product报表
+     *
      * @param product
      */
     public void productExcel(Product product) {
