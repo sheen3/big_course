@@ -1,5 +1,6 @@
 import org.database.mysql.domain.Logistic;
 import org.database.mysql.domain.LogisticsSupermarketRef;
+import org.database.mysql.domain.Product;
 import org.database.mysql.domain.Supermarket;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -78,8 +79,8 @@ public class TestSupermarketMapper {
     @Test
     public void getProduct() throws Exception{
         LogisticsSupermarketRef log=new LogisticsSupermarketRef();
-        log.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
-        log.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
+        log.setSupermarketId("0000018c-cdf2-35fa-ae0d-db115e7515b0");
+        log.setLogisticId("0000018c-cae2-955e-910c-49237ba0738a");
         supermarketMapperImpl.getProduct(log);
         System.out.println("商品入库成功！");
 
@@ -93,6 +94,14 @@ public class TestSupermarketMapper {
         supermarket.setSupermarketAddress("浙江");
         supermarket.setSupermarketContact("079500002");
         supermarketMapperImpl.supermarketExcel(supermarket);
+
+    }
+
+    @Test
+    public void supermarketGetCon() throws Exception {
+        Product product=new Product();
+       product.setProductId("0000018c-c8fd-c038-8cd5-26ee6af1f203");
+        supermarketMapperImpl.supermarketGetCon(product);
 
     }
 

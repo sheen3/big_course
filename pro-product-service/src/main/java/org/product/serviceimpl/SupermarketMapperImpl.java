@@ -6,9 +6,10 @@ import org.database.mysql.BaseMysqlComp;
 import org.database.mysql.domain.*;
 import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.LogisticMapper;
+import org.database.mysql.mapper.ProductMapper;
 import org.database.mysql.mapper.SupermarketMapper;
+import org.database.mysql.mapper.SupermarketProductRefMapper;
 import org.springframework.stereotype.Service;
-import org.tools.Excel.proExcelWriter;
 import org.tools.Excel.supExcelWriter;
 import org.tools.log.LogComp;
 import org.tools.log.LogEnum;
@@ -29,11 +30,15 @@ public class SupermarketMapperImpl {
     private final LogisticMapper logisticMapper;
     private static final Logger log = LogComp.getLogger(SupermarketMapperImpl.class);
     private final BaseMysqlComp baseMysqlComp;
+    private final ProductMapper productMapper;
+    private final SupermarketProductRefMapper supermarketProductRefMapper;
 
-    public SupermarketMapperImpl(SupermarketMapper supermarketMapper, LogisticMapper logisticMapper, BaseMysqlComp baseMysqlComp) {
+    public SupermarketMapperImpl(SupermarketMapper supermarketMapper, LogisticMapper logisticMapper, BaseMysqlComp baseMysqlComp, ProductMapper productMapper, SupermarketProductRefMapper supermarketProductRefMapper) {
         this.supermarketMapper = supermarketMapper;
         this.logisticMapper = logisticMapper;
         this.baseMysqlComp = baseMysqlComp;
+        this.productMapper = productMapper;
+        this.supermarketProductRefMapper = supermarketProductRefMapper;
     }
 
     /**
@@ -201,13 +206,13 @@ public class SupermarketMapperImpl {
                 logMessage1.build(LogEnum.SUPERMARKET_NO_EXISTS);
                 log.warn(logMessage.log());
             } else {
-                //由物流和超市订单找到商品和物流的单子然后进行扫码
-
+                //收货后由物流和超市订单找到商品和物流的单子然后进行扫码
                 ProductLogisticRef log = new ProductLogisticRef();
                 log.setLogisticId(logisticsSupermarketRef.getLogisticId());
                 MysqlBuilder<ProductLogisticRef> getLog = new MysqlBuilder<>(ProductLogisticRef.class);
                 getLog.setIn(log);
                 log = baseMysqlComp.selectOne(getLog);
+
 
                 String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
                 String logisticQrCodeFileName = log.getLogisticId() + ".png";
@@ -228,12 +233,23 @@ public class SupermarketMapperImpl {
                     System.out.println("未能扫描到二维码");
                 }
                 if (logisticText != null && productText != null) {
+                    SupermarketProductRef supermarketProductRef=new SupermarketProductRef();
+                    supermarketProductRef.setProductId(log.getProductId());
+                    supermarketProductRef.setSupermarketId(logisticsSupermarketRef.getSupermarketId());
+                    MysqlBuilder<SupermarketProductRef> add = new MysqlBuilder<>(SupermarketProductRef.class);
+                    add.setIn(supermarketProductRef);
+                    //入库
+                    baseMysqlComp.insert(add);
+
                     ProductStorage proSto = new ProductStorage();
                     proSto.setSupermarketId(logisticsSupermarketRef.getSupermarketId());
                     proSto.setProductId(log.getProductId());
+
+
                     MysqlBuilder<ProductStorage> get = new MysqlBuilder<>(ProductStorage.class);
                     get.setIn(proSto);
-                    //入库
+
+                    //上架
                     baseMysqlComp.insert(get);
 
                 }
@@ -273,5 +289,53 @@ public class SupermarketMapperImpl {
                 supermarket.getSupermarketContact(),
         };
         excelWriter.writeToExcel(folderName, fileName, content);
+    }
+
+    /**
+     * 查询是否有产品污染情况
+     *
+     * @param product
+     */
+    public void supermarketGetCon(Product product) throws Exception {
+        try {
+            LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
+
+            if (product == null || product.getProductId() == null) {
+                logMessage.build(LogEnum.PRODUCT_EMPTY);
+                log.warn(logMessage.log());
+            } else {
+                SupermarketProductRef sup = new SupermarketProductRef();
+                sup.setProductId(product.getProductId());
+                MysqlBuilder<SupermarketProductRef> flag = new MysqlBuilder<>(SupermarketProductRef.class);
+                flag.setIn(sup);
+                sup = baseMysqlComp.selectOne(flag);
+                if (sup.getProductId() == null) {
+                    logMessage.build(LogEnum.PRODUCT_NO_EXISTS);
+                    log.error(logMessage.log());
+                } else {
+                    ContaminationRecord con=new ContaminationRecord();
+                    con.setProductId(sup.getProductId());
+                    MysqlBuilder<ContaminationRecord> flag1 = new MysqlBuilder<>(ContaminationRecord.class);
+                    flag1.setIn(con);
+                    if(baseMysqlComp.selectOne(flag1)==null){
+                        System.out.println("此产品无污染");
+                    }else {
+                        System.out.println(product.getProductId()+"产品已被污染，下架处理！");
+                        ProductStorage pro=new ProductStorage();
+                        pro.setProductId(product.getProductId());
+                        MysqlBuilder<ProductStorage> flag2 = new MysqlBuilder<>(ProductStorage.class);
+                        flag2.setIn(pro);
+                        baseMysqlComp.delete(flag2);
+                        System.out.println(product.getProductId()+"下架成功！");
+                    }
+
+                }
+
+            }
+
+        } catch (
+                Exception e) {
+            log.error("Failed to GetContamination!", e);
+        }
     }
 }

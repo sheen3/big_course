@@ -20,7 +20,7 @@ public class ContaminationRecord {
     private String recordId;
     private String productId;
     private String contaminationDescription;
-    private Byte recordsStatus;
+    private Short recordsStatus;
 }
 
 
