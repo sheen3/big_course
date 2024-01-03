@@ -120,7 +120,7 @@ public class PowerMapperImpl {
     public void deletePower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
-            if (power.getPowerId() == null || power == null) {
+            if ( power == null) {
                 logMessage.build(LogEnum.POWER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -149,7 +149,7 @@ public class PowerMapperImpl {
     public void updatePower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
-            if (power == null || power.getPowerId() == null) {
+            if (power == null ) {
                 logMessage.build(LogEnum.POWER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -211,7 +211,7 @@ public class PowerMapperImpl {
     public Boolean checkPowerOperate(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
-            if (power == null || power.getPowerId() == null) {
+            if (power == null ) {
                 logMessage.build(LogEnum.POWER_EMPTY);
                 log.warn(logMessage.log());
             } else {

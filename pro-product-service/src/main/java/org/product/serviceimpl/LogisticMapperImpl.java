@@ -55,7 +55,7 @@ public class LogisticMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
-            if (logistic == null || logistic.getLogisticId() == null) {
+            if (logistic == null ) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -147,7 +147,7 @@ public class LogisticMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
-            if (logistic == null || logistic.getLogisticId() == null) {
+            if (logistic == null ) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
 
@@ -188,7 +188,7 @@ public class LogisticMapperImpl {
     public void deleteLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-            if (logistic == null || logistic.getLogisticId() == null) {
+            if (logistic == null ) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -228,7 +228,7 @@ public class LogisticMapperImpl {
     public void updateLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-            if (logistic == null || logistic.getLogisticId() == null) {
+            if (logistic == null ) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {

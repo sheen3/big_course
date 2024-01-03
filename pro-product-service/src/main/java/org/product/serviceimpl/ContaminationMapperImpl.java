@@ -47,7 +47,7 @@ public class ContaminationMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
-            if (product == null || product.getProductId() == null) {
+            if (product == null ) {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {

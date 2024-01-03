@@ -67,7 +67,7 @@ public class QrCodeMapperImpl {
     public void deleteQrCode(QrCode qrCode) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.QrCode);
-            if (qrCode.getQrCodeId() == null || qrCode == null) {
+            if ( qrCode == null) {
                 logMessage.build(LogEnum.QRCODE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -96,7 +96,7 @@ public class QrCodeMapperImpl {
     public QrCode selectOneQrCode(QrCode qrCode) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.QrCode);
-            if (qrCode.getQrCodeId() == null && qrCode == null) {
+            if ( qrCode == null) {
                 logMessage.build(LogEnum.QRCODE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -119,7 +119,7 @@ public class QrCodeMapperImpl {
     public void sanProductQrCode(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
-            if (product == null || product.getProductId() == null) {
+            if (product == null ) {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -151,7 +151,7 @@ public class QrCodeMapperImpl {
     public void sanLogisticQrCode(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-            if (logistic == null || logistic.getLogisticId() == null) {
+            if (logistic == null ) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {

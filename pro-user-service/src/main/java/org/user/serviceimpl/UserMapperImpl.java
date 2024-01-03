@@ -59,7 +59,7 @@ public class UserMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
 
-            if (user == null || user.getUserId() == null || user.getUserName() == null || user.getUserTelephone() == null || user.getUserSysEmail() == null) {
+            if (user == null  || user.getUserName() == null || user.getUserTelephone() == null || user.getUserSysEmail() == null) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -149,7 +149,7 @@ public class UserMapperImpl {
     public void selectOneUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null || (user.getUserId() == null && user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
+            if (user == null || ( user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -192,7 +192,7 @@ public class UserMapperImpl {
     public void deleteUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null || user.getUserId() == null) {
+            if (user == null ) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -221,7 +221,7 @@ public class UserMapperImpl {
     public void updateUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null || user.getUserId() == null) {
+            if (user == null ) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -359,7 +359,7 @@ public class UserMapperImpl {
     public Short isUserWhatToRole(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null || user.getUserId() == null) {
+            if (user == null ) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {

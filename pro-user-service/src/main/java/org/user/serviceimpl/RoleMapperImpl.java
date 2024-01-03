@@ -57,7 +57,7 @@ public class RoleMapperImpl {
     public void insertRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null || role.getRoleId() == null) {
+            if (role == null ) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -85,7 +85,7 @@ public class RoleMapperImpl {
 
     /**
      * 查找角色信息
-     * 参数校验：角色、角色id、角色名不为空；
+     * 参数校验：角色、角色名不为空；
      *
      * @param role 角色
      * @throws Exception 错误
@@ -93,7 +93,7 @@ public class RoleMapperImpl {
     public void selectOneRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null || (role.getRoleId() == null && role.getRoleName() == null)) {
+            if (role == null ||  role.getRoleName() == null) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -150,7 +150,7 @@ public class RoleMapperImpl {
     public void deleteRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null || role.getRoleId() == null) {
+            if (role == null ) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -178,7 +178,7 @@ public class RoleMapperImpl {
     public void updateRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null || role.getRoleId() == null) {
+            if (role == null ) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -442,7 +442,7 @@ public class RoleMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
 
-            if (role == null || role.getRoleId() == null) {
+            if (role == null ) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
