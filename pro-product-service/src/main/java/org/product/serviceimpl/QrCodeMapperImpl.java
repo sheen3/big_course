@@ -3,10 +3,10 @@ package org.product.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
-import org.database.mysql.domain.Power;
-import org.database.mysql.domain.Product;
+import org.database.mysql.domain.ProductLogisticRef;
 import org.database.mysql.domain.QrCode;
 import org.database.mysql.entity.MysqlBuilder;
+import org.database.mysql.mapper.ProductLogisticRefMapper;
 import org.database.mysql.mapper.QrCodeMapper;
 import org.springframework.stereotype.Service;
 import org.tools.log.LogComp;
@@ -15,6 +15,8 @@ import org.tools.log.LogType;
 
 import java.io.File;
 import java.util.List;
+
+import static org.tools.QRCode.QRCodeScanner.scanQRCode;
 
 /**
  * @Author: eensh
@@ -27,10 +29,12 @@ public class QrCodeMapperImpl {
     private final QrCodeMapper qrCodeMapper;
     private static final Logger log = LogComp.getLogger(QrCodeMapperImpl.class);
     private final BaseMysqlComp baseMysqlComp;
+    private final ProductLogisticRefMapper productLogisticRefMapper;
 
-    public QrCodeMapperImpl(QrCodeMapper qrCodeMapper, BaseMysqlComp baseMysqlComp) {
+    public QrCodeMapperImpl(QrCodeMapper qrCodeMapper, BaseMysqlComp baseMysqlComp, ProductLogisticRefMapper productLogisticRefMapper) {
         this.qrCodeMapper = qrCodeMapper;
         this.baseMysqlComp = baseMysqlComp;
+        this.productLogisticRefMapper = productLogisticRefMapper;
     }
 
 
@@ -114,6 +118,66 @@ public class QrCodeMapperImpl {
     public List<QrCode> selectAllQrCode() throws Exception {
         MysqlBuilder<QrCode> selectAllQrCode = new MysqlBuilder<>(QrCode.class);
         return baseMysqlComp.selectList(selectAllQrCode);
+    }
+
+    /**
+     * 产品信息和物流信息关联起来
+     * 打包
+     *
+     * @param productLogisticRef
+     * @throws Exception
+     */
+    public void packProduct(ProductLogisticRef productLogisticRef) throws Exception {
+        try {
+            LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
+            LogComp.LogMessage logMessage1 = LogComp.buildData(LogType.LOGISTIC);
+
+            if (productLogisticRef == null || (productLogisticRef.getProductId() == null && productLogisticRef.getLogisticId() == null)) {
+                logMessage.build(LogEnum.PRODUCT_EMPTY);
+                log.warn(logMessage.log());
+            } else {
+
+                MysqlBuilder<ProductLogisticRef> insertProductLogisticRef = new MysqlBuilder<>(ProductLogisticRef.class);
+                insertProductLogisticRef.setIn(productLogisticRef);
+
+                if (productLogisticRefMapper.selectById(productLogisticRef.getProductId()) != null) {
+                    logMessage.build(LogEnum.PRODUCT_EXISTS);
+                    log.error(logMessage.log());
+                } else if (productLogisticRefMapper.selectById(productLogisticRef.getLogisticId()) != null) {
+                    logMessage1.build(LogEnum.LOGISTIC_EXISTS);
+                    log.error(logMessage.log());
+                } else {
+                    // 执行插入操作
+                    baseMysqlComp.insert(insertProductLogisticRef);
+                    //贴两张二维码
+                    // 二维码文件夹路径
+                    String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
+                    String logisticQrCodeFileName = productLogisticRef.getLogisticId() + ".png";
+                    String logisticQrCodeFilePath=logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
+                    String logisticText = scanQRCode(logisticQrCodeFilePath);
+                    if (logisticText != null) {
+                        System.out.println("扫描结果： " + logisticText);
+                    } else {
+                        System.out.println("未能扫描到二维码");
+                    }
+                    String productQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake";
+                    String productQrCodeFileName = productLogisticRef.getProductId() + ".png";
+                    String productQrCodeFilePath = productQrCodeFolderPath + "/" + productQrCodeFileName;
+                    String productText = scanQRCode(productQrCodeFilePath);
+                    if (productText != null) {
+                        System.out.println("扫描结果： " + productText);
+                    } else {
+                        System.out.println("未能扫描到二维码");
+                    }
+
+
+
+
+                }
+            }
+        } catch (Exception e) {
+            log.error("Failed to insert productLogisticRef!", e);
+        }
     }
 
 

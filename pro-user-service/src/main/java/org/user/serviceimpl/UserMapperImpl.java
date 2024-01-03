@@ -3,6 +3,7 @@ package org.user.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
+import org.database.mysql.domain.Role;
 import org.database.mysql.domain.User;
 import org.database.mysql.domain.UserRoleRef;
 import org.database.mysql.entity.MysqlBuilder;
@@ -28,16 +29,19 @@ public class UserMapperImpl {
     private final RoleMapper roleMapper;
     private final PowerMapper powerMapper;
     private final UserMapper userMapper;
+    private final RoleMapperImpl roleMapperImpl;
+
 
     private final BaseMysqlComp baseMysqlComp;
     private static final Logger log = LogComp.getLogger(UserMapperImpl.class);
 
 
     @Autowired
-    public UserMapperImpl(RoleMapper roleMapper, PowerMapper powerMapper, UserMapper userMapper, BaseMysqlComp baseMysqlComp) {
+    public UserMapperImpl(RoleMapper roleMapper, PowerMapper powerMapper, UserMapper userMapper, RoleMapperImpl roleMapperImpl, BaseMysqlComp baseMysqlComp) {
         this.roleMapper = roleMapper;
         this.powerMapper = powerMapper;
         this.userMapper = userMapper;
+        this.roleMapperImpl = roleMapperImpl;
         this.baseMysqlComp = baseMysqlComp;
 
     }
@@ -46,6 +50,7 @@ public class UserMapperImpl {
      * 增加用户（用户注册）
      * 参数校验:用户电话 用户邮箱 用户名不能重复存在;
      *
+     * 用户注册时选择角色
      * @param user
      * @throws Exception
      */
@@ -83,6 +88,23 @@ public class UserMapperImpl {
                     log.warn("用户邮箱已存在，请重新输入");
                 } else {
                     baseMysqlComp.insert(insertUser);
+                    //给用户分配角色
+                    UserRoleRef userRoleRef=new UserRoleRef();
+                    userRoleRef.setRefUserId(user.getUserId());
+                    Role role=new Role();
+                    role.setRoleName(user.getRoleName());
+                    MysqlBuilder<Role> flag = new MysqlBuilder<>(Role.class);
+                    flag.setIn(role);
+                    Role role1=baseMysqlComp.selectOne(flag);
+                    userRoleRef.setRefRoleId(role1.getRoleId());
+                    roleMapperImpl.grantRoleToUser(userRoleRef);
+
+
+
+
+
+
+
                 }
             }
         } catch (Exception e) {

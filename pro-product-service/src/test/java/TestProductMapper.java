@@ -33,14 +33,14 @@ public class TestProductMapper {
     public void insertProduct() throws Exception {
         Product product=new Product();
         product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        product.setProductName("护手霜");
+        product.setProductName("洗发水");
         LocalDateTime now=LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));
         LocalDateTime expirationDate=now.plusYears(3);//当前日期加上三年
         product.setProductExpirationDate(Date.valueOf(expirationDate.toLocalDate()));
-        product.setProductEnterpriseId("1000004");//企业id
-        product.setProductProductionId("2000005");//生产id
-        product.setProductionPlace("北京");
+        product.setProductEnterpriseId("1000034");//企业id
+        product.setProductProductionId("200053");//生产id
+        product.setProductionPlace("南昌");
 
         productMapperImpl.insertProduct(product);
         System.out.println("产品生产成功！");
@@ -69,7 +69,7 @@ public class TestProductMapper {
     @Test
     public void deleteProduct() throws Exception {
         Product product=new Product();
-        product.setProductId("0000018c-c80d-b56e-934d-05d5ac880b28");
+        product.setProductId("0000018c-c8c8-cc0c-b9ad-2bfe8154da34");
         productMapperImpl.deleteProduct(product);
         System.out.println("产品销毁成功！");
     }
@@ -78,9 +78,9 @@ public class TestProductMapper {
     @Test
     public void updateProduct() throws Exception {
         Product product=new Product();
-        product.setProductId("0000018c-c817-7742-bff8-79d45d2734e3");
-        product.setProductEnterpriseId("1666123");
-        product.setProductionPlace("杭州");
+        product.setProductId("0000018c-c8fd-c038-8cd5-26ee6af1f203");
+        product.setProductEnterpriseId("16234");
+        product.setProductionPlace("福建");
         productMapperImpl.updateProduct(product);
         System.out.println("产品状态已更新！");
 

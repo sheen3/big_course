@@ -1,4 +1,5 @@
 import org.database.mysql.domain.Product;
+import org.database.mysql.domain.ProductLogisticRef;
 import org.database.mysql.domain.QrCode;
 import org.database.mysql.mapper.QrCodeMapper;
 import org.junit.Test;
@@ -53,6 +54,14 @@ public class TestQrCodeMapper {
             System.out.println(p);
         }
 
+    }
+    //打包张贴两张二维码
+    @Test
+    public void packProduct() throws Exception{
+        ProductLogisticRef productLogisticRef=new ProductLogisticRef();
+        productLogisticRef.setProductId("0000018c-c8fd-c038-8cd5-26ee6af1f203");
+        productLogisticRef.setLogisticId("0000018c-c913-b31d-87ab-5eb8424f3019");
+        qrCodeMapperImpl.packProduct(productLogisticRef);
     }
 
 }

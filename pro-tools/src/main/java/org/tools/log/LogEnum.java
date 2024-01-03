@@ -191,7 +191,10 @@ public enum LogEnum {
     QRCODE_NO_EXISTS("二维码操作","二维码不存在" ),
     LOGISTIC_EMPTY("物流操作","物流信息为空" ),
     LOGISTIC_EXISTS("物流操作","物流已存在" ),
-    LOGISTIC_NO_EXISTS("物流操作","物流不存在" )
+    LOGISTIC_NO_EXISTS("物流操作","物流不存在" ),
+    SUPERMARKET_EMPTY("超市操作","超市信息为空" ),
+    SUPERMARKET_EXISTS("超市操作","超市已存在" ),
+    SUPERMARKET_NO_EXISTS("超市操作","超市不存在" )
 
     ;
 

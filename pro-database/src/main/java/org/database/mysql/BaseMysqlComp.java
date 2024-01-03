@@ -250,7 +250,7 @@ public class BaseMysqlComp {
             return contaminationRecordMapper;
         } else if (clz.equals(LogisticQrCodeRef.class)) {
             return logisticQrCodeRefMapper;
-        } else if (clz.equals(LogisticsSupermarketRefMapper.class)) {
+        } else if (clz.equals(LogisticsSupermarketRef.class)) {
             return logisticsSupermarketRefMapper;
         } else if (clz.equals(ProductLogisticRef.class)) {
             return productLogisticRefMapper;
@@ -258,8 +258,9 @@ public class BaseMysqlComp {
             return productQrCodeRefMapper;
         } else if (clz.equals(ProductStorage.class)) {
             return productStorageMapper;
-        }else if (clz.equals(SupermarketProductRef.class)) {
+        } else if (clz.equals(SupermarketProductRef.class)) {
             return supermarketProductRefMapper;
+
         }
 
         throw new IllegalStateException("Unexpected value: " + clz);

@@ -32,14 +32,14 @@ public class TestUserMapper {
 
         User user = new User();
         user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        user.setUserName("yiyi");
-        user.setUserTelephone("15625402279");
-        user.setUserSysEmail("yiyiO@yeah.com");
-        user.setUserPassword(PasswordEncrypt.hashPassword("IAmFairy"));
-        user.setUserNickName("Fairy");
+        user.setUserName("Sheen");
+        user.setUserTelephone("15600000001");
+        user.setUserSysEmail("Sheen@yeah.com");
+        user.setUserPassword(PasswordEncrypt.hashPassword("IAmSheen"));
+        user.setUserNickName("Sheen");
         user.setUserGender("女");
-        user.setUserBornDay(Timestamp.valueOf("2012-09-21 00:00:00"));
-        user.setUserIdCard("234454567890");
+        user.setUserBornDay(Timestamp.valueOf("2001-09-21 00:00:00"));
+        user.setUserIdCard("100000001");
         user.setUserCompany("USA.company");
         user.setUserHome("BeiJin");
         user.setUserIp("192.168.1.1");
@@ -77,7 +77,7 @@ public class TestUserMapper {
     @Test
     public void deleteRole() throws Exception {
         User user = new User();
-        user.setUserId("0000018c-9695-d415-b4cc-2139567c2c13");
+        user.setUserId("0000018c-ca65-68f2-b632-6bea9a6c9745");
         userMapperimpl.deleteUser(user);
         System.out.println("用户注销成功！");
 

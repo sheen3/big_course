@@ -28,7 +28,8 @@ public enum LogType {
     ROLE("角色操作"),
     PRODUCT("产品操作"),
     QrCode("二维码操作"),
-    LOGISTIC("物流操作")
+    LOGISTIC("物流操作"),
+    SUPERMARKET("超市操作")
 
     ;
 

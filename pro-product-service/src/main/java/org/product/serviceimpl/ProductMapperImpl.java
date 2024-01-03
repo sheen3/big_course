@@ -3,7 +3,9 @@ package org.product.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
+import org.database.mysql.domain.LogisticQrCodeRef;
 import org.database.mysql.domain.Product;
+import org.database.mysql.domain.ProductQrCodeRef;
 import org.database.mysql.domain.QrCode;
 import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.ProductMapper;
@@ -100,6 +102,15 @@ public class ProductMapperImpl {
 
                     qrCodeMapper.insert(qrcode);
                     System.out.println("二维码信息已添加");
+
+                    //建立产品和二维码的关联
+                    ProductQrCodeRef productQrCodeRef = new ProductQrCodeRef();
+                    productQrCodeRef.setProductId(product.getProductId());
+                    productQrCodeRef.setQrCodeId(qrcode.getQrCodeId());
+                    MysqlBuilder<ProductQrCodeRef> insertProductQrCodeRef = new MysqlBuilder<>(ProductQrCodeRef.class);
+                    insertProductQrCodeRef.setIn(productQrCodeRef);
+                    baseMysqlComp.insert(insertProductQrCodeRef);
+
                 }
             }
         } catch (Exception e) {
@@ -217,43 +228,46 @@ public class ProductMapperImpl {
                     updateProduct.setUpdate(product);
                     baseMysqlComp.update(updateProduct);
 
+
                     //将二维码信息从文件里删除
                     String qrcodeFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake/" + product1.getProductId() + ".png";
                     qrCodeMapperImpl.deleteQrCodeFile(qrcodeFilePath);
                     System.out.println("二维码已从本地文件中删除");
 
 
-
-                    Product product2 = productMapper.selectById(product.getProductId());
-                    updateProduct.setIn(product2);
-
                     //将二维码信息从数据库里更新
+                    Product product2 = productMapper.selectById(product.getProductId());
+
+                    QrCode qrCodeFlag = new QrCode();
+                    qrCodeFlag.setProductId(product2.getProductId());
                     MysqlBuilder<QrCode> findQrCode = new MysqlBuilder<>(QrCode.class);
-                    QrCode qrCode = new QrCode();
-                    qrCode.setProductId(product2.getProductId());
-                    qrCode.setQrCodeContent("产品名:" + product2.getProductName() + '\n' +
-                            "生产日期:" + product2.getProductDate() + '\n' +
-                            "到期时间:" + product2.getProductExpirationDate() + '\n' +
-                            "企业编号:" + product2.getProductEnterpriseId() + '\n' +
-                            "生产编号:" + product2.getProductProductionId() + '\n' +
-                            "生产地址:" + product2.getProductionPlace());
+                    findQrCode.setIn(qrCodeFlag);
+                    QrCode qrCode1 = baseMysqlComp.selectOne(findQrCode);
 
                     MysqlBuilder<QrCode> updateQrCode = new MysqlBuilder<>(QrCode.class);
-                    qrCode.setProductId(product1.getProductId());
-                    QrCode qrCode1 = baseMysqlComp.selectOne(findQrCode.buildIn(qrCode));
+
+                    QrCode qrCodeUpdate=new QrCode();
+                    qrCodeUpdate.setProductId(product2.getProductId());
+                    qrCodeUpdate.setQrCodeContent("产品名:" + product1.getProductName() + '\n' +
+                            "生产日期:" + product1.getProductDate() + '\n' +
+                            "到期时间:" + product1.getProductExpirationDate() + '\n' +
+                            "企业编号:" + product1.getProductEnterpriseId() + '\n' +
+                            "生产编号:" + product1.getProductProductionId() + '\n' +
+                            "生产地址:" + product1.getProductionPlace());
                     updateQrCode.setIn(qrCode1);
-                    updateQrCode.setUpdate(qrCode);
+                    updateQrCode.setUpdate(qrCodeUpdate);
+
                     baseMysqlComp.update(updateQrCode);
                     System.out.println("二维码信息已更新数据库");
 
 
                     //生成二维码
-                    String qrCodeData = "产品名:" + product2.getProductName() + '\n' +
-                            "生产日期:" + product2.getProductDate() + '\n' +
-                            "到期时间:" + product2.getProductExpirationDate() + '\n' +
-                            "企业编号:" + product2.getProductEnterpriseId() + '\n' +
-                            "生产编号:" + product2.getProductProductionId() + '\n' +
-                            "生产地址:" + product2.getProductionPlace();
+                    String qrCodeData = "产品名:" + product1.getProductName() + '\n' +
+                            "生产日期:" + product1.getProductDate() + '\n' +
+                            "到期时间:" + product1.getProductExpirationDate() + '\n' +
+                            "企业编号:" + product1.getProductEnterpriseId() + '\n' +
+                            "生产编号:" + product1.getProductProductionId() + '\n' +
+                            "生产地址:" + product1.getProductionPlace();
                     // 二维码文件夹路径
                     String qrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake";
                     int qrCodeSize = 250;
@@ -267,7 +281,6 @@ public class ProductMapperImpl {
 
                     // 生成二维码并保存
                     QRCodeGenerator.generateQRCode(qrCodeData, qrCodeFolderPath, qrCodeFileName, qrCodeSize);
-                    System.out.println("二维码已生成并保存在:" + qrCodeFolderPath + "/" + qrCodeFileName);
 
 
                 }

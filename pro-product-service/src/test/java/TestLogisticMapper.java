@@ -1,4 +1,5 @@
 import org.database.mysql.domain.Logistic;
+import org.database.mysql.domain.LogisticsSupermarketRef;
 import org.database.mysql.domain.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,14 +29,15 @@ public class TestLogisticMapper {
 
     @Autowired
     private LogisticMapperImpl logisticMapperImpl;
+
     //产生运输信息
     @Test
     public void insertLogistic() throws Exception {
-        Logistic logistic=new Logistic();
+        Logistic logistic = new Logistic();
         logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        logistic.setLogisticCompanyId("宝洁1001");
-        logistic.setLogisticBatchId("sf100001");
-        logistic.setLogisticVehicleInfo("津A10001");
+        logistic.setLogisticCompanyId("宝洁1002");
+        logistic.setLogisticBatchId("sf100123");
+        logistic.setLogisticVehicleInfo("津A10003");
         logistic.setLogisticTime(Timestamp.valueOf(LocalDateTime.now()));
         logistic.setLogisticDestinationSupermarket("天津盒马");
 
@@ -47,7 +49,7 @@ public class TestLogisticMapper {
     //查询物流信息
     @Test
     public void selectOneLogistic() throws Exception {
-        Logistic logistic=new Logistic();
+        Logistic logistic = new Logistic();
         logistic.setLogisticId("0000018c-c7b8-e387-91b5-fbd4bcbe1939");
         System.out.println(logisticMapperImpl.selectOneLogistic(logistic));
         System.out.println("物流信息查找成功！");
@@ -64,8 +66,8 @@ public class TestLogisticMapper {
     //删除物流信息
     @Test
     public void deleteLogistic() throws Exception {
-        Logistic logistic=new Logistic();
-        logistic.setLogisticId("0000018c-c818-c020-902d-2ca81afc58e3");
+        Logistic logistic = new Logistic();
+        logistic.setLogisticId("0000018c-c8c5-abb2-a7f1-6e83cdb0d470");
         logisticMapperImpl.deleteLogistic(logistic);
         System.out.println("物流信息删除成功！");
     }
@@ -73,11 +75,24 @@ public class TestLogisticMapper {
     //更新物流信息
     @Test
     public void updateLogistic() throws Exception {
-        Logistic logistic=new Logistic();
-        logistic.setLogisticId("0000018c-c814-ce74-9cc4-6e067cb8643d");
-        logistic.setLogisticBatchId("yt100001");
+        Logistic logistic = new Logistic();
+        logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
+        logistic.setLogisticBatchId("zt100234");
         logisticMapperImpl.updateLogistic(logistic);
         System.out.println("物流状态已更新！");
+
+    }
+
+    //产品与物流的关联
+    @Test
+    public void sendSupermarket() throws Exception {
+        LogisticsSupermarketRef logisticsSupermarketRef = new LogisticsSupermarketRef();
+        logisticsSupermarketRef.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
+        logisticsSupermarketRef.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
+
+       if( logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)) {
+           System.out.println("物流与超市关联建立成！");
+       }
 
     }
 }

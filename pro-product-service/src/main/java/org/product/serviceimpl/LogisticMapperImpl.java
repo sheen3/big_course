@@ -3,13 +3,9 @@ package org.product.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
-import org.database.mysql.domain.Logistic;
-import org.database.mysql.domain.Product;
-import org.database.mysql.domain.QrCode;
+import org.database.mysql.domain.*;
 import org.database.mysql.entity.MysqlBuilder;
-import org.database.mysql.mapper.ProductMapper;
-import org.database.mysql.mapper.LogisticMapper;
-import org.database.mysql.mapper.QrCodeMapper;
+import org.database.mysql.mapper.*;
 import org.springframework.stereotype.Service;
 import org.tools.QRCode.QRCodeGenerator;
 import org.tools.common.uuid.UuidGenerator;
@@ -30,16 +26,18 @@ import java.util.List;
 public class LogisticMapperImpl {
     private final LogisticMapper logisticMapper;
     private final ProductMapper productMapper;
-    private static final Logger log = LogComp.getLogger(ProductMapperImpl.class);
+    private static final Logger log = LogComp.getLogger(LogisticMapperImpl.class);
     private final BaseMysqlComp baseMysqlComp;
     private final QrCodeMapper qrCodeMapper;
+    private final SupermarketMapper supermarketMapper;
     private final QrCodeMapperImpl qrCodeMapperImpl;
 
-    public LogisticMapperImpl(org.database.mysql.mapper.LogisticMapper logisticMapper, ProductMapper productMapper, BaseMysqlComp baseMysqlComp, QrCodeMapper qrCodeMapper, QrCodeMapperImpl qrCodeMapperImpl) {
+    public LogisticMapperImpl(LogisticMapper logisticMapper, ProductMapper productMapper, BaseMysqlComp baseMysqlComp, QrCodeMapper qrCodeMapper, SupermarketMapper supermarketMapper, QrCodeMapperImpl qrCodeMapperImpl) {
         this.logisticMapper = logisticMapper;
         this.productMapper = productMapper;
         this.baseMysqlComp = baseMysqlComp;
         this.qrCodeMapper = qrCodeMapper;
+        this.supermarketMapper = supermarketMapper;
         this.qrCodeMapperImpl = qrCodeMapperImpl;
     }
 
@@ -98,9 +96,18 @@ public class LogisticMapperImpl {
                             "物流车辆信息:" + logistic.getLogisticVehicleInfo() + '\n' +
                             "物流时间:" + logistic.getLogisticVehicleInfo() + '\n' +
                             "目的地超市信息:" + logistic.getLogisticDestinationSupermarket());
-
                     qrCodeMapper.insert(qrcode);
                     System.out.println("二维码信息已添加");
+
+                    //建立物流和二维码的关联
+                    LogisticQrCodeRef logisticQrCodeRef = new LogisticQrCodeRef();
+                    logisticQrCodeRef.setLogisticId(logistic.getLogisticId());
+                    logisticQrCodeRef.setQrCodeId(qrcode.getQrCodeId());
+                    MysqlBuilder<LogisticQrCodeRef> insertLogisticQrCodeRef = new MysqlBuilder<>(LogisticQrCodeRef.class);
+                    insertLogisticQrCodeRef.setIn(logisticQrCodeRef);
+                    baseMysqlComp.insert(insertLogisticQrCodeRef);
+
+
                 }
 
             }
@@ -195,6 +202,7 @@ public class LogisticMapperImpl {
 
     /**
      * 更新物流信息
+     *
      * @param logistic
      * @throws Exception
      */
@@ -221,52 +229,41 @@ public class LogisticMapperImpl {
                     System.out.println("二维码已从本地文件中删除");
 
 
-                    Logistic logistic2 = logisticMapper.selectById(logistic.getLogisticId());
-                    updateLogistic.setIn(logistic2);
-
                     //将二维码信息从数据库里更新
+                    Logistic logistic2 = logisticMapper.selectById(logistic.getLogisticId());
+
+                    QrCode qrCodeFlag = new QrCode();
+                    qrCodeFlag.setLogisticId(logistic1.getLogisticId());
                     MysqlBuilder<QrCode> findQrCode = new MysqlBuilder<>(QrCode.class);
-                    QrCode qrCode = new QrCode();
-                    qrCode.setLogisticId(logistic2.getLogisticId());
-                    qrCode.setQrCodeContent("物流编号:" + logistic.getLogisticId() + '\n' +
-                            "物流企业编号:" + logistic.getLogisticCompanyId() + '\n' +
-                            "物流批次编号:" + logistic.getLogisticBatchId() + '\n' +
-                            "物流车辆信息:" + logistic.getLogisticVehicleInfo() + '\n' +
-                            "物流时间:" + logistic.getLogisticVehicleInfo() + '\n' +
-                            "目的地超市信息:" + logistic.getLogisticDestinationSupermarket());
+                    findQrCode.setIn(qrCodeFlag);
+                    QrCode qrCode1 = baseMysqlComp.selectOne(findQrCode);
 
                     MysqlBuilder<QrCode> updateQrCode = new MysqlBuilder<>(QrCode.class);
-                    qrCode.setLogisticId(logistic1.getLogisticId());
-                    QrCode qrCode1 = baseMysqlComp.selectOne(findQrCode.buildIn(qrCode));
+
+                    QrCode qrCodeUpdate = new QrCode();
+                    qrCodeUpdate.setLogisticId(logistic2.getLogisticId());
+                    qrCodeUpdate.setQrCodeContent("物流编号:" + logistic1.getLogisticId() + '\n' +
+                            "物流企业编号:" + logistic1.getLogisticCompanyId() + '\n' +
+                            "物流批次编号:" + logistic1.getLogisticBatchId() + '\n' +
+                            "物流车辆信息:" + logistic1.getLogisticVehicleInfo() + '\n' +
+                            "物流时间:" + logistic1.getLogisticVehicleInfo() + '\n' +
+                            "目的地超市信息:" + logistic1.getLogisticDestinationSupermarket());
+
+
                     updateQrCode.setIn(qrCode1);
-                    updateQrCode.setUpdate(qrCode);
+                    updateQrCode.setUpdate(qrCodeUpdate);
+
                     baseMysqlComp.update(updateQrCode);
                     System.out.println("二维码信息已更新数据库");
 
 
-
-                    //将二维码信息插入QrCodeMapper表里
-                    QrCode qrcode = new QrCode();
-                    qrcode.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-                    qrcode.setLogisticId(logistic2.getLogisticId());
-                    qrcode.setQrCodeContent("物流编号:" + logistic.getLogisticId() + '\n' +
-                            "物流企业编号:" + logistic.getLogisticCompanyId() + '\n' +
-                            "物流批次编号:" + logistic.getLogisticBatchId() + '\n' +
-                            "物流车辆信息:" + logistic.getLogisticVehicleInfo() + '\n' +
-                            "物流时间:" + logistic.getLogisticVehicleInfo() + '\n' +
-                            "目的地超市信息:" + logistic.getLogisticDestinationSupermarket());
-
-                    qrCodeMapper.insert(qrcode);
-                    System.out.println("二维码信息已添加入数据库");
-
-
                     //生成二维码
-                    String qrCodeData = "物流编号:" + logistic.getLogisticId() + '\n' +
-                            "物流企业编号:" + logistic.getLogisticCompanyId() + '\n' +
-                            "物流批次编号:" + logistic.getLogisticBatchId() + '\n' +
-                            "物流车辆信息:" + logistic.getLogisticVehicleInfo() + '\n' +
-                            "物流时间:" + logistic.getLogisticVehicleInfo() + '\n' +
-                            "目的地超市信息:" + logistic.getLogisticDestinationSupermarket();
+                    String qrCodeData = "物流编号:" + logistic1.getLogisticId() + '\n' +
+                            "物流企业编号:" + logistic1.getLogisticCompanyId() + '\n' +
+                            "物流批次编号:" + logistic1.getLogisticBatchId() + '\n' +
+                            "物流车辆信息:" + logistic1.getLogisticVehicleInfo() + '\n' +
+                            "物流时间:" + logistic1.getLogisticVehicleInfo() + '\n' +
+                            "目的地超市信息:" + logistic1.getLogisticDestinationSupermarket();
                     // 二维码文件夹路径
                     String qrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
                     int qrCodeSize = 250;
@@ -276,7 +273,7 @@ public class LogisticMapperImpl {
                         qrCodeFolder.mkdir();
                     }
                     //生成二维码文件名称
-                    String qrCodeFileName = logistic2.getLogisticId() + ".png";
+                    String qrCodeFileName = logistic1.getLogisticId() + ".png";
 
                     // 生成二维码并保存
                     QRCodeGenerator.generateQRCode(qrCodeData, qrCodeFolderPath, qrCodeFileName, qrCodeSize);
@@ -292,5 +289,38 @@ public class LogisticMapperImpl {
         }
     }
 
+    /**
+     * 超市与物流的关联
+     * 可以看做超市和物流的一个订单
+     * 先运输出去产品然后超市再获取产品
+     *
+     * @param logisticsSupermarketRef
+     * @return
+     * @throws Exception
+     */
+    public Boolean sendSupermarket(LogisticsSupermarketRef logisticsSupermarketRef) throws Exception {
+        try {
+            LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
+            LogComp.LogMessage logMessage1 = LogComp.buildData(LogType.SUPERMARKET);
 
+            MysqlBuilder<LogisticsSupermarketRef> flag = new MysqlBuilder<>(LogisticsSupermarketRef.class);
+            flag.setIn(logisticsSupermarketRef);
+
+            if (logisticMapper.selectById(logisticsSupermarketRef.getLogisticId()) == null) {
+                logMessage.build(LogEnum.LOGISTIC_NO_EXISTS);
+                log.warn(logMessage.log());
+            } else if (supermarketMapper.selectById(logisticsSupermarketRef.getSupermarketId()) == null) {
+                logMessage1.build(LogEnum.SUPERMARKET_NO_EXISTS);
+                log.warn(logMessage.log());
+            } else {
+                baseMysqlComp.insert(flag);
+                return baseMysqlComp.selectOne(flag) != null;
+            }
+        } catch (Exception e) {
+            log.error("Failed to sendSupermarket!", e);
+        }
+        return null;
+    }
 }
+
+
