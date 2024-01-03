@@ -3,14 +3,13 @@ package org.product.serviceimpl;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
-import org.database.mysql.domain.LogisticQrCodeRef;
-import org.database.mysql.domain.Product;
-import org.database.mysql.domain.ProductQrCodeRef;
-import org.database.mysql.domain.QrCode;
+import org.database.mysql.domain.*;
 import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.ProductMapper;
 import org.database.mysql.mapper.QrCodeMapper;
 import org.springframework.stereotype.Service;
+import org.tools.Excel.LogExcelWriter;
+import org.tools.Excel.proExcelWriter;
 import org.tools.common.uuid.UuidGenerator;
 import org.tools.log.LogComp;
 import org.tools.log.LogEnum;
@@ -18,6 +17,8 @@ import org.tools.log.LogType;
 import org.tools.QRCode.QRCodeGenerator;
 
 import java.io.File;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -110,6 +111,18 @@ public class ProductMapperImpl {
                     MysqlBuilder<ProductQrCodeRef> insertProductQrCodeRef = new MysqlBuilder<>(ProductQrCodeRef.class);
                     insertProductQrCodeRef.setIn(productQrCodeRef);
                     baseMysqlComp.insert(insertProductQrCodeRef);
+
+                    proExcelWriter excelWriter = new proExcelWriter();
+                    String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
+                    String fileName = "pro_product";
+                    String[] content = {product.getProductName(),
+                            String.valueOf(product.getProductDate()),
+                            String.valueOf(product.getProductExpirationDate()),
+                            product.getProductEnterpriseId(),
+                            product.getProductProductionId(),
+                            product.getProductionPlace(),
+                    };
+                    excelWriter.writeToExcel(folderName, fileName, content);
 
                 }
             }
@@ -246,7 +259,7 @@ public class ProductMapperImpl {
 
                     MysqlBuilder<QrCode> updateQrCode = new MysqlBuilder<>(QrCode.class);
 
-                    QrCode qrCodeUpdate=new QrCode();
+                    QrCode qrCodeUpdate = new QrCode();
                     qrCodeUpdate.setProductId(product2.getProductId());
                     qrCodeUpdate.setQrCodeContent("产品名:" + product1.getProductName() + '\n' +
                             "生产日期:" + product1.getProductDate() + '\n' +
@@ -290,6 +303,26 @@ public class ProductMapperImpl {
         } catch (Exception e) {
             log.error("Failed to update product!", e);
         }
+    }
+
+    /**
+     * product报表
+     * @param product
+     */
+    public void productExcel(Product product) {
+        proExcelWriter excelWriter = new proExcelWriter();
+        String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
+        String fileName = "pro_product";
+        String[] content = {
+                product.getProductId(),
+                product.getProductName(),
+                String.valueOf(product.getProductDate()),
+                String.valueOf(product.getProductExpirationDate()),
+                product.getProductEnterpriseId(),
+                product.getProductProductionId(),
+                product.getProductionPlace(),
+        };
+        excelWriter.writeToExcel(folderName, fileName, content);
     }
 
 }

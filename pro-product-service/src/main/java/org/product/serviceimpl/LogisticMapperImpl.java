@@ -7,6 +7,8 @@ import org.database.mysql.domain.*;
 import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.*;
 import org.springframework.stereotype.Service;
+import org.tools.Excel.ExcelReader;
+import org.tools.Excel.LogExcelWriter;
 import org.tools.QRCode.QRCodeGenerator;
 import org.tools.common.uuid.UuidGenerator;
 import org.tools.log.LogComp;
@@ -14,6 +16,8 @@ import org.tools.log.LogEnum;
 import org.tools.log.LogType;
 
 import java.io.File;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -107,8 +111,23 @@ public class LogisticMapperImpl {
                     insertLogisticQrCodeRef.setIn(logisticQrCodeRef);
                     baseMysqlComp.insert(insertLogisticQrCodeRef);
 
-
+                    //插入报表中
+                    LogExcelWriter excelWriter = new LogExcelWriter();
+                    String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
+                    String fileName = "pro_Logistic";
+                    Timestamp timestamp = logistic.getLogisticTime();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String formattedTime = dateFormat.format(timestamp);
+                    String[] content = {logistic.getLogisticId(),
+                            logistic.getLogisticCompanyId(),
+                            logistic.getLogisticBatchId(),
+                            logistic.getLogisticVehicleInfo(),
+                            formattedTime,
+                            logistic.getLogisticDestinationSupermarket()
+                    };
+                    excelWriter.writeToExcel(folderName, fileName, content);
                 }
+
 
             }
         } catch (Exception e) {
@@ -262,7 +281,7 @@ public class LogisticMapperImpl {
                             "物流企业编号:" + logistic1.getLogisticCompanyId() + '\n' +
                             "物流批次编号:" + logistic1.getLogisticBatchId() + '\n' +
                             "物流车辆信息:" + logistic1.getLogisticVehicleInfo() + '\n' +
-                            "物流时间:" + logistic1.getLogisticVehicleInfo() + '\n' +
+                            "物流时间:" + logistic1.getLogisticTime() + '\n' +
                             "目的地超市信息:" + logistic1.getLogisticDestinationSupermarket();
                     // 二维码文件夹路径
                     String qrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
@@ -321,6 +340,27 @@ public class LogisticMapperImpl {
         }
         return null;
     }
+
+    public void LogisticExcel(Logistic logistic) {
+        LogExcelWriter excelWriter = new LogExcelWriter();
+        String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
+        String fileName = "pro_Logistic";
+        Timestamp timestamp = logistic.getLogisticTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedTime = dateFormat.format(timestamp);
+        String[] content = {logistic.getLogisticId(),
+                logistic.getLogisticCompanyId(),
+                logistic.getLogisticBatchId(),
+                logistic.getLogisticVehicleInfo(),
+                formattedTime,
+                logistic.getLogisticDestinationSupermarket()
+        };
+        excelWriter.writeToExcel(folderName, fileName, content);
+    }
+
+
 }
+
+
 
 

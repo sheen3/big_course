@@ -1,3 +1,4 @@
+// @ts-ignore
 import { computed } from 'vue'
 
 const parseJSON = (value: string) => {

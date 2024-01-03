@@ -8,6 +8,8 @@ import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.LogisticMapper;
 import org.database.mysql.mapper.SupermarketMapper;
 import org.springframework.stereotype.Service;
+import org.tools.Excel.proExcelWriter;
+import org.tools.Excel.supExcelWriter;
 import org.tools.log.LogComp;
 import org.tools.log.LogEnum;
 import org.tools.log.LogType;
@@ -59,6 +61,16 @@ public class SupermarketMapperImpl {
                     // 执行插入操作
                     baseMysqlComp.insert(insertSupermarket);
                     System.out.println("超市信息已添加");
+
+                    supExcelWriter excelWriter = new supExcelWriter();
+                    String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
+                    String fileName = "pro_supermarket";
+                    String[] content = {supermarket.getSupermarketId(),
+                            supermarket.getSupermarketName(),
+                            supermarket.getSupermarketAddress(),
+                            supermarket.getSupermarketContact(),
+                    };
+                    excelWriter.writeToExcel(folderName, fileName, content);
                 }
             }
         } catch (Exception e) {
@@ -249,5 +261,17 @@ public class SupermarketMapperImpl {
             log.error("Failed to outProduct!", e);
 
         }
+    }
+
+    public void supermarketExcel(Supermarket supermarket) {
+        supExcelWriter excelWriter = new supExcelWriter();
+        String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
+        String fileName = "pro_supermarket";
+        String[] content = {supermarket.getSupermarketId(),
+                supermarket.getSupermarketName(),
+                supermarket.getSupermarketAddress(),
+                supermarket.getSupermarketContact(),
+        };
+        excelWriter.writeToExcel(folderName, fileName, content);
     }
 }

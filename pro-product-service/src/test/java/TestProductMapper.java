@@ -85,5 +85,21 @@ public class TestProductMapper {
         System.out.println("产品状态已更新！");
 
     }
+    @Test
+    public void ExcelProduct() throws Exception {
+        Product product=new Product();
+        product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        product.setProductName("洗发水");
+        LocalDateTime now=LocalDateTime.now();
+        product.setProductDate(Date.valueOf(now.toLocalDate()));
+        LocalDateTime expirationDate=now.plusYears(3);//当前日期加上三年
+        product.setProductExpirationDate(Date.valueOf(expirationDate.toLocalDate()));
+        product.setProductEnterpriseId("1000034");//企业id
+        product.setProductProductionId("200053");//生产id
+        product.setProductionPlace("南昌");
+
+        productMapperImpl.productExcel(product);
+        System.out.println("产品表插入！");
+    }
 
 }

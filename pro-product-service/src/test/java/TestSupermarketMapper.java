@@ -1,3 +1,4 @@
+import org.database.mysql.domain.Logistic;
 import org.database.mysql.domain.LogisticsSupermarketRef;
 import org.database.mysql.domain.Supermarket;
 import org.junit.Test;
@@ -10,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.tools.common.uuid.UuidGenerator;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -29,7 +32,7 @@ public class TestSupermarketMapper {
     public void insertSupermarket() throws Exception{
         Supermarket supermarket=new Supermarket();
         supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        supermarket.setSupermarketName("便利蜂");
+        supermarket.setSupermarketName("yoyo");
         supermarket.setSupermarketAddress("浙江");
         supermarket.setSupermarketContact("079500002");
 
@@ -80,6 +83,16 @@ public class TestSupermarketMapper {
         supermarketMapperImpl.getProduct(log);
         System.out.println("商品入库成功！");
 
+
+    }
+    @Test
+    public void SupermarketExcel() {
+        Supermarket supermarket=new Supermarket();
+        supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        supermarket.setSupermarketName("便利蜂");
+        supermarket.setSupermarketAddress("浙江");
+        supermarket.setSupermarketContact("079500002");
+        supermarketMapperImpl.supermarketExcel(supermarket);
 
     }
 

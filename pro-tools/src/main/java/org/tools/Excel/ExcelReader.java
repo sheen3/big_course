@@ -14,11 +14,9 @@ import java.io.IOException;
  */
 
 public class ExcelReader {
-    public static void main(String[] args) {
-        String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/pro.xlsx";
-        try {
-            FileInputStream fis = new FileInputStream(new File(excelFilePath));
-            Workbook workbook = new XSSFWorkbook(fis);
+    public void readFromExcel(String excelFilePath) {
+        try (FileInputStream fis = new FileInputStream(excelFilePath);
+             Workbook workbook = new XSSFWorkbook(fis)) {
 
             Sheet sheet = workbook.getSheetAt(0); // 获取第一个工作表
             for (Row row : sheet) {
@@ -36,11 +34,18 @@ public class ExcelReader {
                 }
                 System.out.println(); // 换行
             }
-
-            workbook.close();
-            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        ExcelReader excelReader = new ExcelReader();
+
+       // String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Logistic.xlsx";
+      //  String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_product.xlsx";
+       String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_supermarket.xlsx";
+
+        excelReader.readFromExcel(excelFilePath);
     }
 }

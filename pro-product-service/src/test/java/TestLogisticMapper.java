@@ -35,11 +35,11 @@ public class TestLogisticMapper {
     public void insertLogistic() throws Exception {
         Logistic logistic = new Logistic();
         logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        logistic.setLogisticCompanyId("宝洁1002");
-        logistic.setLogisticBatchId("sf100123");
-        logistic.setLogisticVehicleInfo("津A10003");
+        logistic.setLogisticCompanyId("宝洁1004");
+        logistic.setLogisticBatchId("sf100153");
+        logistic.setLogisticVehicleInfo("赣A10003");
         logistic.setLogisticTime(Timestamp.valueOf(LocalDateTime.now()));
-        logistic.setLogisticDestinationSupermarket("天津盒马");
+        logistic.setLogisticDestinationSupermarket("江西盒马");
 
         logisticMapperImpl.insertLogistic(logistic);
         System.out.println("物流信息新增成功！");
@@ -95,4 +95,17 @@ public class TestLogisticMapper {
        }
 
     }
+    @Test
+    public void LogisticExcel() {
+        Logistic logistic = new Logistic();
+        logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        logistic.setLogisticCompanyId("宝洁10dsf24542");
+        logistic.setLogisticBatchId("sf1001523534");
+        logistic.setLogisticVehicleInfo("津A10434");
+        logistic.setLogisticTime(Timestamp.valueOf(LocalDateTime.now()));
+        logistic.setLogisticDestinationSupermarket("北京盒马");
+        logisticMapperImpl.LogisticExcel(logistic);
+
+    }
+
 }

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { computed } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { auth } from '@/api/user'

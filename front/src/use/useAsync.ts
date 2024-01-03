@@ -1,4 +1,6 @@
+// @ts-ignore
 import type { UnwrapRef } from 'vue'
+// @ts-ignore
 import { ref } from 'vue'
 
 export function useAsync<T>(asyncFn: () => Promise<T>, initValue: T, immediate = true) {
