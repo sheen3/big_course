@@ -43,7 +43,7 @@ public class TestQrCodeMapper {
     public void selectOneQrCode() throws Exception {
         QrCode qrCode=new QrCode();
        // qrCode.setQrCodeId(4);
-        qrCode.setProductId("0000018c-ce96-07ee-98d2-2e9d32bb7d7f");
+        qrCode.setProductId("0000018c-c8fd-1388-83aa-aee760275df7");
 
         System.out.println(qrCodeMapperImpl.selectOneQrCode(qrCode));
         System.out.println("二维码信息查找成功！");

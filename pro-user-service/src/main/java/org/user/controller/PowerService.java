@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import org.database.mysql.domain.Power;
 import org.database.mysql.domain.RolePowerRef;
 import org.database.mysql.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.user.serviceimpl.PowerMapperImpl;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class PowerService {
     private final PowerMapperImpl powerMapperImpl;
 
+    @Autowired
     public PowerService(PowerMapperImpl powerMapperImpl) {
         this.powerMapperImpl = powerMapperImpl;
     }

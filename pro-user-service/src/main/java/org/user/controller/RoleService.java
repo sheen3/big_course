@@ -5,6 +5,7 @@ import org.database.mysql.domain.Power;
 import org.database.mysql.domain.Role;
 import org.database.mysql.domain.RolePowerRef;
 import org.database.mysql.domain.UserRoleRef;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.user.serviceimpl.PowerMapperImpl;
 import org.user.serviceimpl.RoleMapperImpl;
@@ -21,6 +22,7 @@ import java.util.List;
 public class RoleService {
     private final RoleMapperImpl roleMapperImpl;
 
+    @Autowired
     public RoleService(RoleMapperImpl roleMapperImpl) {
         this.roleMapperImpl = roleMapperImpl;
     }
@@ -117,7 +119,6 @@ public class RoleService {
         }
         return false;
     }
-
 
 
 }

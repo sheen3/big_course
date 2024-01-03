@@ -96,7 +96,7 @@ public class QrCodeMapperImpl {
     public QrCode selectOneQrCode(QrCode qrCode) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.QrCode);
-            if (qrCode.getQrCodeId() == null || qrCode == null) {
+            if (qrCode.getQrCodeId() == null && qrCode == null) {
                 logMessage.build(LogEnum.QRCODE_EMPTY);
                 log.warn(logMessage.log());
             } else {

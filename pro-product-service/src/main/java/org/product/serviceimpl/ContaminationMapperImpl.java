@@ -36,7 +36,7 @@ public class ContaminationMapperImpl {
     }
 
     /**
-     * 污染表
+     * 新建污染表
      *
      * @param product
      * @param des

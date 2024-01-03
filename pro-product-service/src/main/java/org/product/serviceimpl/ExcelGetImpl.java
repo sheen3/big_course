@@ -40,7 +40,6 @@ public class ExcelGetImpl {
     public void SupermarketExcelGet() {
         ExcelReader excelReader = new ExcelReader();
          String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_supermarket.xlsx";
-        //String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Con.xlsx";
 
         excelReader.readFromExcel(excelFilePath);
     }
