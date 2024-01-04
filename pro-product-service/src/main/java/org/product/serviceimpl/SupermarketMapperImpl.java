@@ -122,6 +122,7 @@ public class SupermarketMapperImpl {
         } catch (Exception e) {
             log.error("Failed to select supermarket!", e);
         }
+        return null;
     }
 
 

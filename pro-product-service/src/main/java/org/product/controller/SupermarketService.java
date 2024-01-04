@@ -44,6 +44,7 @@ public class SupermarketService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //查询全部产品信息
