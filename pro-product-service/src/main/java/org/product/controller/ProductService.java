@@ -32,19 +32,24 @@ public class ProductService {
 
     //生产产品
     @PostMapping("/products/insert")
-    public void insertProduct(@RequestBody Product product) {
+    public Boolean insertProduct(@RequestBody Product product) {
         try {
-            productMapperImpl.insertProduct(product);
+            if (productMapperImpl.insertProduct(product)) {
+                return true;
+            }
+            return false;
 
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //查询全部产品信息
     @GetMapping("/product/All")
     public List<Product> getAllProduct() throws Exception {
         try {
+
             return productMapperImpl.selectAllProduct();
 
         } catch (Exception e) {
@@ -54,32 +59,44 @@ public class ProductService {
 
     //查询全部产品信息
     @PostMapping("/product/selectOne")
-    public void selectOneProduct(@RequestBody Product product) throws Exception {
+    public Boolean selectOneProduct(@RequestBody Product product) throws Exception {
         try {
-            productMapperImpl.selectOneProduct(product);
+            if (productMapperImpl.selectOneProduct(product)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //销毁产品
     @DeleteMapping("/product/delete")
-    public void deleteProduct(@RequestBody Product product) {
+    public Boolean deleteProduct(@RequestBody Product product) {
         try {
-            productMapperImpl.deleteProduct(product);
+            if (productMapperImpl.deleteProduct(product)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //更新产品内容
     @PostMapping("/product/update")
-    public void updateProduct(@RequestBody Product product) {
+    public Boolean updateProduct(@RequestBody Product product) {
         try {
-            productMapperImpl.updateProduct(product);
+            if(productMapperImpl.updateProduct(product)){
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
 }

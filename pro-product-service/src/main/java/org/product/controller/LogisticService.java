@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/Logistic")
 public class LogisticService {
     private final LogisticMapperImpl logisticMapperImpl;
+
     @Autowired
 
     public LogisticService(LogisticMapperImpl logisticMapperImpl) {
@@ -34,18 +35,23 @@ public class LogisticService {
 
     //产生运输信息
     @PostMapping("/logistic/insert")
-    public void insertLogistic(@RequestBody Logistic logistic) {
+    public Boolean insertLogistic(@RequestBody Logistic logistic) {
         try {
-            logisticMapperImpl.insertLogistic(logistic);
+            if (logisticMapperImpl.insertLogistic(logistic)) {
+                return true;
+
+            }
+            return false;
 
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //查询全部物流信息
     @GetMapping("/logistic/All")
-    public List<Logistic> getAllLogistic() throws Exception{
+    public List<Logistic> getAllLogistic() throws Exception {
         try {
             return logisticMapperImpl.selectAllLogistic();
 
@@ -53,43 +59,60 @@ public class LogisticService {
             return Collections.emptyList();
         }
     }
+
     //查询物流信息
     @PostMapping("/logistic/selectOne")
-    public void selectOneLogistic(@RequestBody Logistic logistic) throws Exception {
+    public Boolean selectOneLogistic(@RequestBody Logistic logistic) throws Exception {
         try {
-            logisticMapperImpl.selectOneLogistic(logistic);
+            if (logisticMapperImpl.selectOneLogistic(logistic)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
+
     //删除物流信息
     @DeleteMapping("/logistic/delete")
-    public void deleteLogistic(@RequestBody Logistic logistic) {
+    public Boolean deleteLogistic(@RequestBody Logistic logistic) {
         try {
-            logisticMapperImpl.deleteLogistic(logistic);
+            if (logisticMapperImpl.deleteLogistic(logistic)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
-        }
+        }return null;
     }
+
     //更新物流信息
     @PostMapping("/logistic/update")
-    public void updateLogistic(@RequestBody Logistic logistic) {
+    public Boolean updateLogistic(@RequestBody Logistic logistic) {
         try {
-            logisticMapperImpl.updateLogistic(logistic);
+           if( logisticMapperImpl.updateLogistic(logistic)){
+               return true;
+           }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
+
     //生成物流和超市订单
     @PostMapping("/logistic/supermarkrt")
-    public void sendSupermarket(@RequestBody LogisticsSupermarketRef logisticsSupermarketRef) {
+    public Boolean sendSupermarket(@RequestBody LogisticsSupermarketRef logisticsSupermarketRef) {
         try {
-            if( logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)) {
+            if (logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)) {
                 System.out.println("物流与超市订单建立成！");
-            }
+                return true;
+
+            }return false;
         } catch (Exception e) {
             System.out.println("操作失败");
-        }
+        }return null;
     }
 }
 

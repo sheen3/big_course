@@ -81,14 +81,14 @@ public class ContaminationMapperImpl {
                     };
                     excelWriter.writeToExcel(folderName, fileName, content);
                     return true;
-                }
+                }return false;
             }
         } catch (
                 Exception e) {
             log.error("Failed to insert Contamination!", e);
         }
 
-        return false;
+        return null;
     }
 
     /**

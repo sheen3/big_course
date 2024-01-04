@@ -45,17 +45,20 @@ public class QrCodeMapperImpl {
      *
      * @param filePath
      */
-    public void deleteQrCodeFile(String filePath) {
+    public Boolean deleteQrCodeFile(String filePath) {
         File file = new File(filePath);
         if (file.exists()) {
             if (file.delete()) {
                 System.out.println("二维码文件已成功删除：" + filePath);
+                return true;
             } else {
                 System.out.println("无法删除二维码文件：" + filePath);
+                return false;
             }
         } else {
             System.out.println("二维码文件不存在：" + filePath);
         }
+        return null;
     }
 
     /**
@@ -64,10 +67,10 @@ public class QrCodeMapperImpl {
      * @param qrCode
      * @throws Exception
      */
-    public void deleteQrCode(QrCode qrCode) throws Exception {
+    public Boolean deleteQrCode(QrCode qrCode) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.QrCode);
-            if ( qrCode == null) {
+            if (qrCode == null) {
                 logMessage.build(LogEnum.QRCODE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -79,11 +82,14 @@ public class QrCodeMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.delete(deleteQrCode);
+                    return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete qrcode!", e);
         }
+        return null;
     }
 
 
@@ -93,10 +99,10 @@ public class QrCodeMapperImpl {
      * @param qrCode
      * @throws Exception
      */
-    public QrCode selectOneQrCode(QrCode qrCode) throws Exception {
+    public Boolean selectOneQrCode(QrCode qrCode) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.QrCode);
-            if ( qrCode == null) {
+            if (qrCode == null) {
                 logMessage.build(LogEnum.QRCODE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -107,7 +113,10 @@ public class QrCodeMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    return baseMysqlComp.selectOne(selectOneQrCode);
+                    if (baseMysqlComp.selectOne(selectOneQrCode) != null) {
+                        return true;
+                    }
+                    return false;
                 }
             }
 
@@ -116,10 +125,11 @@ public class QrCodeMapperImpl {
         }
         return null;
     }
-    public void sanProductQrCode(Product product) throws Exception {
+
+    public Boolean sanProductQrCode(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
-            if (product == null ) {
+            if (product == null) {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -136,8 +146,10 @@ public class QrCodeMapperImpl {
                     String productText = scanQRCode(productQrCodeFilePath);
                     if (productText != null) {
                         System.out.println("扫描结果： " + productText);
+                        return true;
                     } else {
                         System.out.println("未能扫描到二维码");
+                        return false;
                     }
 
                 }
@@ -146,12 +158,13 @@ public class QrCodeMapperImpl {
         } catch (Exception e) {
             log.error("Failed to san Product!", e);
         }
+        return null;
     }
 
-    public void sanLogisticQrCode(Logistic logistic) throws Exception {
+    public Boolean sanLogisticQrCode(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-            if (logistic == null ) {
+            if (logistic == null) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -164,12 +177,14 @@ public class QrCodeMapperImpl {
                 } else {
                     String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
                     String logisticQrCodeFileName = logistic.getLogisticId() + ".png";
-                    String logisticQrCodeFilePath=logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
+                    String logisticQrCodeFilePath = logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
                     String logisticText = scanQRCode(logisticQrCodeFilePath);
                     if (logisticText != null) {
                         System.out.println("扫描结果： " + logisticText);
+                        return true;
                     } else {
                         System.out.println("未能扫描到二维码");
+                        return false;
                     }
 
                 }
@@ -178,6 +193,7 @@ public class QrCodeMapperImpl {
         } catch (Exception e) {
             log.error("Failed to san Logistic!", e);
         }
+        return null;
 
     }
 
@@ -193,7 +209,7 @@ public class QrCodeMapperImpl {
      * @param productLogisticRef
      * @throws Exception
      */
-    public void packProduct(ProductLogisticRef productLogisticRef) throws Exception {
+    public Boolean packProduct(ProductLogisticRef productLogisticRef) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
             LogComp.LogMessage logMessage1 = LogComp.buildData(LogType.LOGISTIC);
@@ -219,7 +235,7 @@ public class QrCodeMapperImpl {
                     // 二维码文件夹路径
                     String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
                     String logisticQrCodeFileName = productLogisticRef.getLogisticId() + ".png";
-                    String logisticQrCodeFilePath=logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
+                    String logisticQrCodeFilePath = logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
                     String logisticText = scanQRCode(logisticQrCodeFilePath);
                     if (logisticText != null) {
                         System.out.println("扫描结果： " + logisticText);
@@ -232,11 +248,11 @@ public class QrCodeMapperImpl {
                     String productText = scanQRCode(productQrCodeFilePath);
                     if (productText != null) {
                         System.out.println("扫描结果： " + productText);
+                        return true;
                     } else {
                         System.out.println("未能扫描到二维码");
+                        return false;
                     }
-
-
 
 
                 }
@@ -244,6 +260,7 @@ public class QrCodeMapperImpl {
         } catch (Exception e) {
             log.error("Failed to insert productLogisticRef!", e);
         }
+        return null;
     }
 
 

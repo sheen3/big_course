@@ -48,7 +48,7 @@ public class SupermarketMapperImpl {
      * @param supermarket
      * @throws Exception
      */
-    public String insertSupermarket(Supermarket supermarket) throws Exception {
+    public Boolean insertSupermarket(Supermarket supermarket) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.SUPERMARKET);
 
@@ -80,14 +80,15 @@ public class SupermarketMapperImpl {
                     };
 
                     excelWriter.writeToExcel(folderName, fileName, content);
-                    return "插入成功！";
+                    return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to insert supermarketMapper!", e);
 
         }
-        return "插入失败！";
+        return null;
 
     }
 
@@ -97,7 +98,7 @@ public class SupermarketMapperImpl {
      * @param supermarket
      * @throws Exception
      */
-    public void selectOneSupermarket(Supermarket supermarket) throws Exception {
+    public Boolean selectOneSupermarket(Supermarket supermarket) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.SUPERMARKET);
 
@@ -109,10 +110,13 @@ public class SupermarketMapperImpl {
                 selectOneSupermarket.setIn(supermarket);
                 Supermarket selectedSupermarket = baseMysqlComp.selectOne(selectOneSupermarket);
 
+
                 if (selectedSupermarket == null) {
                     logMessage.build(LogEnum.SUPERMARKET_NO_EXISTS);
                     log.error(logMessage.log());
+                    return false;
                 }
+                return true;
             }
 
         } catch (Exception e) {
@@ -139,7 +143,7 @@ public class SupermarketMapperImpl {
      * @param supermarket
      * @throws Exception
      */
-    public void deleteSupermarket(Supermarket supermarket) throws Exception {
+    public Boolean deleteSupermarket(Supermarket supermarket) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.SUPERMARKET);
 
@@ -155,11 +159,14 @@ public class SupermarketMapperImpl {
                 } else {
                     baseMysqlComp.delete(deleteSupermarket);
 
+                    return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete Supermarket!", e);
         }
+        return null;
     }
 
 
@@ -169,7 +176,7 @@ public class SupermarketMapperImpl {
      * @param supermarket
      * @throws Exception
      */
-    public void updateSupermarket(Supermarket supermarket) throws Exception {
+    public Boolean updateSupermarket(Supermarket supermarket) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.SUPERMARKET);
 
@@ -186,11 +193,14 @@ public class SupermarketMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.update(updateSupermarket);
+                    return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to update Supermarket!", e);
         }
+        return null;
     }
 
     /**
@@ -200,7 +210,7 @@ public class SupermarketMapperImpl {
      * @param logisticsSupermarketRef
      * @throws Exception
      */
-    public void getProduct(LogisticsSupermarketRef logisticsSupermarketRef) throws Exception {
+    public Boolean getProduct(LogisticsSupermarketRef logisticsSupermarketRef) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
             LogComp.LogMessage logMessage1 = LogComp.buildData(LogType.SUPERMARKET);
@@ -257,13 +267,16 @@ public class SupermarketMapperImpl {
 
                     //上架
                     baseMysqlComp.insert(get);
+                    return true;
 
                 }
+                return false;
 
             }
         } catch (Exception e) {
             log.error("Failed to getProduct!", e);
         }
+        return null;
     }
 
     /**
@@ -273,16 +286,18 @@ public class SupermarketMapperImpl {
      * @param productStorage
      * @throws Exception
      */
-    public void outProduct(ProductStorage productStorage) throws Exception {
+    public Boolean outProduct(ProductStorage productStorage) throws Exception {
         try {
             MysqlBuilder<ProductStorage> outProduct = new MysqlBuilder<>(ProductStorage.class);
             outProduct.setIn(productStorage);
             baseMysqlComp.delete(outProduct);
+            return true;
 
         } catch (Exception e) {
             log.error("Failed to outProduct!", e);
 
         }
+        return false;
     }
 
     public void supermarketExcel(Supermarket supermarket) {
@@ -302,7 +317,7 @@ public class SupermarketMapperImpl {
      *
      * @param product
      */
-    public void supermarketGetCon(Product product) throws Exception {
+    public Boolean supermarketGetCon(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -333,7 +348,9 @@ public class SupermarketMapperImpl {
                         flag2.setIn(pro);
                         baseMysqlComp.delete(flag2);
                         System.out.println(product.getProductId()+"下架成功！");
+                        return true;
                     }
+                    return false;
 
                 }
 
@@ -343,5 +360,6 @@ public class SupermarketMapperImpl {
                 Exception e) {
             log.error("Failed to GetContamination!", e);
         }
+        return null;
     }
 }

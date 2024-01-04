@@ -45,53 +45,73 @@ public class QrcodeService {
 
     //查询二维码
     @PostMapping("/QrCode/selectOne")
-    public void selectOneQrCode(@RequestBody QrCode qrCode) throws Exception {
+    public Boolean selectOneQrCode(@RequestBody QrCode qrCode) throws Exception {
         try {
-            qrCodeMapperImpl.selectOneQrCode(qrCode);
+            if (qrCodeMapperImpl.selectOneQrCode(qrCode)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //删除二维码信息
     //可通过qrcodeId、productId、logisticId
     @DeleteMapping("/qrCode/delete")
-    public void deleteQrCode(@RequestBody QrCode qrCode) {
+    public Boolean deleteQrCode(@RequestBody QrCode qrCode) {
         try {
-            qrCodeMapperImpl.deleteQrCode(qrCode);
+            if (qrCodeMapperImpl.deleteQrCode(qrCode)) {
+                return true;
+            } else return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //扫描产品二维码
     @PostMapping("/qrCode/scanProductQrCode")
-    public void scanProductQrCode(@RequestBody Product product) {
+    public Boolean scanProductQrCode(@RequestBody Product product) {
         try {
-            qrCodeMapperImpl.sanProductQrCode(product);
+            if (qrCodeMapperImpl.sanProductQrCode(product)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //扫描物流二维码
     @PostMapping("/qrCode/scanLogisticQrCode")
-    public void scanLogisticQrCode(@RequestBody Logistic logistic) {
+    public Boolean scanLogisticQrCode(@RequestBody Logistic logistic) {
         try {
-            qrCodeMapperImpl.sanLogisticQrCode(logistic);
+            if (qrCodeMapperImpl.sanLogisticQrCode(logistic)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //打包张贴两张二维码
     @PostMapping("/qrCode/packProduct")
-    public void supermarketGetCon(@RequestBody ProductLogisticRef productLogisticRef) {
+    public Boolean supermarketGetCon(@RequestBody ProductLogisticRef productLogisticRef) {
         try {
-            qrCodeMapperImpl.packProduct(productLogisticRef);
+
+            if (qrCodeMapperImpl.packProduct(productLogisticRef)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
 }

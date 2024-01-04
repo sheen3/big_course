@@ -50,7 +50,7 @@ public class ProductMapperImpl {
      * @param product
      * @throws Exception
      */
-    public String insertProduct(Product product) throws Exception {
+    public Boolean insertProduct(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -126,14 +126,15 @@ public class ProductMapperImpl {
                             product.getProductionPlace(),
                     };
                     excelWriter.writeToExcel(folderName, fileName, content);
-                    return "生产成功";
+                    return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to insert product!", e);
 
         }
-        return "生产失败";
+        return null;
     }
 
 
@@ -144,7 +145,7 @@ public class ProductMapperImpl {
      * @param product
      * @throws Exception
      */
-    public Product selectOneProduct(Product product) throws Exception {
+    public Boolean selectOneProduct(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -159,7 +160,10 @@ public class ProductMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    return baseMysqlComp.selectOne(selectOneProduct);
+                    if (baseMysqlComp.selectOne(selectOneProduct) != null) {
+                        return true;
+                    }
+                    return false;
                 }
             }
         } catch (Exception e) {
@@ -185,7 +189,7 @@ public class ProductMapperImpl {
      * @param product
      * @throws Exception
      */
-    public void deleteProduct(Product product) throws Exception {
+    public Boolean deleteProduct(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -212,12 +216,15 @@ public class ProductMapperImpl {
                     baseMysqlComp.delete(deleteQrCode);
                     System.out.println("二维码已从数据库中删除");
                     baseMysqlComp.delete(deleteProduct);
+                    return true;
 
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete Product!", e);
         }
+        return null;
     }
 
     /**
@@ -227,7 +234,7 @@ public class ProductMapperImpl {
      * @param product
      * @throws Exception
      */
-    public void updateProduct(Product product) throws Exception {
+    public Boolean updateProduct(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -301,14 +308,16 @@ public class ProductMapperImpl {
                     // 生成二维码并保存
                     QRCodeGenerator.generateQRCode(qrCodeData, qrCodeFolderPath, qrCodeFileName, qrCodeSize);
 
-
+                    return true;
                 }
+                return false;
             }
 
 
         } catch (Exception e) {
             log.error("Failed to update product!", e);
         }
+        return null;
     }
 
     /**

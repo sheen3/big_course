@@ -55,7 +55,7 @@ public class LogisticMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
-            if (logistic == null ) {
+            if (logistic == null) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -149,7 +149,7 @@ public class LogisticMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
-            if (logistic == null ) {
+            if (logistic == null) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
 
@@ -161,10 +161,10 @@ public class LogisticMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    if( baseMysqlComp.selectOne(selectOneLogist)!=null){
+                    if (baseMysqlComp.selectOne(selectOneLogist) != null) {
                         return true;
 
-                    }else return false;
+                    } else return false;
                 }
             }
         } catch (Exception e) {
@@ -193,7 +193,7 @@ public class LogisticMapperImpl {
     public Boolean deleteLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-            if (logistic == null ) {
+            if (logistic == null) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -233,10 +233,10 @@ public class LogisticMapperImpl {
      * @param logistic
      * @throws Exception
      */
-    public void updateLogistic(Logistic logistic) throws Exception {
+    public Boolean updateLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-            if (logistic == null ) {
+            if (logistic == null) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -306,14 +306,16 @@ public class LogisticMapperImpl {
                     QRCodeGenerator.generateQRCode(qrCodeData, qrCodeFolderPath, qrCodeFileName, qrCodeSize);
                     System.out.println("二维码已生成并保存在:" + qrCodeFolderPath + "/" + qrCodeFileName);
 
-
+                    return true;
                 }
+                return false;
             }
 
 
         } catch (Exception e) {
             log.error("Failed to update product!", e);
         }
+        return null;
     }
 
     /**
