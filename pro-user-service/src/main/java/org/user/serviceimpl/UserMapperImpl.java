@@ -212,7 +212,7 @@ public class UserMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.delete(deleteUser);
-                    return true";
+                    return true;
                 }
             }
         } catch (Exception e) {
