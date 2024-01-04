@@ -1,5 +1,6 @@
 package org.user.controller;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import io.swagger.annotations.ApiOperation;
 import org.database.mysql.domain.Power;
 import org.database.mysql.domain.Role;
@@ -62,12 +63,10 @@ public class RoleService {
 
     //查找权限，由于权限名可能有多个故只能通过权限id查询
     @PostMapping("/roles/selectOne")
-    public Boolean selectOneRole(@RequestBody Role role) throws Exception {
+    public Role selectOneRole(@RequestBody Role role) throws Exception {
         try {
-            if (roleMapperImpl.selectOneRole(role)!=null) {
-                return true;
-            }
-            return false;
+           return roleMapperImpl.selectOneRole(role);
+
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -112,13 +111,14 @@ public class RoleService {
                 return true;
             } else {
                 System.out.println("撤销角色给用户失败！");
+                return false;
             }
         } catch (Exception e) {
 
             System.out.println("操作失败");
 
         }
-        return false;
+        return null;
     }
 
     //撤销已分配权限给角色
@@ -130,6 +130,7 @@ public class RoleService {
                 return true;
             } else {
                 System.out.println("撤销权限给角色失败！");
+                return false;
             }
         } catch (Exception e) {
             System.out.println("操作失败");

@@ -32,10 +32,10 @@ public class TestUserMapper {
 
         User user = new User();
       //  user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        user.setUserName("qq");
-        user.setUserTelephone("156090002444");
-        user.setUserSysEmail("qq@yeah.com");
-        user.setUserPassword("qqq");
+        user.setUserName("uu");
+        user.setUserTelephone("11111");
+        user.setUserSysEmail("11111.com");
+        user.setUserPassword("uuu");
         user.setUserNickName("kkkv");
         user.setUserGender("女");
         user.setUserBornDay(Timestamp.valueOf("2001-09-21 00:00:00"));
@@ -47,7 +47,10 @@ public class TestUserMapper {
         user.setUserPersonalProfile("I am Sheen");
         user.setUserCreateTime(new java.sql.Timestamp(System.currentTimeMillis()));
         user.setRoleName("系统管理员");
-       System.out.println( userMapperimpl.insertUser(user));
+       if(userMapperimpl.insertUser(user)){
+           System.out.println("注册成功");
+       }
+       else System.out.println("注册失败");
 
     }
 

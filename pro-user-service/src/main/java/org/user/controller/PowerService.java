@@ -63,12 +63,9 @@ public class PowerService {
 
     //查找权限，由于权限名可能有多个故只能通过权限id查询
     @PostMapping("/powers/selectOne")
-    public Boolean selectOnePower(@RequestBody Power power) throws Exception {
+    public Power selectOnePower(@RequestBody Power power) throws Exception {
         try {
-            if (powerMapperImpl.selectOnePower(power)!=null) {
-                return true;
-            }
-            return false;
+            return  powerMapperImpl.selectOnePower(power);
         } catch (Exception e) {
             System.out.println("操作失败");
         }

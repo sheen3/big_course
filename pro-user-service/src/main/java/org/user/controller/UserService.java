@@ -66,12 +66,11 @@ public class UserService {
 
     //用户id 或者用户名 或者用户邮箱 或者用户电话 查询用户列表信息
     @PostMapping("/users/selectOne")
-    public Boolean selectOneUser(@RequestBody User user) throws Exception {
+    public User selectOneUser(@RequestBody User user) throws Exception {
         try {
-            if (userMapperImpl.selectOneUser(user) != null) {
-                return true;
-            }
-            return false;
+            return userMapperImpl.selectOneUser(user);
+
+
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -148,16 +147,15 @@ public class UserService {
 
     //查看当前用户角色
     @PostMapping("/user/role")
-    public Boolean isUserWhatToRole(@RequestBody User user) {
+    public short isUserWhatToRole(@RequestBody User user) {
         try {
-            if (userMapperImpl.isUserWhatToRole(user) != null) {
-                return true;
-            }
-            return false;
+            return userMapperImpl.isUserWhatToRole(user) ;
+
         } catch (Exception e) {
 
         }
-        return null;
+
+        return 0;
     }
 
 
