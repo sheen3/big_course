@@ -58,7 +58,7 @@ public class UserMapperImpl {
      * @throws Exception
      */
 
-    public String insertUser(User user) throws Exception {
+    public Boolean insertUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
 
@@ -106,14 +106,14 @@ public class UserMapperImpl {
                     userRoleRef.setRefRoleId(role1.getRoleId());
                     roleMapperImpl.grantRoleToUser(userRoleRef);
 
-                    return "注册成功";
+                    return true;
 
                 }
             }
         } catch (Exception e) {
             log.error("Failed to insert user!", e);
         }
-        return "注册失败";
+        return false;
     }
 
     /**
@@ -198,7 +198,7 @@ public class UserMapperImpl {
      * @param user
      * @throws Exception
      */
-    public String deleteUser(User user) throws Exception {
+    public Boolean deleteUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null) {
@@ -212,13 +212,13 @@ public class UserMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.delete(deleteUser);
-                    return "删除成功！";
+                    return true";
                 }
             }
         } catch (Exception e) {
             log.error("Failed to delete user!", e);
         }
-        return "删除失败！";
+        return false;
     }
 
     /**
@@ -229,7 +229,7 @@ public class UserMapperImpl {
      * @throws Exception
      */
 
-    public String updateUser(User user) throws Exception {
+    public Boolean updateUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null) {
@@ -278,7 +278,7 @@ public class UserMapperImpl {
                     updateUser.setIn(user1);
                     updateUser.setUpdate(user);
                     baseMysqlComp.update(updateUser);
-                    return "更新成功！";
+                    return true;
                 }
             }
 
@@ -286,7 +286,7 @@ public class UserMapperImpl {
         } catch (Exception e) {
             log.error("Failed to update user!", e);
         }
-        return "更新失败！";
+        return false;
     }
 
     /**
@@ -298,7 +298,7 @@ public class UserMapperImpl {
      * @return
      */
 
-    public String loginUserByName(User user) throws Exception {
+    public Boolean loginUserByName(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null || (user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
@@ -317,16 +317,16 @@ public class UserMapperImpl {
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
                 if (baseMysqlComp.selectOne(loginUser) != null) {
-                    return "登陆成功！";
+                    return true;
                 } else {
-                    return "登陆失败！";
+                    return false;
                 }
 
             }
         } catch (Exception e) {
             log.error("Failed to loginUser!", e);
         }
-        return "登陆失败！";
+        return false;
 
     }
 
@@ -339,7 +339,7 @@ public class UserMapperImpl {
      * @return
      * @throws Exception
      */
-    public String loginUserByEmail(User user) throws Exception {
+    public Boolean loginUserByEmail(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null || (user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
@@ -357,16 +357,16 @@ public class UserMapperImpl {
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
                 if (baseMysqlComp.selectOne(loginUser) != null) {
-                    return "登陆成功！";
+                    return true;
                 } else {
-                    return "登陆失败！";
+                    return false;
                 }
 
             }
         } catch (Exception e) {
             log.error("Failed to loginUserByEmail!", e);
         }
-        return "登陆失败！";
+        return false;
     }
 
     /**
@@ -378,7 +378,7 @@ public class UserMapperImpl {
      * @return
      * @throws Exception
      */
-    public String loginUserByTelephone(User user) throws Exception {
+    public Boolean loginUserByTelephone(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null || (user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
@@ -397,15 +397,15 @@ public class UserMapperImpl {
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
                 if (baseMysqlComp.selectOne(loginUser) != null) {
-                    return "登陆成功！";
+                    return true;
                 } else {
-                    return "登陆失败！";
+                    return false;
                 }
             }
         } catch (Exception e) {
             log.error("Failed to loginUserByTelephone!", e);
         }
-        return "登陆失败！";
+        return false;
     }
 
     /**

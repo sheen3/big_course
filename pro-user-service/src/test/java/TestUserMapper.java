@@ -32,10 +32,10 @@ public class TestUserMapper {
 
         User user = new User();
       //  user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        user.setUserName("kk");
-        user.setUserTelephone("15609000234");
-        user.setUserSysEmail("kkk@yeah.com");
-        user.setUserPassword("kkkv");
+        user.setUserName("qq");
+        user.setUserTelephone("156090002444");
+        user.setUserSysEmail("qq@yeah.com");
+        user.setUserPassword("qqq");
         user.setUserNickName("kkkv");
         user.setUserGender("女");
         user.setUserBornDay(Timestamp.valueOf("2001-09-21 00:00:00"));
@@ -89,7 +89,7 @@ public class TestUserMapper {
     public void updateUser() throws Exception {
         User user = new User();
        // user.setUserId("0000018c-5caf-cba7-8b25-8d2a2844cdab");
-        user.setUserName("ww");
+        user.setUserName("11");
         //user.setUserSysEmail("Cob@yean.net");
           user.setUserTelephone("12345678457");
         userMapperimpl.updateUser(user);
@@ -101,8 +101,8 @@ public class TestUserMapper {
     public void loginUserByName() throws Exception {
         User user = new User();
         //user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
-        user.setUserName("kk");
-        user.setUserPassword("kkkv");
+        user.setUserName("qq");
+        user.setUserPassword("qqqe");
         System.out.println( userMapperimpl.loginUserByName(user));
     }
 
