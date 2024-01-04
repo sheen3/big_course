@@ -32,15 +32,15 @@ public class TestProductMapper {
     @Test
     public void insertProduct() throws Exception {
         Product product = new Product();
-        product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        product.setProductName("面包");
+       // product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        product.setProductName("盼盼");
         LocalDateTime now = LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));
         LocalDateTime expirationDate = now.plusYears(3);//当前日期加上三年
         product.setProductExpirationDate(Date.valueOf(expirationDate.toLocalDate()));
-        product.setProductEnterpriseId("1000234");//企业id
-        product.setProductProductionId("20005345");//生产id
-        product.setProductionPlace("江西");
+        product.setProductEnterpriseId("1000344");//企业id
+        product.setProductProductionId("200054355");//生产id
+        product.setProductionPlace("北京");
 
         if (productMapperImpl.insertProduct(product) != null) {
             System.out.println("产品生产成功！");
@@ -50,8 +50,8 @@ public class TestProductMapper {
     @Test
     public void selectOneProduct() throws Exception {
         Product product=new Product();
-        product.setProductId("0000018c-c44d-857f-a546-51cc6b627d71");
-        product.setProductName("洗衣液");
+     //   product.setProductId("0000018c-c44d-857f-a546-51cc6b627d71");
+        product.setProductName("盼盼");
         product.setProductionPlace("天津");
         System.out.println(productMapperImpl.selectOneProduct(product));
         System.out.println("产品查找成功！");
@@ -88,7 +88,7 @@ public class TestProductMapper {
     @Test
     public void ExcelProduct() throws Exception {
         Product product=new Product();
-       // product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+         product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         product.setProductName("洗发水");
         LocalDateTime now=LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));

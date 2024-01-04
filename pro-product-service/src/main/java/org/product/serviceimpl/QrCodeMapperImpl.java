@@ -123,7 +123,7 @@ public class QrCodeMapperImpl {
         return null;
     }
 
-    public Boolean sanProductQrCode(Product product) throws Exception {
+    public String sanProductQrCode(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
             if (product == null) {
@@ -143,10 +143,10 @@ public class QrCodeMapperImpl {
                     String productText = scanQRCode(productQrCodeFilePath);
                     if (productText != null) {
                         System.out.println("扫描结果： " + productText);
-                        return true;
+                       return productText;
                     } else {
                         System.out.println("未能扫描到二维码");
-                        return false;
+                        return "未能扫描到二维码";
                     }
 
                 }
@@ -158,7 +158,7 @@ public class QrCodeMapperImpl {
         return null;
     }
 
-    public Boolean sanLogisticQrCode(Logistic logistic) throws Exception {
+    public String sanLogisticQrCode(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
             if (logistic == null) {
@@ -178,10 +178,10 @@ public class QrCodeMapperImpl {
                     String logisticText = scanQRCode(logisticQrCodeFilePath);
                     if (logisticText != null) {
                         System.out.println("扫描结果： " + logisticText);
-                        return true;
+                        return logisticText;
                     } else {
                         System.out.println("未能扫描到二维码");
-                        return false;
+                        return "未能扫描到二维码";
                     }
 
                 }

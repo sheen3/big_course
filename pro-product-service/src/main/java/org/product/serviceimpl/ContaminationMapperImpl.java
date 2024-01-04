@@ -59,6 +59,7 @@ public class ContaminationMapperImpl {
                     logMessage.build(LogEnum.PRODUCT_NO_EXISTS);
                     log.error(logMessage.log());
 
+
                 } else {
                     ContaminationRecord con = new ContaminationRecord();
                     con.setRecordId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());

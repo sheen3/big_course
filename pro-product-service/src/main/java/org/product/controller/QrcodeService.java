@@ -73,12 +73,9 @@ public class QrcodeService {
 
     //扫描产品二维码
     @PostMapping("/qrCode/scanProductQrCode")
-    public Boolean scanProductQrCode(@RequestBody Product product) {
+    public String scanProductQrCode(@RequestBody Product product) {
         try {
-            if (qrCodeMapperImpl.sanProductQrCode(product)) {
-                return true;
-            }
-            return false;
+            return qrCodeMapperImpl.sanProductQrCode(product);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -87,12 +84,9 @@ public class QrcodeService {
 
     //扫描物流二维码
     @PostMapping("/qrCode/scanLogisticQrCode")
-    public Boolean scanLogisticQrCode(@RequestBody Logistic logistic) {
+    public String scanLogisticQrCode(@RequestBody Logistic logistic) {
         try {
-            if (qrCodeMapperImpl.sanLogisticQrCode(logistic)) {
-                return true;
-            }
-            return false;
+            return qrCodeMapperImpl.sanLogisticQrCode(logistic);
         } catch (Exception e) {
             System.out.println("操作失败");
         }

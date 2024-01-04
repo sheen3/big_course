@@ -351,6 +351,7 @@ public class LogisticMapperImpl {
     }
 
     public void LogisticExcel(Logistic logistic) {
+
         LogExcelWriter excelWriter = new LogExcelWriter();
         String folderName = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel";
         String fileName = "pro_Logistic";

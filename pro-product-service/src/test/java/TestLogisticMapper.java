@@ -90,7 +90,7 @@ public class TestLogisticMapper {
         logisticsSupermarketRef.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
         logisticsSupermarketRef.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
 
-       if( logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)) {
+        if(logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)!=null){
            System.out.println("物流与超市订单建立成！");
        }
 
@@ -98,7 +98,7 @@ public class TestLogisticMapper {
     @Test
     public void LogisticExcel() {
         Logistic logistic = new Logistic();
-      //  logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         logistic.setLogisticCompanyId("宝洁10dsf24542");
         logistic.setLogisticBatchId("sf1001523534");
         logistic.setLogisticVehicleInfo("津A10434");

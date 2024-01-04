@@ -80,7 +80,7 @@ public class TestUserMapper {
     @Test
     public void deleteRole() throws Exception {
         User user = new User();
-        user.setUserName("bb");
+        user.setUserName("wo");
        // user.setUserId("0000018c-ca65-68f2-b632-6bea9a6c9745");
         System.out.println(   userMapperimpl.deleteUser(user));
 
@@ -92,9 +92,9 @@ public class TestUserMapper {
     public void updateUser() throws Exception {
         User user = new User();
        // user.setUserId("0000018c-5caf-cba7-8b25-8d2a2844cdab");
-        user.setUserName("11");
+        user.setUserName("qwq");
         //user.setUserSysEmail("Cob@yean.net");
-          user.setUserTelephone("12345678457");
+          user.setUserTelephone("123456747");
         userMapperimpl.updateUser(user);
         System.out.println("角色信息已更新！");
     }
@@ -104,8 +104,8 @@ public class TestUserMapper {
     public void loginUserByName() throws Exception {
         User user = new User();
         //user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
-        user.setUserName("qq");
-        user.setUserPassword("qqqe");
+        user.setUserName("uu");
+        user.setUserPassword("uuu");
         System.out.println( userMapperimpl.loginUserByName(user));
     }
 
