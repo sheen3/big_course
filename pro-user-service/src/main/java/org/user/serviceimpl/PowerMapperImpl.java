@@ -56,7 +56,7 @@ public class PowerMapperImpl {
                 log.warn(logMessage.log());
             } else {
                 Power power1=new Power();
-                power1.setPowerName(power1.getPowerName());
+                power1.setPowerName(power.getPowerName());
                 MysqlBuilder<Power> builder = new MysqlBuilder<>(Power.class);
                 builder.setIn(power1);
 
@@ -66,7 +66,6 @@ public class PowerMapperImpl {
                 } else {
                     MysqlBuilder<Power> insertPower = new MysqlBuilder<>(Power.class);
                     insertPower.setIn(power);
-
                     baseMysqlComp.insert(insertPower);
                     return true;
                 }

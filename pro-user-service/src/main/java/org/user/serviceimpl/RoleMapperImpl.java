@@ -66,7 +66,6 @@ public class RoleMapperImpl {
                 role1.setRoleName(role.getRoleName());
                 MysqlBuilder<Role> builder = new MysqlBuilder<>(Role.class);
                 builder.setIn(role1);
-
                 if (baseMysqlComp.selectOne(builder) != null) {
                     logMessage.build(LogEnum.ROLE_EXISTS);
                     log.error(logMessage.log());
