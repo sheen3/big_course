@@ -50,7 +50,7 @@ public class TestLogisticMapper {
     @Test
     public void selectOneLogistic() throws Exception {
         Logistic logistic = new Logistic();
-        logistic.setLogisticId("0000018c-c7b8-e387-91b5-fbd4bcbe1939");
+        logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
         System.out.println(logisticMapperImpl.selectOneLogistic(logistic));
         System.out.println("物流信息查找成功！");
 
