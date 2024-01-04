@@ -62,12 +62,9 @@ public class LogisticService {
 
     //查询物流信息
     @PostMapping("/logistic/selectOne")
-    public Boolean selectOneLogistic(@RequestBody Logistic logistic) throws Exception {
+    public Logistic selectOneLogistic(@RequestBody Logistic logistic) throws Exception {
         try {
-            if (logisticMapperImpl.selectOneLogistic(logistic)!=null) {
-                return true;
-            }
-            return false;
+            return  logisticMapperImpl.selectOneLogistic(logistic);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -103,13 +100,9 @@ public class LogisticService {
 
     //生成物流和超市订单
     @PostMapping("/logistic/supermarkrt")
-    public Boolean sendSupermarket(@RequestBody LogisticsSupermarketRef logisticsSupermarketRef) {
+    public LogisticsSupermarketRef  sendSupermarket(@RequestBody LogisticsSupermarketRef logisticsSupermarketRef) {
         try {
-            if (logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)!=null) {
-                System.out.println("物流与超市订单建立成！");
-                return true;
-
-            }return false;
+            return logisticMapperImpl.sendSupermarket(logisticsSupermarketRef);
         } catch (Exception e) {
             System.out.println("操作失败");
         }return null;
