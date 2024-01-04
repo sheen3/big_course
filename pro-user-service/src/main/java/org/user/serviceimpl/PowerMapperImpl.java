@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
 import org.database.mysql.domain.Power;
+import org.database.mysql.domain.Role;
 import org.database.mysql.domain.RolePowerRef;
 import org.database.mysql.entity.MysqlBuilder;
 import org.database.mysql.mapper.PowerMapper;
@@ -54,13 +55,19 @@ public class PowerMapperImpl {
                 logMessage.build(LogEnum.POWER_EMPTY);
                 log.warn(logMessage.log());
             } else {
-                MysqlBuilder<Power> insertPower = new MysqlBuilder<>(Power.class);
-                insertPower.setIn(power);
-                if (powerMapper.selectById(power.getPowerId()) != null) {
+                Power power1=new Power();
+                power1.setPowerName(power1.getPowerName());
+
+                MysqlBuilder<Power> builder = new MysqlBuilder<>(Power.class);
+                builder.setIn(power1);
+
+                if (baseMysqlComp.selectOne(builder) != null) {
                     logMessage.build(LogEnum.POWER_EXISTS);
                     log.error(logMessage.log());
                 } else {
+                    MysqlBuilder<Power> insertPower = new MysqlBuilder<>(Power.class);
                     baseMysqlComp.insert(insertPower);
+                    insertPower.setIn(power);
                     return true;
                 }
             }
