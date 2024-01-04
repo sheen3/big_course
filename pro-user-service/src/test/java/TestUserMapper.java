@@ -103,11 +103,7 @@ public class TestUserMapper {
         //user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
         user.setUserName("aa");
         user.setUserPassword(PasswordEncrypt.hashPassword("abc"));
-        if (userMapperimpl.loginUserByName(user)) {
-            System.out.println("登陆成功！");
-        } else {
-            System.out.println("登陆失败！");
-        }
+        userMapperimpl.loginUserByName(user);
     }
 
 
@@ -118,12 +114,7 @@ public class TestUserMapper {
         user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
         user.setUserSysEmail("yiyiO@yeah.com");
         user.setUserPassword(PasswordEncrypt.hashPassword("IAmFairy"));
-        if (userMapperimpl.loginUserByEmail(user)) {
-            System.out.println("登陆成功！");
-        } else {
-            System.out.println("登陆失败！");
-        }
-
+      userMapperimpl.loginUserByEmail(user);
     }
 
     //验证用户电话登陆
@@ -132,11 +123,7 @@ public class TestUserMapper {
         User user = new User();
         user.setUserTelephone("15602300031");
         user.setUserPassword("I am Sheen");
-        if (userMapperimpl.loginUserByTelephone(user)) {
-            System.out.println("登陆成功！");
-        } else {
-            System.out.println("登陆失败！");
-        }
+        userMapperimpl.loginUserByTelephone(user);
     }
 
     //验证用户名登陆
