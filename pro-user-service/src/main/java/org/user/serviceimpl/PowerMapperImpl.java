@@ -51,7 +51,7 @@ public class PowerMapperImpl {
     public Boolean insertPower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
-            if (power == null || power.getPowerId() == null) {
+            if (power == null ) {
                 logMessage.build(LogEnum.POWER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -88,7 +88,7 @@ public class PowerMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
 
-            if (power.getPowerId() == null) {
+            if (power.getPowerName() == null) {
                 logMessage.build(LogEnum.POWER_EMPTY);
                 log.warn(logMessage.log());
             } else {

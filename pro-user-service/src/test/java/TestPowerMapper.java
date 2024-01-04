@@ -46,7 +46,8 @@ public class TestPowerMapper {
     @Test
     public void selectOnePower() throws Exception {
         Power power = new Power();
-       power.setPowerId(1051);
+      // power.setPowerId(1051);
+        power.setPowerName("产生产品二维码");
         powerMapperImpl.selectOnePower(power);
         System.out.println("权限查找成功！");
 
