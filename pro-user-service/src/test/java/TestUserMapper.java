@@ -31,10 +31,10 @@ public class TestUserMapper {
     public void insertUser() throws Exception {
 
         User user = new User();
-        user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        user.setUserName("Sheen");
-        user.setUserTelephone("15600000001");
-        user.setUserSysEmail("Sheen@yeah.com");
+      //  user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        user.setUserName("mob");
+        user.setUserTelephone("15602300031");
+        user.setUserSysEmail("mob@yeah.com");
         user.setUserPassword(PasswordEncrypt.hashPassword("IAmSheen"));
         user.setUserNickName("Sheen");
         user.setUserGender("女");

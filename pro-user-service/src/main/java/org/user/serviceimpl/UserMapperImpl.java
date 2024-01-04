@@ -12,6 +12,7 @@ import org.database.mysql.mapper.RoleMapper;
 import org.database.mysql.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tools.common.uuid.UuidGenerator;
 import org.tools.log.LogComp;
 import org.tools.log.LogEnum;
 import org.tools.log.LogType;
@@ -63,6 +64,7 @@ public class UserMapperImpl {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
+                user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
                 MysqlBuilder<User> insertUser = new MysqlBuilder<>(User.class);
                 insertUser.setIn(user);
 
@@ -225,7 +227,9 @@ public class UserMapperImpl {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
-                if (userMapper.selectById(user.getUserId()) == null) {
+                MysqlBuilder<User> checkUser = new MysqlBuilder<>(User.class);
+                checkUser.setIn(user);
+                if (baseMysqlComp.selectOne(checkUser)==null) {
                     logMessage.build(LogEnum.USER_NO_Exists);
                     log.error(logMessage.log());
                 } else {
