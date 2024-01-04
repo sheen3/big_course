@@ -15,6 +15,7 @@ import org.tools.log.LogComp;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import static org.tools.QRCode.QRCodeScanner.scanQRCode;
 
@@ -24,30 +25,49 @@ import static org.tools.QRCode.QRCodeScanner.scanQRCode;
  */
 @Service
 @Getter
-public class ExcelGetImpl {
-
-    public void LogisticExcelGet() {
-        ExcelReader excelReader = new ExcelReader();
-         String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Logistic.xlsx";
-        excelReader.readFromExcel(excelFilePath);
+public class ExcelGetImpl { public List<List<Object>> logisticExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
+        try {
+            ExcelReader excelReader = new ExcelReader();
+            String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Logistic.xlsx";
+            excelData = excelReader.readFromExcel(excelFilePath);
+        } catch (Exception e) {
+            System.out.println("操作失败");
+        }
+        return excelData;
     }
-
-    public void ProductExcelGet() {
-        ExcelReader excelReader = new ExcelReader();
-       String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_product.xlsx";
-        excelReader.readFromExcel(excelFilePath);
+    public List<List<Object>> supermarketExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
+        try {
+            ExcelReader excelReader = new ExcelReader();
+            String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_supermarket.xlsx";
+            excelData = excelReader.readFromExcel(excelFilePath);
+        } catch (Exception e) {
+            System.out.println("操作失败");
+        }
+        return excelData;
     }
-    public void SupermarketExcelGet() {
-        ExcelReader excelReader = new ExcelReader();
-         String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_supermarket.xlsx";
-
-        excelReader.readFromExcel(excelFilePath);
+    public List<List<Object>> contaminationExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
+        try {
+            ExcelReader excelReader = new ExcelReader();
+            String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Con.xlsx";
+            excelData = excelReader.readFromExcel(excelFilePath);
+        } catch (Exception e) {
+            System.out.println("操作失败");
+        }
+        return excelData;
     }
-
-    public void ContaminationExcelGet() {
-        ExcelReader excelReader = new ExcelReader();
-        String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Con.xlsx";
-        excelReader.readFromExcel(excelFilePath);
+    public List<List<Object>> productExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
+        try {
+            ExcelReader excelReader = new ExcelReader();
+            String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_product.xlsx";
+            excelData = excelReader.readFromExcel(excelFilePath);
+        } catch (Exception e) {
+            System.out.println("操作失败");
+        }
+        return excelData;
     }
 
 }

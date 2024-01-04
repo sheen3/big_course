@@ -10,6 +10,7 @@ import org.tools.Excel.ExcelReader;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Author: eensh
@@ -20,48 +21,58 @@ import java.util.List;
 public class ExcelService {
     //拿到产品报表
     @GetMapping("/excel/ProductExcelGet")
-    public void ProductExcelGet() throws Exception {
+    public List<List<Object>> ProductExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
         try {
             ExcelReader excelReader = new ExcelReader();
             String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_product.xlsx";
-            excelReader.readFromExcel(excelFilePath);
+            excelData = excelReader.readFromExcel(excelFilePath);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return excelData;
     }
+
     //拿到物流报表
     @GetMapping("/excel/LogisticExcelGet")
-    public void LogisticExcelGet() throws Exception {
+    public List<List<Object>> logisticExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
         try {
             ExcelReader excelReader = new ExcelReader();
             String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Logistic.xlsx";
-            excelReader.readFromExcel(excelFilePath);
+            excelData = excelReader.readFromExcel(excelFilePath);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return excelData;
     }
 
     //拿到超市报表
     @GetMapping("/excel/SupermarketExcelGet")
-    public void SupermarketExcelGet() throws Exception {
+    public List<List<Object>> supermarketExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
         try {
             ExcelReader excelReader = new ExcelReader();
             String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_supermarket.xlsx";
-            excelReader.readFromExcel(excelFilePath);
+            excelData = excelReader.readFromExcel(excelFilePath);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return excelData;
     }
+
     //拿到污染表
     @GetMapping("/excel/ContaminationExcelGet")
-    public void ContaminationExcelGet() throws Exception {
+    public List<List<Object>> contaminationExcelGet() throws Exception {
+        List<List<Object>> excelData = null;
         try {
             ExcelReader excelReader = new ExcelReader();
             String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_Con.xlsx";
-            excelReader.readFromExcel(excelFilePath);
+            excelData = excelReader.readFromExcel(excelFilePath);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return excelData;
     }
 
 }

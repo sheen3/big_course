@@ -20,19 +20,22 @@ public class TestExcelGetImpl {
     private ExcelGetImpl excelGetImpl;
 
     @Test
-    public void LogisticExcelGet() {
-        excelGetImpl.LogisticExcelGet();
+    public void LogisticExcelGet() throws Exception {
+        excelGetImpl.logisticExcelGet();
     }
+
     @Test
-    public void ProductExcelGet() {
-        excelGetImpl.ProductExcelGet();
+    public void ProductExcelGet() throws Exception {
+        excelGetImpl.productExcelGet();
     }
+
     @Test
-    public void SupermarketExcelGet()  {
-        excelGetImpl.SupermarketExcelGet();
+    public void SupermarketExcelGet() throws Exception {
+        excelGetImpl.supermarketExcelGet();
     }
+
     @Test
-    public void ContaminationExcelGet()  {
-        excelGetImpl.ContaminationExcelGet();
+    public void ContaminationExcelGet() throws Exception {
+        excelGetImpl.contaminationExcelGet();
     }
 }
