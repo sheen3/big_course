@@ -59,12 +59,9 @@ public class ProductService {
 
     //查询全部产品信息
     @PostMapping("/product/selectOne")
-    public Boolean selectOneProduct(@RequestBody Product product) throws Exception {
+    public Product selectOneProduct(@RequestBody Product product) throws Exception {
         try {
-            if (productMapperImpl.selectOneProduct(product)!=null) {
-                return true;
-            }
-            return false;
+            return  productMapperImpl.selectOneProduct(product);
         } catch (Exception e) {
             System.out.println("操作失败");
         }

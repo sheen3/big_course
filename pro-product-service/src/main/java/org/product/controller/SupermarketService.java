@@ -60,12 +60,9 @@ public class SupermarketService {
 
     //查询超市信息
     @PostMapping("/supermarket/selectOne")
-    public Boolean selectOneSupermarket(@RequestBody Supermarket supermarket) throws Exception {
+    public Supermarket selectOneSupermarket(@RequestBody Supermarket supermarket) throws Exception {
         try {
-            if(supermarketMapperImpl.selectOneSupermarket(supermarket)!=null){
-                return true;
-            }
-            return false;
+            return supermarketMapperImpl.selectOneSupermarket(supermarket);
         } catch (Exception e) {
             System.out.println("操作失败");
         }return null;
@@ -95,7 +92,7 @@ public class SupermarketService {
         return null;
     }
 
-    //商品入科
+    //商品入库
     @PostMapping("/supermarket/getProduct")
     public Boolean getProduct(@RequestBody LogisticsSupermarketRef logisticsSupermarketRef) {
         try {
@@ -111,11 +108,9 @@ public class SupermarketService {
 
     //查询是否有产品污染情况
     @PostMapping("/supermarket/conProduct")
-    public Boolean supermarketGetCon(@RequestBody Product product) {
+    public Product supermarketGetCon(@RequestBody Product product) {
         try {
-            if(supermarketMapperImpl.supermarketGetCon(product)!=null){
-                return true;
-            }return false;
+            return supermarketMapperImpl.supermarketGetCon(product);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
