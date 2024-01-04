@@ -133,7 +133,7 @@ public class QrCodeMapperImpl {
                 MysqlBuilder<Product> sanQrCode = new MysqlBuilder<>(Product.class);
                 sanQrCode.setIn(product);
                 if (baseMysqlComp.selectOne(sanQrCode) == null) {
-                    logMessage.build(LogEnum.PRODUCT_EXISTS);
+                    logMessage.build(LogEnum.PRODUCT_NO_EXISTS);
                     log.error(logMessage.log());
 
                 } else {
@@ -168,7 +168,7 @@ public class QrCodeMapperImpl {
                 MysqlBuilder<Logistic> sanQrCode = new MysqlBuilder<>(Logistic.class);
                 sanQrCode.setIn(logistic);
                 if (baseMysqlComp.selectOne(sanQrCode) == null) {
-                    logMessage.build(LogEnum.LOGISTIC_EXISTS);
+                    logMessage.build(LogEnum.LOGISTIC_NO_EXISTS);
                     log.error(logMessage.log());
 
                 } else {
@@ -194,54 +194,9 @@ public class QrCodeMapperImpl {
 
     }
 
-    public String sanProAndLogQrCode(Product product) throws Exception {
-        try {
-            LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
-            if (product == null) {
-                logMessage.build(LogEnum.PRODUCT_EMPTY);
-                log.warn(logMessage.log());
-            } else {
-
-                MysqlBuilder<Product> sanPro = new MysqlBuilder<>(Product.class);
-                sanPro.setIn(product);
-                if (baseMysqlComp.selectOne(sanPro) == null) {
-                    logMessage.build(LogEnum.PRODUCT_EXISTS);
-                    log.error(logMessage.log());
-
-                } else {
-                    ProductLogisticRef logi = new ProductLogisticRef();
-                    logi.setLogisticId(product.getProductId());
-                    MysqlBuilder<ProductLogisticRef> sanLog = new MysqlBuilder<>(ProductLogisticRef.class);
-                    sanLog.setIn(logi);
-                    logi = baseMysqlComp.selectOne(sanLog);
-                    String productQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake";
-                    String productQrCodeFileName = product.getProductId() + ".png";
-                    String productQrCodeFilePath = productQrCodeFolderPath + "/" + productQrCodeFileName;
-                    String productText = scanQRCode(productQrCodeFilePath);
-
-                    String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
-                    String logisticQrCodeFileName = logi.getLogisticId() + ".png";
-                    String logisticQrCodeFilePath = logisticQrCodeFolderPath + "/" + logisticQrCodeFileName;
-                    String logisticText = scanQRCode(logisticQrCodeFilePath);
-
-                    if (productText != null && logisticText != null) {
-                        System.out.println("扫描结果： " + logisticText);
-                        System.out.println("扫描结果： " + productText);
-                        return productText+productText;
-                    } else {
-                        System.out.println("未能扫描到二维码");
-                        return "未能扫描到二维码";
 
 
-                    }
-                }
-            }
 
-        } catch (Exception e) {
-            log.error("Failed to san Logistic!", e);
-        }
-        return null;
-    }
 
     public List<QrCode> selectAllQrCode() throws Exception {
         MysqlBuilder<QrCode> selectAllQrCode = new MysqlBuilder<>(QrCode.class);

@@ -92,16 +92,6 @@ public class QrcodeService {
         }
         return null;
     }
-    //扫描产品与物流二维码
-    @PostMapping("/qrCode/sanProAndLogQrCode")
-    public String sanProAndLogQrCode(@RequestBody Product product) {
-        try {
-            return qrCodeMapperImpl.sanProAndLogQrCode(product);
-        } catch (Exception e) {
-            System.out.println("操作失败");
-        }
-        return null;
-    }
 
     //打包张贴两张二维码
     @PostMapping("/qrCode/packProduct")
