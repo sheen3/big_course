@@ -88,7 +88,7 @@ public class TestPowerMapper {
     public void getRolePowers() throws Exception {
         // 执行授权操作
         RolePowerRef rolePowerRef = new RolePowerRef();
-        rolePowerRef.setRefRoleId((short) 103);
+        rolePowerRef.setRefRoleId((short) 1);
         List<RolePowerRef> powerList = powerMapperImpl.getRolePowers(rolePowerRef);
 
         if (powerList != null) {
@@ -107,7 +107,7 @@ public class TestPowerMapper {
     @Test
     public void checkPowerOperate() throws Exception {
         Power power=new Power();
-        power.setPowerId(64);
+        power.setPowerId(1);
         if(powerMapperImpl.checkPowerOperate(power)){
             System.out.println(power.getPowerId()+"权限状态是可操作");}
         else
