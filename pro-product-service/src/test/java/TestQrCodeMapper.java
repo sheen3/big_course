@@ -60,7 +60,7 @@ public class TestQrCodeMapper {
     @Test
     public void scanProductQrCode() throws Exception {
         Product product=new Product();
-        product.setProductId("0000018c-ce96-07ee-98d2-2e9d32bb7d7f");
+        product.setProductId("0000018c-d20c-2d59-a317-714cea39c0ce");
        qrCodeMapperImpl.sanProductQrCode(product);
         System.out.println("二维码信息查找成功！");
 

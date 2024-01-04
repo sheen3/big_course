@@ -36,7 +36,8 @@ public class QRCodeScanner {
 
     public static void main(String[] args) {
        // String qrCodeFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake/0000018c-c8fd-c038-8cd5-26ee6af1f203.png"; // 生成的二维码文件路径
-        String qrCodeFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic/0000018c-c8fc-257b-b15c-ae41f891562b.png";
+       // String qrCodeFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic/0000018c-c8fc-257b-b15c-ae41f891562b.png";
+        String qrCodeFilePath="//Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake/qrcode.png";
         String decodedText = scanQRCode(qrCodeFilePath);
         if (decodedText != null) {
             System.out.println("扫描结果： " + decodedText);

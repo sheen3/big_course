@@ -33,14 +33,14 @@ public class TestProductMapper {
     public void insertProduct() throws Exception {
         Product product=new Product();
         product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        product.setProductName("香皂");
+        product.setProductName("面包");
         LocalDateTime now=LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));
         LocalDateTime expirationDate=now.plusYears(3);//当前日期加上三年
         product.setProductExpirationDate(Date.valueOf(expirationDate.toLocalDate()));
-        product.setProductEnterpriseId("10000234");//企业id
-        product.setProductProductionId("20005244");//生产id
-        product.setProductionPlace("浙江");
+        product.setProductEnterpriseId("1000234");//企业id
+        product.setProductProductionId("20005345");//生产id
+        product.setProductionPlace("江西");
 
         productMapperImpl.insertProduct(product);
         System.out.println("产品生产成功！");

@@ -18,6 +18,7 @@
         <module>pro-tools</module>
         <module>pro-user-service</module>
         <module>pro-product-service</module>
+        <module>pro-start</module>
 
     </modules>
     <packaging>pom</packaging>

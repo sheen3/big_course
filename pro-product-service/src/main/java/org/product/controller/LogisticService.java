@@ -43,7 +43,7 @@ public class LogisticService {
         }
     }
 
-    //查询全部产品信息
+    //查询全部物流信息
     @GetMapping("/logistic/All")
     public List<Logistic> getAllLogistic() throws Exception{
         try {
