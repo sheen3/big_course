@@ -101,7 +101,7 @@ public class TestUserMapper {
         User user = new User();
         user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
         user.setUserName("yiyi");
-        user.setUserPassword(PasswordEncrypt.hashPassword("IAmFairy"));
+        user.setUserPassword(PasswordEncrypt.hashPassword("I am Sheen"));
         if (userMapperimpl.loginUserByName(user)) {
             System.out.println("登陆成功！");
         } else {
@@ -130,14 +130,13 @@ public class TestUserMapper {
     public void loginUserByTelephone() throws Exception {
         User user = new User();
         user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
-        user.setUserTelephone("15625402279");
-        user.setUserPassword(PasswordEncrypt.hashPassword("IAmFairy"));
+        user.setUserTelephone("15600000001");
+        user.setUserPassword(PasswordEncrypt.hashPassword("IAmSheen"));
         if (userMapperimpl.loginUserByTelephone(user)) {
             System.out.println("登陆成功！");
         } else {
             System.out.println("登陆失败！");
         }
-        System.out.println("登陆成功！");
     }
 
     //验证用户名登陆

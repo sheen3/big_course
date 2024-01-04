@@ -12,6 +12,7 @@ import org.database.mysql.mapper.RoleMapper;
 import org.database.mysql.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tools.common.encrypt.PasswordEncrypt;
 import org.tools.common.uuid.UuidGenerator;
 import org.tools.log.LogComp;
 import org.tools.log.LogEnum;
@@ -65,6 +66,7 @@ public class UserMapperImpl {
                 log.warn(logMessage.log());
             } else {
                 user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                 MysqlBuilder<User> insertUser = new MysqlBuilder<>(User.class);
                 insertUser.setIn(user);
 
@@ -270,6 +272,7 @@ public class UserMapperImpl {
             if (user1Flag == null) {
                 log.warn("用户名不存在，请重新输入");
             } else {
+                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
                 return baseMysqlComp.selectOne(loginUser) != null;
@@ -304,6 +307,7 @@ public class UserMapperImpl {
             if (user1Flag == null) {
                 log.warn("用户邮箱不存在，请重新输入");
             } else {
+                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
                 return baseMysqlComp.selectOne(loginUser) != null;
@@ -312,7 +316,7 @@ public class UserMapperImpl {
         } catch (Exception e) {
             log.error("Failed to loginUserByEmail!", e);
         }
-        return null;
+        return false;
     }
 
     /**
@@ -339,6 +343,7 @@ public class UserMapperImpl {
             if (user1Flag == null) {
                 log.warn("用户电话不存在，请重新输入");
             } else {
+                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
                 return baseMysqlComp.selectOne(loginUser) != null;
@@ -347,7 +352,7 @@ public class UserMapperImpl {
         } catch (Exception e) {
             log.error("Failed to loginUserByTelephone!", e);
         }
-        return null;
+        return false;
     }
 
     /**
