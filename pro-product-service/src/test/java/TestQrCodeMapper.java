@@ -31,8 +31,8 @@ public class TestQrCodeMapper {
     //删除二维码
     @Test
     public void deleteQrCode() throws Exception {
-        QrCode qrCode=new QrCode();
-      //  qrCode.setQrCodeId(13);
+        QrCode qrCode = new QrCode();
+        //  qrCode.setQrCodeId(13);
         qrCode.setProductId("0000018c-c7d2-ad13-89e4-e695c7090849");
         qrCodeMapperImpl.deleteQrCode(qrCode);
         System.out.println("二维码删除成功！");
@@ -41,8 +41,8 @@ public class TestQrCodeMapper {
     //查询二维码
     @Test
     public void selectOneQrCode() throws Exception {
-        QrCode qrCode=new QrCode();
-       // qrCode.setQrCodeId(4);
+        QrCode qrCode = new QrCode();
+        // qrCode.setQrCodeId(4);
         qrCode.setProductId("0000018c-c8fd-1388-83aa-aee760275df7");
 
         System.out.println(qrCodeMapperImpl.selectOneQrCode(qrCode));
@@ -59,29 +59,35 @@ public class TestQrCodeMapper {
 
     @Test
     public void scanProductQrCode() throws Exception {
-        Product product=new Product();
+        Product product = new Product();
         product.setProductId("0000018c-d3e0-271f-8d8d-829a7a25ef2a");
-       qrCodeMapperImpl.sanProductQrCode(product);
+        qrCodeMapperImpl.sanProductQrCode(product);
         System.out.println("二维码信息查找成功！");
 
 
     }
+
     @Test
     public void scanLogisticQrCode() throws Exception {
-        Logistic logistic =new Logistic();
+        Logistic logistic = new Logistic();
         logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
         qrCodeMapperImpl.sanLogisticQrCode(logistic);
         System.out.println("二维码信息查找成功！");
 
 
     }
+
     //打包张贴两张二维码
     @Test
-    public void packProduct() throws Exception{
-        ProductLogisticRef productLogisticRef=new ProductLogisticRef();
+    public void packProduct() throws Exception {
+        ProductLogisticRef productLogisticRef = new ProductLogisticRef();
         productLogisticRef.setProductId("0000018c-c8fd-c038-8cd5-26ee6af1f203");
         productLogisticRef.setLogisticId("0000018c-c913-b31d-87ab-5eb8424f3019");
-        qrCodeMapperImpl.packProduct(productLogisticRef);
+        if (qrCodeMapperImpl.packProduct(productLogisticRef)) {
+            System.out.println("打包成功");
+        } else {
+            System.out.println("打包失败");
+        }
     }
 
 }

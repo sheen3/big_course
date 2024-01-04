@@ -20,14 +20,19 @@ import org.tools.common.uuid.UuidGenerator;
 public class TestContaminationMapper {
     @Autowired
     private ContaminationMapperImpl contaminationMapperImpl;
+
     @Test
     public void insertContamination() throws Exception {
-        Product product=new Product();
+        Product product = new Product();
         product.setProductId("0000018c-c8fd-1388-83aa-aee760275df7");
         product.setProductName("洗发水");
-        String des="荧光剂超标";
-        short status=2;
-        contaminationMapperImpl.insertContamination(product,des,status);
+        String des = "荧光剂超标";
+        short status = 2;
+        if (contaminationMapperImpl.insertContamination(product, des, status)) {
+            System.out.println("污染产品已通报");
+        } else {
+            System.out.println("污染产品通报失败");
+        }
     }
 
 

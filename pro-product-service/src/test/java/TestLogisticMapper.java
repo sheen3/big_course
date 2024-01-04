@@ -34,15 +34,17 @@ public class TestLogisticMapper {
     @Test
     public void insertLogistic() throws Exception {
         Logistic logistic = new Logistic();
-     //   logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        logistic.setLogisticCompanyId("黑妞1007");
+        //   logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+        logistic.setLogisticCompanyId("哇哈哈");
         logistic.setLogisticBatchId("sf105153");
         logistic.setLogisticVehicleInfo("赣A10003");
         logistic.setLogisticTime(Timestamp.valueOf(LocalDateTime.now()));
         logistic.setLogisticDestinationSupermarket("江西盒马");
-
-        logisticMapperImpl.insertLogistic(logistic);
-        System.out.println("物流信息新增成功！");
+        if (logisticMapperImpl.insertLogistic(logistic)) {
+            System.out.println("物流信息新增成功！");
+        } else {
+            System.out.println("物流信息新增失败");
+        }
     }
 
 
@@ -50,10 +52,14 @@ public class TestLogisticMapper {
     @Test
     public void selectOneLogistic() throws Exception {
         Logistic logistic = new Logistic();
-        logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
-        System.out.println(logisticMapperImpl.selectOneLogistic(logistic));
-        System.out.println("物流信息查找成功！");
+        logistic.setLogisticId("0000018c-d490-6ff6-b2e0-5000dd3b2844");
 
+
+        if (logisticMapperImpl.selectOneLogistic(logistic) != null) {
+            System.out.println("查找成功");
+        } else {
+            System.out.println("查找失败");
+        }
         System.out.println("############################################################");
         System.out.println("以下是查询所有的产品得到信息:");
         List<Logistic> logisticsList = logisticMapperImpl.selectAllLogistic();
@@ -67,10 +73,13 @@ public class TestLogisticMapper {
     @Test
     public void deleteLogistic() throws Exception {
         Logistic logistic = new Logistic();
-        logistic.setLogisticId("0000018c-d3e5-dded-8e3b-14c07e1c88f5");
+        logistic.setLogisticId("1742846218133835777");
 
-        logisticMapperImpl.deleteLogistic(logistic);
-        System.out.println("物流信息删除成功！");
+        if (logisticMapperImpl.deleteLogistic(logistic)) {
+            System.out.println("物流信息删除成功！");
+        } else {
+            System.out.println("物流信息删除失败！");
+        }
     }
 
     //更新物流信息
@@ -78,9 +87,12 @@ public class TestLogisticMapper {
     public void updateLogistic() throws Exception {
         Logistic logistic = new Logistic();
         logistic.setLogisticId("0000018c-cae2-955e-910c-49237ba0738a");
-        logistic.setLogisticBatchId("sf00234");
-        logisticMapperImpl.updateLogistic(logistic);
-        System.out.println("物流状态已更新！");
+        logistic.setLogisticBatchId("coco00234");
+        if (logisticMapperImpl.updateLogistic(logistic)) {
+            System.out.println("物流状态已更新！");
+        } else {
+            System.out.println("物流状态更新失败！");
+        }
 
     }
 
@@ -91,11 +103,14 @@ public class TestLogisticMapper {
         logisticsSupermarketRef.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
         logisticsSupermarketRef.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
 
-        if(logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)!=null){
-           System.out.println("物流与超市订单建立成！");
-       }
+        if (logisticMapperImpl.sendSupermarket(logisticsSupermarketRef) != null) {
+            System.out.println("物流与超市订单建立成功！");
+        } else {
+            System.out.println("物流与超市订单建立失败！");
+        }
 
     }
+
     @Test
     public void LogisticExcel() {
         Logistic logistic = new Logistic();
