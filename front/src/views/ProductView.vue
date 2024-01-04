@@ -1,7 +1,7 @@
 <template>
   <div>
     产品 {{ route.params.productId }}
-    {{showRes}}
+    {{showRes2}}
   </div>
 </template>
 
@@ -25,5 +25,15 @@ const instance = axios.create({
 const showRes = ref({} as any)
 instance.get<Ajax,Ajax>('/'+route.params.productId).then((res)=>{
   showRes.value = res
+})
+
+const instance2 = axios.create({
+  baseURL: 'https://localhost:18080/Power/sheen',
+})
+// http://localhost:8080/#/product/计科2013
+const showRes2 = ref()
+instance2.get().then((res)=>{
+  showRes2.value = res
+  console.log(res)
 })
 </script>

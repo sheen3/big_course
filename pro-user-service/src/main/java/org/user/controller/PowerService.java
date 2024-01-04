@@ -19,6 +19,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/Power")
+
 public class PowerService {
     private final PowerMapperImpl powerMapperImpl;
 

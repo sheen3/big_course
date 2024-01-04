@@ -5,6 +5,12 @@ spring:
     username: root
     password: "jiajiajia1."
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    cors:
+      # 允许的来源
+      allowed-origins: http://18080.com
+      # 设置为true以允许凭据
+      allow-credentials: true
 
 
 
