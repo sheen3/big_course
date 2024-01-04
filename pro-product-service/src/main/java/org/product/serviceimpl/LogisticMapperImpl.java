@@ -90,6 +90,8 @@ public class LogisticMapperImpl {
                     QRCodeGenerator.generateQRCode(qrCodeData, qrCodeFolderPath, qrCodeFileName, qrCodeSize);
                     System.out.println("二维码已生成并保存在:" + qrCodeFolderPath + "/" + qrCodeFileName);
 
+
+
                     //将二维码信息插入QrCodeMapper表里
                     QrCode qrcode = new QrCode();
                     qrcode.setQrCodeId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
@@ -207,6 +209,12 @@ public class LogisticMapperImpl {
                     String qrcodeFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic/" + logistic.getLogisticId() + ".png";
                     qrCodeMapperImpl.deleteQrCodeFile(qrcodeFilePath);
                     System.out.println("二维码已从本地文件中删除");
+
+                    LogisticQrCodeRef l1=new LogisticQrCodeRef();
+                    l1.setLogisticId(logistic.getLogisticId());
+                    MysqlBuilder<LogisticQrCodeRef> log = new MysqlBuilder<>(LogisticQrCodeRef.class);
+                    log.setIn(l1);
+                    baseMysqlComp.delete(log);
 
                     QrCode qrcode = new QrCode();
                     qrcode.setLogisticId(logistic.getLogisticId());
