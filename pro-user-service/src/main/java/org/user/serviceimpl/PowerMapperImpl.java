@@ -47,7 +47,7 @@ public class PowerMapperImpl {
      * @param power
      * @throws Exception
      */
-    public void insertPower(Power power) throws Exception {
+    public Boolean insertPower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
             if (power == null || power.getPowerId() == null) {
@@ -61,11 +61,13 @@ public class PowerMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.insert(insertPower);
+                    return true;
                 }
             }
         } catch (Exception e) {
             log.error("Failed to insert power!", e);
         }
+        return false;
     }
 
     /**
@@ -75,7 +77,7 @@ public class PowerMapperImpl {
      * @param power
      * @throws Exception
      */
-    public void selectOnePower(Power power) throws Exception {
+    public Boolean selectOnePower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
 
@@ -91,11 +93,13 @@ public class PowerMapperImpl {
                     logMessage.build(LogEnum.POWER_NO_EXISTS);
                     log.error(logMessage.log());
                 }
+                return true;
             }
 
         } catch (Exception e) {
             log.error("Failed to select power!", e);
         }
+        return false;
     }
 
     /**
@@ -117,7 +121,7 @@ public class PowerMapperImpl {
      * @param power
      * @throws Exception
      */
-    public void deletePower(Power power) throws Exception {
+    public Boolean deletePower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
             if ( power == null) {
@@ -131,12 +135,14 @@ public class PowerMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.delete(deletePower);
+                    return true;
 
                 }
             }
         } catch (Exception e) {
             log.error("Failed to delete power!", e);
         }
+        return false;
     }
 
     /**
@@ -146,7 +152,7 @@ public class PowerMapperImpl {
      * @param power
      * @throws Exception
      */
-    public void updatePower(Power power) throws Exception {
+    public Boolean updatePower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
             if (power == null ) {
@@ -162,11 +168,13 @@ public class PowerMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     baseMysqlComp.update(updatePower);
+                    return true;
                 }
             }
         } catch (Exception e) {
             log.error("Failed to update power!", e);
         }
+        return false;
     }
 
     /**
@@ -226,6 +234,6 @@ public class PowerMapperImpl {
         } catch (Exception e) {
             log.error("Failed to checkPowerOperate!", e);
         }
-        return null;
+        return false;
     }
 }

@@ -37,13 +37,17 @@ public class PowerService {
 
 
     @PostMapping("/powers/insert")
-    public void insertPower(@RequestBody Power power) {
+    public Boolean insertPower(@RequestBody Power power) {
         try {
-            powerMapperImpl.insertPower(power);
+            if (powerMapperImpl.insertPower(power)) {
+                return true;
+            }
+            return false;
 
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return false;
     }
 
     //测试查询权限列表信息
@@ -59,32 +63,42 @@ public class PowerService {
 
     //查找权限，由于权限名可能有多个故只能通过权限id查询
     @PostMapping("/powers/selectOne")
-    public void selectOnePower(@RequestBody Power power) throws Exception {
+    public Boolean selectOnePower(@RequestBody Power power) throws Exception {
         try {
-            powerMapperImpl.selectOnePower(power);
+            if (powerMapperImpl.selectOnePower(power)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return false;
     }
 
     //删除角色
     @DeleteMapping("/powers/delete")
-    public void deletePower(@RequestBody Power power) {
+    public Boolean deletePower(@RequestBody Power power) {
         try {
-            powerMapperImpl.deletePower(power);
+            if(powerMapperImpl.deletePower(power)){
+                return true;
+            }return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return false;
     }
 
     //修改角色信息
     @PostMapping("/power/update")
-    public void updatePower(@RequestBody Power power) {
+    public Boolean updatePower(@RequestBody Power power) {
         try {
-            powerMapperImpl.updatePower(power);
+           if( powerMapperImpl.updatePower(power)){
+               return true;
+           }return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return false;
     }
 
 

@@ -36,9 +36,12 @@ public class RoleService {
 
     // 增加角色
     @PostMapping("/role/insert")
-    public void insertRole(@RequestBody Role role) {
+    public Boolean insertRole(@RequestBody Role role) {
         try {
-            roleMapperImpl.insertRole(role);
+            if (roleMapperImpl.insertRole(role)) {
+                return true;
+            }
+            return false;
 
         } catch (Exception e) {
             System.out.println("操作失败");
@@ -58,9 +61,12 @@ public class RoleService {
 
     //查找权限，由于权限名可能有多个故只能通过权限id查询
     @PostMapping("/roles/selectOne")
-    public void selectOneRole(@RequestBody Role role) throws Exception {
+    public Boolean selectOneRole(@RequestBody Role role) throws Exception {
         try {
-            roleMapperImpl.selectOneRole(role);
+            if (roleMapperImpl.selectOneRole(role)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -68,9 +74,12 @@ public class RoleService {
 
     //删除角色
     @DeleteMapping("/roles/delete")
-    public void deleteRole(@RequestBody Role role) {
+    public Boolean deleteRole(@RequestBody Role role) {
         try {
-            roleMapperImpl.deleteRole(role);
+            if (roleMapperImpl.deleteRole(role)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -78,9 +87,12 @@ public class RoleService {
 
     //修改角色信息
     @PostMapping("/role/update")
-    public void updateRole(@RequestBody Role role) {
+    public Boolean updateRole(@RequestBody Role role) {
         try {
-            roleMapperImpl.updateRole(role);
+            if (roleMapperImpl.updateRole(role)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -93,6 +105,7 @@ public class RoleService {
         try {
             if (roleMapperImpl.revokeRoleFromUser(userRoleRef)) {
                 System.out.println("撤销角色给用户成功！");
+                return true;
             } else {
                 System.out.println("撤销角色给用户失败！");
             }
@@ -110,6 +123,7 @@ public class RoleService {
         try {
             if (roleMapperImpl.revokePowerFromRole(rolePowerRef)) {
                 System.out.println("撤销权限给角色成功！");
+                return true;
             } else {
                 System.out.println("撤销权限给角色失败！");
             }
