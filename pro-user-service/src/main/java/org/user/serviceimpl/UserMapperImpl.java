@@ -109,11 +109,12 @@ public class UserMapperImpl {
                     return true;
 
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to insert user!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -154,7 +155,7 @@ public class UserMapperImpl {
      * @param user
      * @throws Exception
      */
-    public User selectOneUser(User user) throws Exception {
+    public Boolean selectOneUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null || (user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
@@ -168,7 +169,11 @@ public class UserMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    baseMysqlComp.selectOne(selectOneUser);
+                    if (baseMysqlComp.selectOne(selectOneUser) != null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
             }
         } catch (Exception e) {
@@ -213,12 +218,12 @@ public class UserMapperImpl {
                 } else {
                     baseMysqlComp.delete(deleteUser);
                     return true;
-                }
+                }return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete user!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -279,14 +284,14 @@ public class UserMapperImpl {
                     updateUser.setUpdate(user);
                     baseMysqlComp.update(updateUser);
                     return true;
-                }
+                }return false;
             }
 
 
         } catch (Exception e) {
             log.error("Failed to update user!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -322,11 +327,12 @@ public class UserMapperImpl {
                     return false;
                 }
 
+
             }
         } catch (Exception e) {
             log.error("Failed to loginUser!", e);
         }
-        return false;
+        return null;
 
     }
 
@@ -366,7 +372,7 @@ public class UserMapperImpl {
         } catch (Exception e) {
             log.error("Failed to loginUserByEmail!", e);
         }
-        return false;
+        return null;
     }
 
     /**

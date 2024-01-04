@@ -57,7 +57,7 @@ public class RoleMapperImpl {
     public Boolean insertRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null ) {
+            if (role == null) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -76,12 +76,13 @@ public class RoleMapperImpl {
                     baseMysqlComp.insert(insertRole);
                     return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to insert role!", e);
 
         }
-        return false;
+        return null;
     }
 
 
@@ -95,7 +96,7 @@ public class RoleMapperImpl {
     public Boolean selectOneRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null ||  role.getRoleName() == null) {
+            if (role == null || role.getRoleName() == null) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -106,7 +107,7 @@ public class RoleMapperImpl {
                     log.warn(logMessage.log());
                 } else {
                     //执行查找操作
-                    if(baseMysqlComp.selectOne(selectOneRole)!=null){
+                    if (baseMysqlComp.selectOne(selectOneRole) != null) {
                         return true;
                     }
                     return false;
@@ -117,7 +118,8 @@ public class RoleMapperImpl {
             log.error("Failed to select role!", e);
 
         }
-        return false;
+
+        return null;
     }
 
     /**
@@ -157,7 +159,7 @@ public class RoleMapperImpl {
     public Boolean deleteRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null ) {
+            if (role == null) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -170,11 +172,12 @@ public class RoleMapperImpl {
                     baseMysqlComp.delete(deleteRole);
                     return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete role!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -187,7 +190,7 @@ public class RoleMapperImpl {
     public Boolean updateRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
-            if (role == null ) {
+            if (role == null) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -202,11 +205,12 @@ public class RoleMapperImpl {
                     baseMysqlComp.update(updateRole);
                     return true;
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to select role!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -251,7 +255,7 @@ public class RoleMapperImpl {
         } catch (Exception e) {
             log.error("Failed to grantRoleToUser!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -296,7 +300,7 @@ public class RoleMapperImpl {
         } catch (Exception e) {
             log.error("Failed to revokeRoleFromUser!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -344,7 +348,7 @@ public class RoleMapperImpl {
         } catch (Exception e) {
             log.error("Failed to grantDoPowerToRole role!", e);
         }
-        return false;
+        return null;
     }
 
 
@@ -394,7 +398,7 @@ public class RoleMapperImpl {
         } catch (Exception e) {
             log.error("Failed to grantSeePowerToRole role!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -437,7 +441,7 @@ public class RoleMapperImpl {
             log.error("Failed to revokePowerFromRole!", e);
 
         }
-        return false;
+        return null;
     }
 
 
@@ -453,7 +457,7 @@ public class RoleMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
 
-            if (role == null ) {
+            if (role == null) {
                 logMessage.build(LogEnum.ROLE_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -474,7 +478,7 @@ public class RoleMapperImpl {
             log.error("Failed to checkRoleOperate role!", e);
 
         }
-        return false;
+        return null;
     }
 }
 

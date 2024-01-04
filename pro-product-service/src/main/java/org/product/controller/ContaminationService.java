@@ -33,12 +33,15 @@ public class ContaminationService {
 
     //添加污染表
     @PostMapping("/contamination/insert")
-    public void insertContamination(@RequestBody InsertContaminationRequest request) {
+    public Boolean insertContamination(@RequestBody InsertContaminationRequest request) {
         try {
-            contaminationMapperImpl.insertContamination(request.getProduct(), request.getDescription(), request.getStatus());
+            if(contaminationMapperImpl.insertContamination(request.getProduct(), request.getDescription(), request.getStatus())){
+                return true;
+            }return false;
         } catch (Exception e) {
             // 处理异常
         }
+        return null;
     }
 
     static class InsertContaminationRequest {

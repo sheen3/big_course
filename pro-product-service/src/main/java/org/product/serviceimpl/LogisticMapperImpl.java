@@ -51,7 +51,7 @@ public class LogisticMapperImpl {
      * @param logistic
      * @throws Exception
      */
-    public void insertLogistic(Logistic logistic) throws Exception {
+    public Boolean insertLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
@@ -128,12 +128,14 @@ public class LogisticMapperImpl {
                     excelWriter.writeToExcel(folderName, fileName, content);
                 }
 
+                return true;
 
             }
         } catch (Exception e) {
             log.error("Failed to insert product!", e);
 
         }
+        return false;
     }
 
     /**
@@ -143,7 +145,7 @@ public class LogisticMapperImpl {
      * @return
      * @throws Exception
      */
-    public Logistic selectOneLogistic(Logistic logistic) throws Exception {
+    public Boolean selectOneLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
@@ -159,7 +161,10 @@ public class LogisticMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    return baseMysqlComp.selectOne(selectOneLogist);
+                    if( baseMysqlComp.selectOne(selectOneLogist)!=null){
+                        return true;
+
+                    }else return false;
                 }
             }
         } catch (Exception e) {
@@ -185,7 +190,7 @@ public class LogisticMapperImpl {
      * @param logistic
      * @throws Exception
      */
-    public void deleteLogistic(Logistic logistic) throws Exception {
+    public Boolean deleteLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
             if (logistic == null ) {
@@ -211,12 +216,15 @@ public class LogisticMapperImpl {
                     baseMysqlComp.delete(deleteQrCode);
                     System.out.println("二维码已从数据库中删除");
                     baseMysqlComp.delete(deleteLogistic);
+                    return true;
 
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete Product!", e);
         }
+        return null;
     }
 
     /**

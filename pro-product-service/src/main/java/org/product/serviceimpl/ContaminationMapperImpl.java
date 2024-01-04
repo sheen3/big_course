@@ -43,7 +43,7 @@ public class ContaminationMapperImpl {
      * @param status
      * @throws Exception
      */
-    public void insertContamination(Product product, String des, short status) throws Exception {
+    public Boolean insertContamination(Product product, String des, short status) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -80,6 +80,7 @@ public class ContaminationMapperImpl {
                             String.valueOf(contaminationRecord.getRecordsStatus()),
                     };
                     excelWriter.writeToExcel(folderName, fileName, content);
+                    return true;
                 }
             }
         } catch (
@@ -87,6 +88,7 @@ public class ContaminationMapperImpl {
             log.error("Failed to insert Contamination!", e);
         }
 
+        return false;
     }
 
     /**
