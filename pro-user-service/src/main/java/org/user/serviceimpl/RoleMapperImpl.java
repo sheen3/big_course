@@ -54,7 +54,7 @@ public class RoleMapperImpl {
      * @param role
      * @throws Exception
      */
-    public void insertRole(Role role) throws Exception {
+    public Boolean insertRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
             if (role == null ) {
@@ -74,12 +74,14 @@ public class RoleMapperImpl {
                 } else {
                     // 执行插入操作
                     baseMysqlComp.insert(insertRole);
+                    return true;
                 }
             }
         } catch (Exception e) {
             log.error("Failed to insert role!", e);
 
         }
+        return false;
     }
 
 
@@ -90,7 +92,7 @@ public class RoleMapperImpl {
      * @param role 角色
      * @throws Exception 错误
      */
-    public void selectOneRole(Role role) throws Exception {
+    public Boolean selectOneRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
             if (role == null ||  role.getRoleName() == null) {
@@ -104,13 +106,18 @@ public class RoleMapperImpl {
                     log.warn(logMessage.log());
                 } else {
                     //执行查找操作
-                    baseMysqlComp.selectOne(selectOneRole);
+                    if(baseMysqlComp.selectOne(selectOneRole)!=null){
+                        return true;
+                    }
+                    return false;
+
                 }
             }
         } catch (Exception e) {
             log.error("Failed to select role!", e);
 
         }
+        return false;
     }
 
     /**

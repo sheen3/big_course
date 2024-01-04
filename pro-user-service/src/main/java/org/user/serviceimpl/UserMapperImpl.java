@@ -168,7 +168,7 @@ public class UserMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    return baseMysqlComp.selectOne(selectOneUser);
+                    baseMysqlComp.selectOne(selectOneUser);
                 }
             }
         } catch (Exception e) {

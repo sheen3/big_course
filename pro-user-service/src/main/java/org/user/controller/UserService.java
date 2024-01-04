@@ -42,8 +42,10 @@ public class UserService {
     @PostMapping("/users/insert")
     public Boolean insertUser(@RequestBody User user) {
         try {
-            System.out.println(userMapperImpl.insertUser(user));
-            return true;
+            if (userMapperImpl.insertUser(user)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("注册失败");
 
@@ -66,8 +68,10 @@ public class UserService {
     @PostMapping("/users/selectOne")
     public Boolean selectOneUser(@RequestBody User user) throws Exception {
         try {
-            userMapperImpl.selectOneUser(user);
-            return true;
+            if (userMapperImpl.selectOneUser(user) != null) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -78,8 +82,11 @@ public class UserService {
     @DeleteMapping("/users/delete")
     public Boolean deleteUser(@RequestBody User user) {
         try {
-            System.out.println(userMapperImpl.deleteUser(user));
-            return true;
+            if (userMapperImpl.deleteUser(user)) {
+                return true;
+            }
+            return false;
+
         } catch (Exception e) {
             System.out.println("操作失败");
         }
@@ -90,8 +97,11 @@ public class UserService {
     @PostMapping("/users/update")
     public Boolean updateUser(@RequestBody User user) {
         try {
-            System.out.println(userMapperImpl.updateUser(user));
-            return true;
+            if (userMapperImpl.updateUser(user)) {
+                return true;
+            }
+            return false;
+
         } catch (Exception e) {
 
         }
@@ -101,8 +111,10 @@ public class UserService {
     @PostMapping("/loginByUserName")
     public Boolean loginUserByName(@RequestBody User user) {
         try {
-            System.out.println(userMapperImpl.loginUserByName(user));
-            return true;
+            if (userMapperImpl.loginUserByName(user)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
         }
         return false;
@@ -111,8 +123,10 @@ public class UserService {
     @PostMapping("/loginByUserTelephone")
     public Boolean loginUserByTelephone(@RequestBody User user) {
         try {
-            System.out.println(userMapperImpl.loginUserByTelephone(user));
-            return true;
+            if (userMapperImpl.loginUserByTelephone(user)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
         }
         return false;
@@ -121,8 +135,10 @@ public class UserService {
     @PostMapping("/loginByUserEmail")
     public Boolean loginUserByEmail(@RequestBody User user) {
         try {
-            System.out.println(userMapperImpl.loginUserByEmail(user));
-            return true;
+            if (userMapperImpl.loginUserByEmail(user)) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
 
         }
@@ -134,10 +150,12 @@ public class UserService {
     @PostMapping("/user/role")
     public Boolean isUserWhatToRole(@RequestBody User user) {
         try {
-            if(userMapperImpl.isUserWhatToRole(user)!=null)
-            return true;
+            if (userMapperImpl.isUserWhatToRole(user) != null) {
+                return true;
+            }
+            return false;
         } catch (Exception e) {
-            return null;
+
         }
         return false;
     }
