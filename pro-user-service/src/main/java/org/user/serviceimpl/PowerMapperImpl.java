@@ -77,7 +77,7 @@ public class PowerMapperImpl {
      * @param power
      * @throws Exception
      */
-    public Boolean selectOnePower(Power power) throws Exception {
+    public Power selectOnePower(Power power) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.POWER);
 
@@ -93,13 +93,13 @@ public class PowerMapperImpl {
                     logMessage.build(LogEnum.POWER_NO_EXISTS);
                     log.error(logMessage.log());
                 }
-                return true;
+              return baseMysqlComp.selectOne(selectOnePower);
             }
 
         } catch (Exception e) {
             log.error("Failed to select power!", e);
         }
-        return false;
+        return null;
     }
 
     /**

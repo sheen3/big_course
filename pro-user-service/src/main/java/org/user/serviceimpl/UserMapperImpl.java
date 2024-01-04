@@ -155,7 +155,7 @@ public class UserMapperImpl {
      * @param user
      * @throws Exception
      */
-    public Boolean selectOneUser(User user) throws Exception {
+    public User selectOneUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
             if (user == null || (user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
@@ -169,11 +169,8 @@ public class UserMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    if (baseMysqlComp.selectOne(selectOneUser) != null) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return baseMysqlComp.selectOne(selectOneUser);
+
                 }
             }
         } catch (Exception e) {
@@ -218,7 +215,8 @@ public class UserMapperImpl {
                 } else {
                     baseMysqlComp.delete(deleteUser);
                     return true;
-                }return false;
+                }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to delete user!", e);
@@ -284,7 +282,8 @@ public class UserMapperImpl {
                     updateUser.setUpdate(user);
                     baseMysqlComp.update(updateUser);
                     return true;
-                }return false;
+                }
+                return false;
             }
 
 

@@ -64,7 +64,7 @@ public class RoleService {
     @PostMapping("/roles/selectOne")
     public Boolean selectOneRole(@RequestBody Role role) throws Exception {
         try {
-            if (roleMapperImpl.selectOneRole(role)) {
+            if (roleMapperImpl.selectOneRole(role)!=null) {
                 return true;
             }
             return false;

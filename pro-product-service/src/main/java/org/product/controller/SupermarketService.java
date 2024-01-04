@@ -62,7 +62,7 @@ public class SupermarketService {
     @PostMapping("/supermarket/selectOne")
     public Boolean selectOneSupermarket(@RequestBody Supermarket supermarket) throws Exception {
         try {
-            if(supermarketMapperImpl.selectOneSupermarket(supermarket)){
+            if(supermarketMapperImpl.selectOneSupermarket(supermarket)!=null){
                 return true;
             }
             return false;
@@ -113,7 +113,7 @@ public class SupermarketService {
     @PostMapping("/supermarket/conProduct")
     public Boolean supermarketGetCon(@RequestBody Product product) {
         try {
-            if(supermarketMapperImpl.supermarketGetCon(product)){
+            if(supermarketMapperImpl.supermarketGetCon(product)!=null){
                 return true;
             }return false;
         } catch (Exception e) {

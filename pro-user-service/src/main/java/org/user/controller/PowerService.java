@@ -65,7 +65,7 @@ public class PowerService {
     @PostMapping("/powers/selectOne")
     public Boolean selectOnePower(@RequestBody Power power) throws Exception {
         try {
-            if (powerMapperImpl.selectOnePower(power)) {
+            if (powerMapperImpl.selectOnePower(power)!=null) {
                 return true;
             }
             return false;

@@ -99,7 +99,7 @@ public class QrCodeMapperImpl {
      * @param qrCode
      * @throws Exception
      */
-    public Boolean selectOneQrCode(QrCode qrCode) throws Exception {
+    public QrCode selectOneQrCode(QrCode qrCode) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.QrCode);
             if (qrCode == null) {
@@ -113,10 +113,7 @@ public class QrCodeMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    if (baseMysqlComp.selectOne(selectOneQrCode) != null) {
-                        return true;
-                    }
-                    return false;
+                    return baseMysqlComp.selectOne(selectOneQrCode) ;
                 }
             }
 
@@ -231,6 +228,7 @@ public class QrCodeMapperImpl {
                 } else {
                     // 执行插入操作
                     baseMysqlComp.insert(insertProductLogisticRef);
+
                     //贴两张二维码
                     // 二维码文件夹路径
                     String logisticQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productLogistic";
@@ -248,14 +246,16 @@ public class QrCodeMapperImpl {
                     String productText = scanQRCode(productQrCodeFilePath);
                     if (productText != null) {
                         System.out.println("扫描结果： " + productText);
-                        return true;
+
                     } else {
                         System.out.println("未能扫描到二维码");
-                        return false;
+
                     }
 
+                    return true;
 
                 }
+                return false;
             }
         } catch (Exception e) {
             log.error("Failed to insert productLogisticRef!", e);

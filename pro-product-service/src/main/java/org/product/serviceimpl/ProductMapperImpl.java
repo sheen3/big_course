@@ -145,7 +145,7 @@ public class ProductMapperImpl {
      * @param product
      * @throws Exception
      */
-    public Boolean selectOneProduct(Product product) throws Exception {
+    public Product selectOneProduct(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -160,10 +160,8 @@ public class ProductMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    if (baseMysqlComp.selectOne(selectOneProduct) != null) {
-                        return true;
-                    }
-                    return false;
+                    return  baseMysqlComp.selectOne(selectOneProduct);
+
                 }
             }
         } catch (Exception e) {

@@ -98,7 +98,7 @@ public class SupermarketMapperImpl {
      * @param supermarket
      * @throws Exception
      */
-    public Boolean selectOneSupermarket(Supermarket supermarket) throws Exception {
+    public Supermarket selectOneSupermarket(Supermarket supermarket) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.SUPERMARKET);
 
@@ -114,9 +114,9 @@ public class SupermarketMapperImpl {
                 if (selectedSupermarket == null) {
                     logMessage.build(LogEnum.SUPERMARKET_NO_EXISTS);
                     log.error(logMessage.log());
-                    return false;
+
                 }
-                return true;
+              return baseMysqlComp.selectOne(selectOneSupermarket);
             }
 
         } catch (Exception e) {
@@ -318,7 +318,7 @@ public class SupermarketMapperImpl {
      *
      * @param product
      */
-    public Boolean supermarketGetCon(Product product) throws Exception {
+    public Product supermarketGetCon(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
@@ -341,7 +341,9 @@ public class SupermarketMapperImpl {
                     flag1.setIn(con);
                     if(baseMysqlComp.selectOne(flag1)==null){
                         System.out.println("此产品无污染");
+
                     }else {
+
                         System.out.println(product.getProductId()+"产品已被污染，下架处理！");
                         ProductStorage pro=new ProductStorage();
                         pro.setProductId(product.getProductId());
@@ -349,9 +351,9 @@ public class SupermarketMapperImpl {
                         flag2.setIn(pro);
                         baseMysqlComp.delete(flag2);
                         System.out.println(product.getProductId()+"下架成功！");
-                        return true;
+                        return product;
                     }
-                    return false;
+
 
                 }
 

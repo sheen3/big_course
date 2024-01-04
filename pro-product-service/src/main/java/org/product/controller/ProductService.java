@@ -61,7 +61,7 @@ public class ProductService {
     @PostMapping("/product/selectOne")
     public Boolean selectOneProduct(@RequestBody Product product) throws Exception {
         try {
-            if (productMapperImpl.selectOneProduct(product)) {
+            if (productMapperImpl.selectOneProduct(product)!=null) {
                 return true;
             }
             return false;

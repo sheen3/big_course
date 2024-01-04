@@ -47,7 +47,7 @@ public class QrcodeService {
     @PostMapping("/QrCode/selectOne")
     public Boolean selectOneQrCode(@RequestBody QrCode qrCode) throws Exception {
         try {
-            if (qrCodeMapperImpl.selectOneQrCode(qrCode)) {
+            if (qrCodeMapperImpl.selectOneQrCode(qrCode)!=null) {
                 return true;
             }
             return false;

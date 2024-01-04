@@ -145,7 +145,7 @@ public class LogisticMapperImpl {
      * @return
      * @throws Exception
      */
-    public Boolean selectOneLogistic(Logistic logistic) throws Exception {
+    public Logistic selectOneLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
 
@@ -161,10 +161,9 @@ public class LogisticMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
-                    if (baseMysqlComp.selectOne(selectOneLogist) != null) {
-                        return true;
+                    return baseMysqlComp.selectOne(selectOneLogist);
 
-                    } else return false;
+
                 }
             }
         } catch (Exception e) {
@@ -327,7 +326,7 @@ public class LogisticMapperImpl {
      * @return
      * @throws Exception
      */
-    public Boolean sendSupermarket(LogisticsSupermarketRef logisticsSupermarketRef) throws Exception {
+    public LogisticsSupermarketRef sendSupermarket(LogisticsSupermarketRef logisticsSupermarketRef) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
             LogComp.LogMessage logMessage1 = LogComp.buildData(LogType.SUPERMARKET);
@@ -343,7 +342,7 @@ public class LogisticMapperImpl {
                 log.warn(logMessage.log());
             } else {
                 baseMysqlComp.insert(flag);
-                return baseMysqlComp.selectOne(flag) != null;
+                return baseMysqlComp.selectOne(flag) ;
             }
         } catch (Exception e) {
             log.error("Failed to sendSupermarket!", e);

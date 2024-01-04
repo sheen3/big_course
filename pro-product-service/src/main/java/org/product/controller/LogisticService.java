@@ -64,7 +64,7 @@ public class LogisticService {
     @PostMapping("/logistic/selectOne")
     public Boolean selectOneLogistic(@RequestBody Logistic logistic) throws Exception {
         try {
-            if (logisticMapperImpl.selectOneLogistic(logistic)) {
+            if (logisticMapperImpl.selectOneLogistic(logistic)!=null) {
                 return true;
             }
             return false;
@@ -105,7 +105,7 @@ public class LogisticService {
     @PostMapping("/logistic/supermarkrt")
     public Boolean sendSupermarket(@RequestBody LogisticsSupermarketRef logisticsSupermarketRef) {
         try {
-            if (logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)) {
+            if (logisticMapperImpl.sendSupermarket(logisticsSupermarketRef)!=null) {
                 System.out.println("物流与超市订单建立成！");
                 return true;
 

@@ -1,5 +1,6 @@
 package org.user.serviceimpl;
 
+import com.baomidou.mybatisplus.extension.api.R;
 import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 import org.database.mysql.BaseMysqlComp;
@@ -93,7 +94,7 @@ public class RoleMapperImpl {
      * @param role 角色
      * @throws Exception 错误
      */
-    public Boolean selectOneRole(Role role) throws Exception {
+    public Role selectOneRole(Role role) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.ROLE);
             if (role == null || role.getRoleName() == null) {
@@ -107,10 +108,7 @@ public class RoleMapperImpl {
                     log.warn(logMessage.log());
                 } else {
                     //执行查找操作
-                    if (baseMysqlComp.selectOne(selectOneRole) != null) {
-                        return true;
-                    }
-                    return false;
+                   return  baseMysqlComp.selectOne(selectOneRole) ;
 
                 }
             }
