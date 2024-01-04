@@ -28,7 +28,7 @@ instance.get<Ajax,Ajax>('/'+route.params.productId).then((res)=>{
 })
 
 const instance2 = axios.create({
-  baseURL: 'https://localhost:18080/Power/sheen',
+  baseURL: 'http://localhost:18080/Power/sheen',
 })
 // http://localhost:8080/#/product/计科2013
 const showRes2 = ref()
