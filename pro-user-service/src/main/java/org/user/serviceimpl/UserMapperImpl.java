@@ -65,9 +65,9 @@ public class UserMapperImpl {
             if (user == null || user.getUserName() == null || user.getUserTelephone() == null || user.getUserSysEmail() == null) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
+
             } else {
-                user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
+
                 MysqlBuilder<User> insertUser = new MysqlBuilder<>(User.class);
                 insertUser.setIn(user);
 
@@ -92,6 +92,8 @@ public class UserMapperImpl {
                 } else if (user3Flag != null) {
                     log.warn("用户邮箱已存在，请重新输入");
                 } else {
+                    user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+                    user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                     baseMysqlComp.insert(insertUser);
                     //给用户分配角色
                     UserRoleRef userRoleRef = new UserRoleRef();

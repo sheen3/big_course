@@ -92,7 +92,7 @@ public class SupermarketMapperImpl {
     }
 
     /**
-     * 查找某一门店
+     * 查找门店
      *
      * @param supermarket
      * @throws Exception
