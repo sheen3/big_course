@@ -1,4 +1,4 @@
-import org.database.mysql.domain.Power;
+
 import org.database.mysql.domain.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.tools.common.uuid.UuidGenerator;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -99,7 +98,7 @@ public class TestProductMapper {
     }
 
     @Test
-    public void ExcelProduct() throws Exception {
+    public void ExcelProduct() {
         Product product = new Product();
         product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         product.setProductName("洗发水");

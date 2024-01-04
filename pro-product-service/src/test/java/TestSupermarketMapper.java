@@ -1,4 +1,4 @@
-import org.database.mysql.domain.Logistic;
+
 import org.database.mysql.domain.LogisticsSupermarketRef;
 import org.database.mysql.domain.Product;
 import org.database.mysql.domain.Supermarket;
@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.tools.common.uuid.UuidGenerator;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+
 import java.util.List;
 
 /**

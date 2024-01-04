@@ -3,12 +3,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.product.ProductApplication;
 import org.product.serviceimpl.ContaminationMapperImpl;
-import org.product.serviceimpl.LogisticMapperImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.tools.common.uuid.UuidGenerator;
+
 
 /**
  * @Author: eensh
