@@ -111,7 +111,7 @@ public class TestUserMapper {
     @Test
     public void loginUserByEmail() throws Exception {
         User user = new User();
-        user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
+      //  user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
         user.setUserSysEmail("yiyiO@yeah.com");
         user.setUserPassword(PasswordEncrypt.hashPassword("IAmFairy"));
       userMapperimpl.loginUserByEmail(user);

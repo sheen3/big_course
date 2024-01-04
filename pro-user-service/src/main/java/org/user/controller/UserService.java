@@ -40,13 +40,14 @@ public class UserService {
     }
 
     @PostMapping("/users/insert")
-    public void insertUser(@RequestBody User user) {
+    public String insertUser(@RequestBody User user) {
         try {
-            userMapperImpl.insertUser(user);
+            return userMapperImpl.insertUser(user);
 
         } catch (Exception e) {
             System.out.println("注册失败");
         }
+        return null;
     }
 
     //测试查询用户列表信息
@@ -62,59 +63,62 @@ public class UserService {
 
     //用户id 或者用户名 或者用户邮箱 或者用户电话 查询用户列表信息
     @PostMapping("/users/selectOne")
-    public void selectOneUser(@RequestBody User user) throws Exception {
+    public User selectOneUser(@RequestBody User user) throws Exception {
         try {
-            userMapperImpl.selectOneUser(user);
+            return userMapperImpl.selectOneUser(user);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //删除用户
     @DeleteMapping("/users/delete")
-    public void deleteUser(@RequestBody User user) {
+    public String deleteUser(@RequestBody User user) {
         try {
-            userMapperImpl.deleteUser(user);
+            return  userMapperImpl.deleteUser(user);
         } catch (Exception e) {
             System.out.println("操作失败");
         }
+        return null;
     }
 
     //修改用户信息
     @PostMapping("/users/update")
-    public void updateUser(@RequestBody User user) {
+    public String  updateUser(@RequestBody User user) {
         try {
-            userMapperImpl.updateUser(user);
+            return userMapperImpl.updateUser(user);
         } catch (Exception e) {
-            System.out.println("操作失败");
+            return null;
+
         }
     }
 
     @PostMapping("/loginByUserName")
-    public boolean loginUserByName(@RequestBody User user) {
+    public String loginUserByName(@RequestBody User user) {
         try {
             return userMapperImpl.loginUserByName(user);
         } catch (Exception e) {
-            return false;
+            return null;
         }
     }
 
     @PostMapping("/loginByUserTelephone")
-    public boolean loginUserByTelephone(@RequestBody User user) {
+    public String loginUserByTelephone(@RequestBody User user) {
         try {
             return userMapperImpl.loginUserByTelephone(user);
         } catch (Exception e) {
-            return false;
+            return null;
         }
 
     }
 
     @PostMapping("/loginByUserEmail")
-    public boolean loginUserByEmail(@RequestBody User user) {
+    public String loginUserByEmail(@RequestBody User user) {
         try {
             return userMapperImpl.loginUserByEmail(user);
         } catch (Exception e) {
-            return false;
+            return null;
         }
 
     }
