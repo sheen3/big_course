@@ -50,7 +50,7 @@ public class UserService {
             System.out.println("注册失败");
 
         }
-        return false;
+        return null;
     }
 
     //测试查询用户列表信息
@@ -75,7 +75,7 @@ public class UserService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return false;
+        return null;
     }
 
     //删除用户
@@ -90,7 +90,7 @@ public class UserService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return false;
+        return null;
     }
 
     //修改用户信息
@@ -105,7 +105,7 @@ public class UserService {
         } catch (Exception e) {
 
         }
-        return false;
+        return null;
     }
 
     @PostMapping("/loginByUserName")
@@ -117,7 +117,7 @@ public class UserService {
             return false;
         } catch (Exception e) {
         }
-        return false;
+        return null;
     }
 
     @PostMapping("/loginByUserTelephone")
@@ -129,7 +129,7 @@ public class UserService {
             return false;
         } catch (Exception e) {
         }
-        return false;
+        return null;
     }
 
     @PostMapping("/loginByUserEmail")
@@ -142,7 +142,7 @@ public class UserService {
         } catch (Exception e) {
 
         }
-        return false;
+        return null;
 
     }
 
@@ -157,7 +157,7 @@ public class UserService {
         } catch (Exception e) {
 
         }
-        return false;
+        return null;
     }
 
 

@@ -46,7 +46,7 @@ public class RoleService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return false;
+        return null;
     }
 
     //测试查询权限列表信息
@@ -71,7 +71,7 @@ public class RoleService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return false;
+        return null;
     }
 
     //删除角色
@@ -85,7 +85,7 @@ public class RoleService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return false;
+        return null;
     }
 
     //修改角色信息
@@ -99,7 +99,7 @@ public class RoleService {
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return false;
+        return null;
     }
 
 
@@ -135,7 +135,7 @@ public class RoleService {
             System.out.println("操作失败");
 
         }
-        return false;
+        return null;
     }
 
 
