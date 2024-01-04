@@ -303,6 +303,7 @@ public class UserMapperImpl {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             }
+            user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
             MysqlBuilder<User> builder = new MysqlBuilder<>(User.class);
             User user1 = new User();
             user1.setUserName(user.getUserName());
@@ -310,11 +311,14 @@ public class UserMapperImpl {
             if (user1Flag == null) {
                 log.warn("用户名不存在，请重新输入");
             } else {
-                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
+
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
-                baseMysqlComp.selectOne(loginUser);
-                return "登陆成功！";
+                if (baseMysqlComp.selectOne(loginUser) != null) {
+                    return "登陆成功！";
+                } else {
+                    return "登陆失败！";
+                }
 
             }
         } catch (Exception e) {
@@ -340,6 +344,7 @@ public class UserMapperImpl {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             }
+            user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
             MysqlBuilder<User> builder = new MysqlBuilder<>(User.class);
             User user1 = new User();
             user1.setUserSysEmail(user.getUserSysEmail());
@@ -347,11 +352,13 @@ public class UserMapperImpl {
             if (user1Flag == null) {
                 log.warn("用户邮箱不存在，请重新输入");
             } else {
-                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
-                baseMysqlComp.selectOne(loginUser);
-                return "登陆成功！";
+                if (baseMysqlComp.selectOne(loginUser) != null) {
+                    return "登陆成功！";
+                } else {
+                    return "登陆失败！";
+                }
 
             }
         } catch (Exception e) {
@@ -376,6 +383,7 @@ public class UserMapperImpl {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             }
+            user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
             MysqlBuilder<User> builder = new MysqlBuilder<>(User.class);
 
             User user1 = new User();
@@ -384,12 +392,13 @@ public class UserMapperImpl {
             if (user1Flag == null) {
                 log.warn("用户电话不存在，请重新输入");
             } else {
-                user.setUserPassword(PasswordEncrypt.hashPassword(user.getUserPassword()));
                 MysqlBuilder<User> loginUser = new MysqlBuilder<>(User.class);
                 loginUser.setIn(user);
-                 baseMysqlComp.selectOne(loginUser);
-                return "登陆成功！";
-
+                if (baseMysqlComp.selectOne(loginUser) != null) {
+                    return "登陆成功！";
+                } else {
+                    return "登陆失败！";
+                }
             }
         } catch (Exception e) {
             log.error("Failed to loginUserByTelephone!", e);
