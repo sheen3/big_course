@@ -52,7 +52,7 @@ public class TestProductMapper {
         Product product=new Product();
      //   product.setProductId("0000018c-c44d-857f-a546-51cc6b627d71");
         product.setProductName("盼盼");
-        product.setProductionPlace("天津");
+       // product.setProductionPlace("天津");
         System.out.println(productMapperImpl.selectOneProduct(product));
         System.out.println("产品查找成功！");
 

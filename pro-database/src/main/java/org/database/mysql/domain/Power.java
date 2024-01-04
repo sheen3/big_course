@@ -1,5 +1,6 @@
 package org.database.mysql.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @TableName("sys_power")
 public class Power {
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer powerId;
     private String powerName;
     private Short powerType;

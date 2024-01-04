@@ -31,8 +31,8 @@ public class TestRoleMapper {
     @Test
     public void insertRole() throws Exception {
         Role role = new Role();
-        role.setRoleId((short) 109);
-        role.setRoleName("测试者");
+     //   role.setRoleId((short) 101);
+        role.setRoleName("维护者");
         role.setRoleCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         role.setRoleStatusFlag((short) 0);
         role.setRoleRemark("销售设备");
@@ -46,7 +46,7 @@ public class TestRoleMapper {
     public void selectOneRole() throws Exception {
         Role role = new Role();
         // role.setRoleId((short)101);
-        role.setRoleName("被测者");
+        role.setRoleName("系统管理员");
         roleMapperImpl.selectOneRole(role);
         System.out.println("权限查找成功！");
 

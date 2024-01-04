@@ -63,16 +63,16 @@ public class RoleMapperImpl {
                 log.warn(logMessage.log());
             } else {
                 Role role1 = new Role();
+                role1.setRoleName(role.getRoleName());
                 MysqlBuilder<Role> builder = new MysqlBuilder<>(Role.class);
                 builder.setIn(role1);
 
-                MysqlBuilder<Role> insertRole = new MysqlBuilder<>(Role.class);
-                insertRole.setIn(role);
-
-                if (roleMapper.selectById(role.getRoleId()) != null || baseMysqlComp.selectOne(builder) != null) {
+                if (baseMysqlComp.selectOne(builder) != null) {
                     logMessage.build(LogEnum.ROLE_EXISTS);
                     log.error(logMessage.log());
                 } else {
+                    MysqlBuilder<Role> insertRole = new MysqlBuilder<>(Role.class);
+                    insertRole.setIn(role);
                     // 执行插入操作
                     baseMysqlComp.insert(insertRole);
                     return true;

@@ -45,7 +45,7 @@ public class TestSupermarketMapper {
     @Test
     public void selectOneSupermarket() throws Exception {
         Supermarket supermarket=new Supermarket();
-        supermarket.setSupermarketId("0000018c-ca52-3e64-8442-2de6991684ab");
+        //supermarket.setSupermarketId("0000018c-ca52-3e64-8442-2de6991684ab");
         supermarket.setSupermarketName("盒马");
         supermarketMapperImpl.selectOneSupermarket(supermarket);
         System.out.println("超市查找成功！");
@@ -61,7 +61,7 @@ public class TestSupermarketMapper {
     @Test
     public void deleteSupermarket() throws Exception {
         Supermarket supermarket=new Supermarket();
-        supermarket.setSupermarketId("0000018c-ca52-3e64-8442-2de6991684ab");
+       // supermarket.setSupermarketId("0000018c-ca52-3e64-8442-2de6991684ab");
         supermarketMapperImpl.deleteSupermarket(supermarket);
         System.out.println("超市删除成功！");
     }
