@@ -122,7 +122,7 @@ public class TestUserMapper {
     public void loginUserByTelephone() throws Exception {
         User user = new User();
         user.setUserTelephone("15609000234");
-        user.setUserPassword("kkkv");
+        user.setUserPassword("kkikv");
         System.out.println(userMapperimpl.loginUserByTelephone(user));
     }
 

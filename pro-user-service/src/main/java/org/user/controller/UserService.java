@@ -40,14 +40,13 @@ public class UserService {
     }
 
     @PostMapping("/users/insert")
-    public String insertUser(@RequestBody User user) {
+    public void insertUser(@RequestBody User user) {
         try {
-            return userMapperImpl.insertUser(user);
+            System.out.println(userMapperImpl.insertUser(user));
 
         } catch (Exception e) {
             System.out.println("注册失败");
         }
-        return null;
     }
 
     //测试查询用户列表信息
@@ -74,51 +73,48 @@ public class UserService {
 
     //删除用户
     @DeleteMapping("/users/delete")
-    public String deleteUser(@RequestBody User user) {
+    public void deleteUser(@RequestBody User user) {
         try {
-            return  userMapperImpl.deleteUser(user);
+            System.out.println(userMapperImpl.deleteUser(user));
         } catch (Exception e) {
             System.out.println("操作失败");
         }
-        return null;
+
     }
 
     //修改用户信息
     @PostMapping("/users/update")
-    public String  updateUser(@RequestBody User user) {
+    public void updateUser(@RequestBody User user) {
         try {
-            return userMapperImpl.updateUser(user);
+            System.out.println(userMapperImpl.updateUser(user));
         } catch (Exception e) {
-            return null;
 
         }
     }
 
     @PostMapping("/loginByUserName")
-    public String loginUserByName(@RequestBody User user) {
+    public void loginUserByName(@RequestBody User user) {
         try {
-            return userMapperImpl.loginUserByName(user);
+            System.out.println(userMapperImpl.loginUserByName(user));
         } catch (Exception e) {
-            return null;
         }
     }
 
     @PostMapping("/loginByUserTelephone")
-    public String loginUserByTelephone(@RequestBody User user) {
+    public void loginUserByTelephone(@RequestBody User user) {
         try {
-            return userMapperImpl.loginUserByTelephone(user);
+            System.out.println(userMapperImpl.loginUserByTelephone(user));
         } catch (Exception e) {
-            return null;
         }
 
     }
 
     @PostMapping("/loginByUserEmail")
-    public String loginUserByEmail(@RequestBody User user) {
+    public void loginUserByEmail(@RequestBody User user) {
         try {
-            return userMapperImpl.loginUserByEmail(user);
+            System.out.println(userMapperImpl.loginUserByEmail(user));
         } catch (Exception e) {
-            return null;
+
         }
 
     }
