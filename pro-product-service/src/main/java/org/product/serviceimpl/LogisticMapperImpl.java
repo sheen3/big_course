@@ -54,11 +54,11 @@ public class LogisticMapperImpl {
     public Boolean insertLogistic(Logistic logistic) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.LOGISTIC);
-
             if (logistic == null) {
                 logMessage.build(LogEnum.LOGISTIC_EMPTY);
                 log.warn(logMessage.log());
             } else {
+                logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
                 MysqlBuilder<Logistic> insertLogistic = new MysqlBuilder<>(Logistic.class);
                 insertLogistic.setIn(logistic);
 

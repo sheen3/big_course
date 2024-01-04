@@ -33,13 +33,13 @@ public class TestProductMapper {
     public void insertProduct() throws Exception {
         Product product = new Product();
        // product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        product.setProductName("盼盼");
+        product.setProductName("嘿嘿");
         LocalDateTime now = LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));
         LocalDateTime expirationDate = now.plusYears(3);//当前日期加上三年
         product.setProductExpirationDate(Date.valueOf(expirationDate.toLocalDate()));
-        product.setProductEnterpriseId("1000344");//企业id
-        product.setProductProductionId("200054355");//生产id
+        product.setProductEnterpriseId("10003354");//企业id
+        product.setProductProductionId("2000543245");//生产id
         product.setProductionPlace("北京");
 
         if (productMapperImpl.insertProduct(product) != null) {
@@ -69,7 +69,7 @@ public class TestProductMapper {
     @Test
     public void deleteProduct() throws Exception {
         Product product=new Product();
-        product.setProductId("0000018c-c8c8-cc0c-b9ad-2bfe8154da34");
+        product.setProductId("0000018c-d3e0-271f-8d8d-829a7a25ef2a");
         productMapperImpl.deleteProduct(product);
         System.out.println("产品销毁成功！");
     }

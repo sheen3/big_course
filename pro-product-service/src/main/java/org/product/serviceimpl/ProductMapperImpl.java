@@ -59,7 +59,6 @@ public class ProductMapperImpl {
                 log.warn(logMessage.log());
             } else {
                 product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-
                 MysqlBuilder<Product> insertProduct = new MysqlBuilder<>(Product.class);
                 insertProduct.setIn(product);
 
@@ -206,6 +205,12 @@ public class ProductMapperImpl {
                     String qrcodeFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake/" + product.getProductId() + ".png";
                     qrCodeMapperImpl.deleteQrCodeFile(qrcodeFilePath);
                     System.out.println("二维码已从本地文件中删除");
+
+                    ProductQrCodeRef p1=new ProductQrCodeRef();
+                    p1.setProductId(product.getProductId());
+                    MysqlBuilder<ProductQrCodeRef> pro = new MysqlBuilder<>(ProductQrCodeRef.class);
+                    pro.setIn(p1);
+                    baseMysqlComp.delete(pro);
 
                     QrCode qrcode = new QrCode();
                     qrcode.setProductId(product.getProductId());

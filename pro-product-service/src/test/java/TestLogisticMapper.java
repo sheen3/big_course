@@ -35,8 +35,8 @@ public class TestLogisticMapper {
     public void insertLogistic() throws Exception {
         Logistic logistic = new Logistic();
      //   logistic.setLogisticId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        logistic.setLogisticCompanyId("宝洁1004");
-        logistic.setLogisticBatchId("sf100153");
+        logistic.setLogisticCompanyId("黑妞1007");
+        logistic.setLogisticBatchId("sf105153");
         logistic.setLogisticVehicleInfo("赣A10003");
         logistic.setLogisticTime(Timestamp.valueOf(LocalDateTime.now()));
         logistic.setLogisticDestinationSupermarket("江西盒马");
@@ -67,7 +67,8 @@ public class TestLogisticMapper {
     @Test
     public void deleteLogistic() throws Exception {
         Logistic logistic = new Logistic();
-        logistic.setLogisticId("0000018c-c8c5-abb2-a7f1-6e83cdb0d470");
+        logistic.setLogisticId("0000018c-d3e5-dded-8e3b-14c07e1c88f5");
+
         logisticMapperImpl.deleteLogistic(logistic);
         System.out.println("物流信息删除成功！");
     }
