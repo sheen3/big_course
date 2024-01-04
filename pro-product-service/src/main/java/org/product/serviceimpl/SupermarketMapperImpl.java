@@ -11,6 +11,7 @@ import org.database.mysql.mapper.SupermarketMapper;
 import org.database.mysql.mapper.SupermarketProductRefMapper;
 import org.springframework.stereotype.Service;
 import org.tools.Excel.supExcelWriter;
+import org.tools.common.uuid.UuidGenerator;
 import org.tools.log.LogComp;
 import org.tools.log.LogEnum;
 import org.tools.log.LogType;
@@ -47,7 +48,7 @@ public class SupermarketMapperImpl {
      * @param supermarket
      * @throws Exception
      */
-    public void insertSupermarket(Supermarket supermarket) throws Exception {
+    public String insertSupermarket(Supermarket supermarket) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.SUPERMARKET);
 
@@ -55,6 +56,8 @@ public class SupermarketMapperImpl {
                 logMessage.build(LogEnum.SUPERMARKET_EMPTY);
                 log.warn(logMessage.log());
             } else {
+                supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+
 
                 MysqlBuilder<Supermarket> insertSupermarket = new MysqlBuilder<>(Supermarket.class);
                 insertSupermarket.setIn(supermarket);
@@ -75,13 +78,16 @@ public class SupermarketMapperImpl {
                             supermarket.getSupermarketAddress(),
                             supermarket.getSupermarketContact(),
                     };
+
                     excelWriter.writeToExcel(folderName, fileName, content);
+                    return "插入成功！";
                 }
             }
         } catch (Exception e) {
             log.error("Failed to insert supermarketMapper!", e);
 
         }
+        return "插入失败！";
 
     }
 

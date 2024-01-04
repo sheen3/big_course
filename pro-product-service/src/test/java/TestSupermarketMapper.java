@@ -32,7 +32,7 @@ public class TestSupermarketMapper {
     @Test
     public void insertSupermarket() throws Exception{
         Supermarket supermarket=new Supermarket();
-        supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+     //   supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         supermarket.setSupermarketName("yoyo");
         supermarket.setSupermarketAddress("浙江");
         supermarket.setSupermarketContact("079500002");
@@ -89,7 +89,7 @@ public class TestSupermarketMapper {
     @Test
     public void SupermarketExcel() {
         Supermarket supermarket=new Supermarket();
-        supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+      //  supermarket.setSupermarketId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         supermarket.setSupermarketName("便利蜂");
         supermarket.setSupermarketAddress("浙江");
         supermarket.setSupermarketContact("079500002");

@@ -102,7 +102,7 @@ public class TestUserMapper {
         User user = new User();
         //user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
         user.setUserName("aa");
-        user.setUserPassword(PasswordEncrypt.hashPassword("abc"));
+        user.setUserPassword("aba");
         userMapperimpl.loginUserByName(user);
     }
 
@@ -112,8 +112,8 @@ public class TestUserMapper {
     public void loginUserByEmail() throws Exception {
         User user = new User();
       //  user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
-        user.setUserSysEmail("yiyiO@yeah.com");
-        user.setUserPassword(PasswordEncrypt.hashPassword("IAmFairy"));
+        user.setUserSysEmail("maa@yeah.com");
+        user.setUserPassword("IAmFairy");
       userMapperimpl.loginUserByEmail(user);
     }
 

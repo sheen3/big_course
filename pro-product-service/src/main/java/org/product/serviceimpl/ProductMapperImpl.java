@@ -50,14 +50,15 @@ public class ProductMapperImpl {
      * @param product
      * @throws Exception
      */
-    public void insertProduct(Product product) throws Exception {
+    public String insertProduct(Product product) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
-            if (product == null ) {
+            if (product == null) {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {
+                product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
 
                 MysqlBuilder<Product> insertProduct = new MysqlBuilder<>(Product.class);
                 insertProduct.setIn(product);
@@ -125,13 +126,14 @@ public class ProductMapperImpl {
                             product.getProductionPlace(),
                     };
                     excelWriter.writeToExcel(folderName, fileName, content);
-
+                    return "生产成功";
                 }
             }
         } catch (Exception e) {
             log.error("Failed to insert product!", e);
 
         }
+        return "生产失败";
     }
 
 
@@ -146,7 +148,7 @@ public class ProductMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
-            if (product == null ) {
+            if (product == null) {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -187,7 +189,7 @@ public class ProductMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.PRODUCT);
 
-            if (product == null ) {
+            if (product == null) {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {

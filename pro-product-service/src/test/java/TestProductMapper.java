@@ -31,21 +31,21 @@ public class TestProductMapper {
     //生产产品
     @Test
     public void insertProduct() throws Exception {
-        Product product=new Product();
+        Product product = new Product();
         product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         product.setProductName("面包");
-        LocalDateTime now=LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));
-        LocalDateTime expirationDate=now.plusYears(3);//当前日期加上三年
+        LocalDateTime expirationDate = now.plusYears(3);//当前日期加上三年
         product.setProductExpirationDate(Date.valueOf(expirationDate.toLocalDate()));
         product.setProductEnterpriseId("1000234");//企业id
         product.setProductProductionId("20005345");//生产id
         product.setProductionPlace("江西");
 
-        productMapperImpl.insertProduct(product);
-        System.out.println("产品生产成功！");
+        if (productMapperImpl.insertProduct(product) != null) {
+            System.out.println("产品生产成功！");
+        }
     }
-
     //查询产品信息
     @Test
     public void selectOneProduct() throws Exception {
@@ -88,7 +88,7 @@ public class TestProductMapper {
     @Test
     public void ExcelProduct() throws Exception {
         Product product=new Product();
-        product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
+       // product.setProductId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
         product.setProductName("洗发水");
         LocalDateTime now=LocalDateTime.now();
         product.setProductDate(Date.valueOf(now.toLocalDate()));
@@ -99,7 +99,7 @@ public class TestProductMapper {
         product.setProductionPlace("南昌");
 
         productMapperImpl.productExcel(product);
-        System.out.println("产品表插入！");
+       // System.out.println("产品表插入！");
     }
 
 }
