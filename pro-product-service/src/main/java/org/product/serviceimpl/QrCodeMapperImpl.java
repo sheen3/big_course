@@ -201,11 +201,7 @@ public class QrCodeMapperImpl {
                 logMessage.build(LogEnum.PRODUCT_EMPTY);
                 log.warn(logMessage.log());
             } else {
-                ProductLogisticRef logi = new ProductLogisticRef();
-                logi.setLogisticId(product.getProductId());
-                MysqlBuilder<ProductLogisticRef> sanLog = new MysqlBuilder<>(ProductLogisticRef.class);
-                sanLog.setIn(logi);
-                logi = baseMysqlComp.selectOne(sanLog);
+
                 MysqlBuilder<Product> sanPro = new MysqlBuilder<>(Product.class);
                 sanPro.setIn(product);
                 if (baseMysqlComp.selectOne(sanPro) == null) {
@@ -213,6 +209,11 @@ public class QrCodeMapperImpl {
                     log.error(logMessage.log());
 
                 } else {
+                    ProductLogisticRef logi = new ProductLogisticRef();
+                    logi.setLogisticId(product.getProductId());
+                    MysqlBuilder<ProductLogisticRef> sanLog = new MysqlBuilder<>(ProductLogisticRef.class);
+                    sanLog.setIn(logi);
+                    logi = baseMysqlComp.selectOne(sanLog);
                     String productQrCodeFolderPath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/productMake";
                     String productQrCodeFileName = product.getProductId() + ".png";
                     String productQrCodeFilePath = productQrCodeFolderPath + "/" + productQrCodeFileName;
@@ -226,7 +227,7 @@ public class QrCodeMapperImpl {
                     if (productText != null && logisticText != null) {
                         System.out.println("扫描结果： " + logisticText);
                         System.out.println("扫描结果： " + productText);
-                        return productText + productText;
+                        return productText+productText;
                     } else {
                         System.out.println("未能扫描到二维码");
                         return "未能扫描到二维码";
