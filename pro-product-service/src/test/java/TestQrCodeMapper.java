@@ -54,12 +54,14 @@ public class TestQrCodeMapper {
         }
 
     }
+
     @Test
     public void scanProductQrCode() throws Exception {
         Product product = new Product();
         product.setProductId("0000018c-cded-2acd-94bb-c85beea2725f");
-        if(qrCodeMapperImpl.sanProductQrCode(product)!=null){
-        System.out.println("二维码信息查找成功！");}else {
+        if (qrCodeMapperImpl.sanProductQrCode(product) != null) {
+            System.out.println("二维码信息查找成功！");
+        } else {
             System.out.println("二维码信息查找失败！");
         }
 
@@ -71,7 +73,20 @@ public class TestQrCodeMapper {
     public void scanLogisticQrCode() throws Exception {
         Logistic logistic = new Logistic();
         logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
-        if(qrCodeMapperImpl.sanLogisticQrCode(logistic) != null) {
+        if (qrCodeMapperImpl.sanLogisticQrCode(logistic) != null) {
+            System.out.println("二维码信息查找成功！");
+        } else {
+            System.out.println("二维码信息查找失败！");
+        }
+
+
+    }
+
+    @Test
+    public void scanProAndLogQrCode() throws Exception {
+        Product product = new Product();
+        product.setProductId("0000018c-c8fd-1388-83aa-aee760275df7");
+        if (qrCodeMapperImpl.sanProAndLogQrCode(product) != null) {
             System.out.println("二维码信息查找成功！");
         } else {
             System.out.println("二维码信息查找失败！");
