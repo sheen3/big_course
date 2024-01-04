@@ -109,43 +109,12 @@ public class UserMapperImpl {
                     return true;
 
                 }
-                return false;
+
             }
         } catch (Exception e) {
             log.error("Failed to insert user!", e);
         }
         return null;
-    }
-
-    /**
-     * 判断字符串是否为纯数字
-     *
-     * @param str
-     * @return
-     */
-
-    private Boolean isNumeric(String str) {
-        return str != null && str.matches("\\d+");
-    }
-
-    /**
-     * 判断字符串是否为有效邮箱地址
-     *
-     * @param str
-     * @return
-     */
-    private Boolean isValidEmail(String str) {
-        return str != null && str.matches("\\w+@[a-zA-Z_]+?\\.[a-zA-Z]{2,3}");
-    }
-
-    /**
-     * 判断字符串是否为uuid
-     *
-     * @param str
-     * @return
-     */
-    private boolean isValidUuid(String str) {
-        return str != null && str.matches("[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}");
     }
 
     /**
@@ -216,7 +185,7 @@ public class UserMapperImpl {
                     baseMysqlComp.delete(deleteUser);
                     return true;
                 }
-                return false;
+
             }
         } catch (Exception e) {
             log.error("Failed to delete user!", e);
@@ -283,7 +252,7 @@ public class UserMapperImpl {
                     baseMysqlComp.update(updateUser);
                     return true;
                 }
-                return false;
+
             }
 
 

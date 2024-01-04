@@ -70,7 +70,7 @@ public class TestSupermarketMapper {
     public void updateSupermarket() throws Exception{
         Supermarket supermarket=new Supermarket();
         supermarket.setSupermarketId("0000018c-ca5e-9f76-8ce8-d49e76be216d");
-        supermarket.setSupermarketContact("10000001");
+        supermarket.setSupermarketContact("111111");
         supermarketMapperImpl.updateSupermarket(supermarket);
         System.out.println("超市信息更新成功！");
 

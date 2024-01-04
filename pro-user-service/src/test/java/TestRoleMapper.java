@@ -31,14 +31,17 @@ public class TestRoleMapper {
     @Test
     public void insertRole() throws Exception {
         Role role = new Role();
-     //   role.setRoleId((short) 101);
+        //   role.setRoleId((short) 101);
         role.setRoleName("维护者");
         role.setRoleCreateTime(Timestamp.valueOf(LocalDateTime.now()));
         role.setRoleStatusFlag((short) 0);
         role.setRoleRemark("销售设备");
 
-        roleMapperImpl.insertRole(role);
-        System.out.println("角色创建成功！");
+        if (roleMapperImpl.insertRole(role)) {
+            System.out.println("角色创建成功！");
+        } else {
+            System.out.println("角色创建失败！");
+        }
     }
 
     //根据roleId或roleName查询
@@ -46,9 +49,12 @@ public class TestRoleMapper {
     public void selectOneRole() throws Exception {
         Role role = new Role();
         // role.setRoleId((short)101);
-        role.setRoleName("系统管理员");
-        roleMapperImpl.selectOneRole(role);
-        System.out.println("权限查找成功！");
+        role.setRoleName("维护者");
+        if (roleMapperImpl.selectOneRole(role) != null) {
+            System.out.println("权限查找成功！");
+        } else {
+            System.out.println("权限查找失败！");
+        }
 
         System.out.println("############################################################");
         System.out.println("以下是查询所有的权限得到信息:");
@@ -67,19 +73,23 @@ public class TestRoleMapper {
     @Test
     public void deleteRole() throws Exception {
         Role role = new Role();
-        role.setRoleId((short) 104);
-        roleMapperImpl.deleteRole(role);
-        System.out.println("角色删除成功！");
-
+        //role.setRoleId((short) 104);
+        role.setRoleName("维护者");
+        if (roleMapperImpl.deleteRole(role)) {
+            System.out.println("角色删除成功！");
+        } else System.out.println("角色删除失败！");
     }
 
     @Test
     public void updateRole() throws Exception {
         Role role = new Role();
-        role.setRoleId((short) 103);
+        role.setRoleId((short) 6);
         role.setRoleRemark("维修");
-        roleMapperImpl.updateRole(role);
-        System.out.println("角色状态已更新！");
+        if (roleMapperImpl.updateRole(role)) {
+            System.out.println("角色状态已更新！");
+        } else {
+            System.out.println("角色状态更新失败");
+        }
 
     }
 
@@ -87,8 +97,8 @@ public class TestRoleMapper {
     @Test
     public void grantUserToRole() throws Exception {
         UserRoleRef userRoleRef = new UserRoleRef();
-        userRoleRef.setRefUserId("0000018c-5caf-cba7-8b25-8d2a2844cdab");
-        userRoleRef.setRefRoleId((short) 101);
+        userRoleRef.setRefUserId("0000018c-d2a1-2612-be6c-95280b010e9d");
+        userRoleRef.setRefRoleId((short) 1);
         // 执行授权并验证授权结果
         if (roleMapperImpl.grantRoleToUser(userRoleRef)) {
             System.out.println("分配角色给用户成功！");
@@ -101,8 +111,8 @@ public class TestRoleMapper {
     @Test
     public void revokeRoleFromUser() throws Exception {
         UserRoleRef userRoleRef = new UserRoleRef();
-        userRoleRef.setRefUserId("0000018c-5caf-cba7-8b25-8d2a2844cdab");
-        userRoleRef.setRefRoleId((short) 101);
+        userRoleRef.setRefUserId("0000018c-d2a1-2612-be6c-95280b010e9d");
+        userRoleRef.setRefRoleId((short) 1);
         // 执行撤销并验证授权结果
         if (roleMapperImpl.revokeRoleFromUser(userRoleRef)) {
             System.out.println("撤销角色给用户成功！");
@@ -116,8 +126,8 @@ public class TestRoleMapper {
     @Test
     public void grantDoPowerToRole() throws Exception {
         RolePowerRef rolePowerRef = new RolePowerRef();
-        rolePowerRef.setRefPowerId(3);
-        rolePowerRef.setRefRoleId((short) 103);
+        rolePowerRef.setRefPowerId(1);
+        rolePowerRef.setRefRoleId((short) 1);
         // 执行授权并验证授权结果
         if (roleMapperImpl.grantDoPowerToRole(rolePowerRef)) {
             System.out.println("分配可操作权限给角色成功！");
@@ -130,8 +140,8 @@ public class TestRoleMapper {
     @Test
     public void grantSeePowerToRole() throws Exception {
         RolePowerRef rolePowerRef = new RolePowerRef();
-        rolePowerRef.setRefPowerId(17);
-        rolePowerRef.setRefRoleId((short) 103);
+        rolePowerRef.setRefPowerId(1);
+        rolePowerRef.setRefRoleId((short) 1);
         // 执行授权并验证授权结果
         if (roleMapperImpl.grantSeePowerToRole(rolePowerRef)) {
             System.out.println("分配可查看作权限给角色成功！");
@@ -144,8 +154,8 @@ public class TestRoleMapper {
     @Test
     public void revokePowerFromRole() throws Exception {
         RolePowerRef rolePowerRef = new RolePowerRef();
-        rolePowerRef.setRefPowerId(17);
-        rolePowerRef.setRefRoleId((short) 103);
+        rolePowerRef.setRefPowerId(1);
+        rolePowerRef.setRefRoleId((short) 1);
         // 执行撤销并验证授权结果
         if (roleMapperImpl.revokePowerFromRole(rolePowerRef)) {
             System.out.println("撤销权限给角色成功！");
@@ -155,15 +165,15 @@ public class TestRoleMapper {
     }
 
 
-
     //查询角色状态
     @Test
     public void checkRoleOperate() throws Exception {
         Role role = new Role();
         role.setRoleId((short) 105);
-        if(roleMapperImpl.checkRoleOperate(role)) {
+        if (roleMapperImpl.checkRoleOperate(role)) {
             System.out.println(role.getRoleId() + "状态是正常使用");
-        }else { System.out.println(role.getRoleId() + "状态是已停用");
+        } else {
+            System.out.println(role.getRoleId() + "状态是已停用");
 
         }
 

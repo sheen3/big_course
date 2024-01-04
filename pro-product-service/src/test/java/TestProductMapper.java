@@ -80,7 +80,7 @@ public class TestProductMapper {
         Product product=new Product();
         product.setProductId("0000018c-c8fd-c038-8cd5-26ee6af1f203");
         product.setProductEnterpriseId("16234");
-        product.setProductionPlace("福建");
+        product.setProductionPlace("天津");
         productMapperImpl.updateProduct(product);
         System.out.println("产品状态已更新！");
 

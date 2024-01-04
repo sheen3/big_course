@@ -57,7 +57,6 @@ public class PowerMapperImpl {
             } else {
                 Power power1=new Power();
                 power1.setPowerName(power1.getPowerName());
-
                 MysqlBuilder<Power> builder = new MysqlBuilder<>(Power.class);
                 builder.setIn(power1);
 
@@ -66,15 +65,16 @@ public class PowerMapperImpl {
                     log.error(logMessage.log());
                 } else {
                     MysqlBuilder<Power> insertPower = new MysqlBuilder<>(Power.class);
-                    baseMysqlComp.insert(insertPower);
                     insertPower.setIn(power);
+
+                    baseMysqlComp.insert(insertPower);
                     return true;
                 }
             }
         } catch (Exception e) {
             log.error("Failed to insert power!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -149,7 +149,7 @@ public class PowerMapperImpl {
         } catch (Exception e) {
             log.error("Failed to delete power!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -181,7 +181,7 @@ public class PowerMapperImpl {
         } catch (Exception e) {
             log.error("Failed to update power!", e);
         }
-        return false;
+        return null;
     }
 
     /**
@@ -241,6 +241,6 @@ public class PowerMapperImpl {
         } catch (Exception e) {
             log.error("Failed to checkPowerOperate!", e);
         }
-        return false;
+        return null;
     }
 }

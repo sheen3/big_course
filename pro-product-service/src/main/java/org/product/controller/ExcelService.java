@@ -27,6 +27,7 @@ public class ExcelService {
             ExcelReader excelReader = new ExcelReader();
             String excelFilePath = "/Users/eensh/Desktop/softwareIntegratedCourseDesign/Excel/pro_product.xlsx";
             excelData = excelReader.readFromExcel(excelFilePath);
+
         } catch (Exception e) {
             System.out.println("操作失败");
         }

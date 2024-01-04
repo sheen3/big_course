@@ -77,7 +77,7 @@ public class RoleMapperImpl {
                     baseMysqlComp.insert(insertRole);
                     return true;
                 }
-                return false;
+
             }
         } catch (Exception e) {
             log.error("Failed to insert role!", e);
@@ -170,7 +170,7 @@ public class RoleMapperImpl {
                     baseMysqlComp.delete(deleteRole);
                     return true;
                 }
-                return false;
+
             }
         } catch (Exception e) {
             log.error("Failed to delete role!", e);
@@ -203,7 +203,7 @@ public class RoleMapperImpl {
                     baseMysqlComp.update(updateRole);
                     return true;
                 }
-                return false;
+
             }
         } catch (Exception e) {
             log.error("Failed to select role!", e);

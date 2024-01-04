@@ -77,8 +77,8 @@ public class TestLogisticMapper {
     @Test
     public void updateLogistic() throws Exception {
         Logistic logistic = new Logistic();
-        logistic.setLogisticId("0000018c-c8fc-257b-b15c-ae41f891562b");
-        logistic.setLogisticBatchId("zt100234");
+        logistic.setLogisticId("0000018c-cae2-955e-910c-49237ba0738a");
+        logistic.setLogisticBatchId("sf00234");
         logisticMapperImpl.updateLogistic(logistic);
         System.out.println("物流状态已更新！");
 
