@@ -51,8 +51,9 @@ public class UserMapperImpl {
     /**
      * 增加用户（用户注册）
      * 参数校验:用户电话 用户邮箱 用户名不能重复存在;
-     *
+     * <p>
      * 用户注册时选择角色
+     *
      * @param user
      * @throws Exception
      */
@@ -61,7 +62,7 @@ public class UserMapperImpl {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
 
-            if (user == null  || user.getUserName() == null || user.getUserTelephone() == null || user.getUserSysEmail() == null) {
+            if (user == null || user.getUserName() == null || user.getUserTelephone() == null || user.getUserSysEmail() == null) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -93,16 +94,15 @@ public class UserMapperImpl {
                 } else {
                     baseMysqlComp.insert(insertUser);
                     //给用户分配角色
-                    UserRoleRef userRoleRef=new UserRoleRef();
+                    UserRoleRef userRoleRef = new UserRoleRef();
                     userRoleRef.setRefUserId(user.getUserId());
-                    Role role=new Role();
+                    Role role = new Role();
                     role.setRoleName(user.getRoleName());
                     MysqlBuilder<Role> flag = new MysqlBuilder<>(Role.class);
                     flag.setIn(role);
-                    Role role1=baseMysqlComp.selectOne(flag);
+                    Role role1 = baseMysqlComp.selectOne(flag);
                     userRoleRef.setRefRoleId(role1.getRoleId());
                     roleMapperImpl.grantRoleToUser(userRoleRef);
-
 
 
                 }
@@ -153,7 +153,7 @@ public class UserMapperImpl {
     public void selectOneUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null || ( user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
+            if (user == null || (user.getUserName() == null && user.getUserTelephone() == null && user.getUserSysEmail() == null)) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -196,7 +196,7 @@ public class UserMapperImpl {
     public void deleteUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null ) {
+            if (user == null) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
@@ -216,7 +216,7 @@ public class UserMapperImpl {
 
     /**
      * 更新角色信息
-     * 参数校验：用户id不为空；
+     * 参数校验：用户标识信息不为空
      *
      * @param user
      * @throws Exception
@@ -225,18 +225,46 @@ public class UserMapperImpl {
     public void updateUser(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null ) {
+            if (user == null) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {
-                MysqlBuilder<User> checkUser = new MysqlBuilder<>(User.class);
-                checkUser.setIn(user);
-                if (baseMysqlComp.selectOne(checkUser)==null) {
-                    logMessage.build(LogEnum.USER_NO_Exists);
-                    log.error(logMessage.log());
-                } else {
+                if (user.getUserName() != null) {
+                    User one = new User();
+                    MysqlBuilder<User> checkUser = new MysqlBuilder<>(User.class);
+                    checkUser.setIn(one);
+                    if (baseMysqlComp.selectOne(checkUser) == null) {
+                        logMessage.build(LogEnum.USER_NO_Exists);
+                        log.error(logMessage.log());
+                    }
                     MysqlBuilder<User> updateUser = new MysqlBuilder<>(User.class);
-                    User user1 = userMapper.selectById(user.getUserId());
+                    User user1 = baseMysqlComp.selectOne(checkUser);
+                    updateUser.setIn(user1);
+                    updateUser.setUpdate(user);
+                    baseMysqlComp.update(updateUser);
+                } else if (user.getUserTelephone() != null) {
+                    User two = new User();
+                    MysqlBuilder<User> checkUser = new MysqlBuilder<>(User.class);
+                    checkUser.setIn(two);
+                    if (baseMysqlComp.selectOne(checkUser) == null) {
+                        logMessage.build(LogEnum.USER_NO_Exists);
+                        log.error(logMessage.log());
+                    }
+                    MysqlBuilder<User> updateUser = new MysqlBuilder<>(User.class);
+                    User user1 = baseMysqlComp.selectOne(checkUser);
+                    updateUser.setIn(user1);
+                    updateUser.setUpdate(user);
+                    baseMysqlComp.update(updateUser);
+                } else if (user.getUserSysEmail() != null) {
+                    User three = new User();
+                    MysqlBuilder<User> checkUser = new MysqlBuilder<>(User.class);
+                    checkUser.setIn(three);
+                    if (baseMysqlComp.selectOne(checkUser) == null) {
+                        logMessage.build(LogEnum.USER_NO_Exists);
+                        log.error(logMessage.log());
+                    }
+                    MysqlBuilder<User> updateUser = new MysqlBuilder<>(User.class);
+                    User user1 = baseMysqlComp.selectOne(checkUser);
                     updateUser.setIn(user1);
                     updateUser.setUpdate(user);
                     baseMysqlComp.update(updateUser);
@@ -281,7 +309,7 @@ public class UserMapperImpl {
         } catch (Exception e) {
             log.error("Failed to loginUser!", e);
         }
-        return null;
+        return false;
     }
 
     /**
@@ -368,7 +396,7 @@ public class UserMapperImpl {
     public Short isUserWhatToRole(User user) throws Exception {
         try {
             LogComp.LogMessage logMessage = LogComp.buildData(LogType.USER);
-            if (user == null ) {
+            if (user == null) {
                 logMessage.build(LogEnum.USER_EMPTY);
                 log.warn(logMessage.log());
             } else {

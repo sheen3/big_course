@@ -32,10 +32,10 @@ public class TestUserMapper {
 
         User user = new User();
       //  user.setUserId(UuidGenerator.getCustomUuid(System.currentTimeMillis()).toString());
-        user.setUserName("mob");
-        user.setUserTelephone("15602300031");
-        user.setUserSysEmail("mob@yeah.com");
-        user.setUserPassword(PasswordEncrypt.hashPassword("IAmSheen"));
+        user.setUserName("aa");
+        user.setUserTelephone("1560000000");
+        user.setUserSysEmail("maa@yeah.com");
+        user.setUserPassword(PasswordEncrypt.hashPassword("abc"));
         user.setUserNickName("Sheen");
         user.setUserGender("女");
         user.setUserBornDay(Timestamp.valueOf("2001-09-21 00:00:00"));
@@ -77,7 +77,8 @@ public class TestUserMapper {
     @Test
     public void deleteRole() throws Exception {
         User user = new User();
-        user.setUserId("0000018c-ca65-68f2-b632-6bea9a6c9745");
+        user.setUserName("mob");
+       // user.setUserId("0000018c-ca65-68f2-b632-6bea9a6c9745");
         userMapperimpl.deleteUser(user);
         System.out.println("用户注销成功！");
 
@@ -87,10 +88,10 @@ public class TestUserMapper {
     @Test
     public void updateUser() throws Exception {
         User user = new User();
-        user.setUserId("0000018c-5caf-cba7-8b25-8d2a2844cdab");
-        user.setUserName("cire");
-        user.setUserSysEmail("Cob@yean.net");
-        //  user.setUserTelephone("12345678457");
+       // user.setUserId("0000018c-5caf-cba7-8b25-8d2a2844cdab");
+        user.setUserName("aa");
+        //user.setUserSysEmail("Cob@yean.net");
+          user.setUserTelephone("12345678457");
         userMapperimpl.updateUser(user);
         System.out.println("角色信息已更新！");
     }
@@ -99,9 +100,9 @@ public class TestUserMapper {
     @Test
     public void loginUserByName() throws Exception {
         User user = new User();
-        user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
-        user.setUserName("yiyi");
-        user.setUserPassword(PasswordEncrypt.hashPassword("I am Sheen"));
+        //user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
+        user.setUserName("aa");
+        user.setUserPassword(PasswordEncrypt.hashPassword("abc"));
         if (userMapperimpl.loginUserByName(user)) {
             System.out.println("登陆成功！");
         } else {
@@ -129,9 +130,8 @@ public class TestUserMapper {
     @Test
     public void loginUserByTelephone() throws Exception {
         User user = new User();
-        user.setUserId("0000018c-a3e0-8f55-861b-daa075e0eb38");
-        user.setUserTelephone("15600000001");
-        user.setUserPassword(PasswordEncrypt.hashPassword("IAmSheen"));
+        user.setUserTelephone("15602300031");
+        user.setUserPassword("I am Sheen");
         if (userMapperimpl.loginUserByTelephone(user)) {
             System.out.println("登陆成功！");
         } else {
